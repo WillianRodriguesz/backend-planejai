@@ -6,7 +6,7 @@ export class Usuario {
   private email: string;
   private senha: string;
 
-  constructor(nome: string, email: string, senha: string, id?: string) {
+  constructor(nome: string, email: string, senha: string, id: string) {
     this.id = id ?? uuidv4(); // se não passar, gera novo
     this.nome = nome;
     this.email = email;

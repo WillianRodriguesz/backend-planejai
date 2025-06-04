@@ -1,5 +1,5 @@
 import { IsEmail, IsString, Matches } from "class-validator";
-
+// ISSO AQUI PARECE MAIS UM SERVICE
 export class AuthLoginDto{
 
     @IsEmail()
