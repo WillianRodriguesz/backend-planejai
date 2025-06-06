@@ -2,6 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CriarUsuarioDto } from '../../dtos/usuario/criar-usuario.dto';
 import { Usuario } from '../../../domain/entities/usuario/usuario.entity';
 import { UsuarioRepository } from 'src/modules/core/domain/entities/repositories/usuario.repository.interface';
+import { UsuarioMapper } from '../../mappers/usuario.mapper';
+import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
 
 @Injectable()
 export class CriarUsuarioUseCase {
@@ -10,7 +12,7 @@ export class CriarUsuarioUseCase {
     private readonly usuarioRepository: UsuarioRepository,
   ) {}
 
-  async executar(dto: CriarUsuarioDto): Promise<Usuario> {
+  async executar(dto: CriarUsuarioDto): Promise<UsuarioDto> {
     const novoUsuario = new Usuario(
       dto.nome,
       dto.email,
@@ -18,10 +20,8 @@ export class CriarUsuarioUseCase {
       dto.carteira,
     );
 
-    //RETORNO DELE DEVE SER UM DTO, CRIAR UM MAPPER DE DOMINIO DE USUARIO PARA DTO
-    // ou seja, converter a entidade Usuario para um DTO que será retornado
-    // domainToDto(usuario: Usuario): UsuarioDto {
-    //   return new UsuarioDto(usuario.getId(), usuario.getNome(), usuario.getEmail());
-    return await this.usuarioRepository.criarUsuario(novoUsuario);
+    const usuarioCriado = await this.usuarioRepository.criarUsuario(novoUsuario);
+
+    return UsuarioMapper.toDto(usuarioCriado); //criei o retorno dto
   }
 }

@@ -29,7 +29,7 @@ export class ExisteIdUsecase {
     }
 
     //RETORNAR UM DTO
-
-    return true;
+    
+    return true; // aqui quero retornar apenas se existe ID se não lança exceptions, acho que naõ faz sentido criar DTO
   }
 }

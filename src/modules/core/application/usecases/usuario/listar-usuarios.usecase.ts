@@ -1,5 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Usuario } from 'backend-planejai/src/domain/entities/usuario/usuario.entity';
 import { UsuarioRepository } from 'src/modules/core/domain/entities/repositories/usuario.repository.interface';
+import { UsuarioMapper } from '../../mappers/usuario.mapper';
 
 @Injectable()
 export class ListarTodosUseCase {
@@ -10,12 +12,13 @@ export class ListarTodosUseCase {
   ) {}
 
   async listarTodos() {
-    return this.usuarioRepository.listarTodos();
-    //PRECISA ADICIONAR VALIDAÇÃO E SE NÃO RETORNAR NENHUM? COMO VOU SABER?
-    // O RETORNO PRECISA SER UM DTO OU UM ARRAY DE DTOs
-    // OU SEJA, CONVERTER A ENTIDADE Usuario PARA UM DTO QUE SERÁ RETORNADO
-    // CRIAR UM MAPPER DE DOMINIO DE USUARIO PARA DTO
-    // EXEMPLO:
-    // domainToDto(usuario: Usuario): UsuarioDto
+    const usuarios = await this.usuarioRepository.listarTodos();
+
+    if(!usuarios || (await usuarios).length === 0 ){
+      throw new NotFoundException ('Nenhum usúario encontrado');
+    } else{
+      return UsuarioMapper.toDtoList(usuarios);
+    }
+    //validei para verificar se existe usuarios, retornando uma exceptions ou um array de DTOS.
   }
 }

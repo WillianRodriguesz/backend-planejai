@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { ExisteIdUsecase } from './existeId-suario.usecase';
+import { ExisteIdUsecase } from './existeId-usuario.usecase';
 import { UsuarioRepository } from 'src/modules/core/domain/entities/repositories/usuario.repository.interface';
 
 @Injectable()
