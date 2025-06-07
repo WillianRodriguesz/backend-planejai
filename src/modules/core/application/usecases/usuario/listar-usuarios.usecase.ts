@@ -1,5 +1,4 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { Usuario } from 'backend-planejai/src/domain/entities/usuario/usuario.entity';
 import { UsuarioRepository } from 'src/modules/core/domain/entities/repositories/usuario.repository.interface';
 import { UsuarioMapper } from '../../mappers/usuario.mapper';
 

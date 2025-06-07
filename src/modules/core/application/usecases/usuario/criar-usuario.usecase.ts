@@ -8,7 +8,7 @@ import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
 @Injectable()
 export class CriarUsuarioUseCase {
   constructor(
-    @Inject('IUSUARIO_REPOSITORY')
+    @Inject('UsuarioRepository')
     private readonly usuarioRepository: UsuarioRepository,
   ) {}
 
