@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model carteiras {
+  id          String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nome        String       @db.VarChar(255)
+  saldo_atual Decimal?     @default(0.00) @db.Decimal(10, 2)
+  usuario_id  String?      @db.Uuid
+  usuario     usuario?     @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  lancamento  lancamento[]
+}
+
+model lancamento {
+  id              String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  tipo_lancamento String     @db.VarChar(50)
+  data_lancamento DateTime?  @db.Date
+  descricao       String?    @db.VarChar
+  data_cadastro   DateTime?  @default(now()) @db.Timestamp(6)
+  valor           Decimal?   @db.Decimal(10, 2)
+  forma_pagamento String?    @db.VarChar(50)
+  carteira_id     String?    @db.Uuid
+  carteiras       carteiras? @relation(fields: [carteira_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model usuario {
+  id        String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nome      String      @db.VarChar(50)
+  senha     String      @db.VarChar(255)
+  email     String      @unique @db.VarChar(255)
+  carteiras carteiras[]
+}
