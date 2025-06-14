@@ -1,15 +1,32 @@
 import { Dinheiro } from '../../value-objects/dinheiro/dinheiro.value-object';
 import { v4 as uuidv4 } from 'uuid';
 
+interface CarteiraProps {
+  id?: string;
+  idUsuario: string;
+  saldoInicial: number;
+}
+
 export class Carteira {
   private readonly id: string;
   private idUsuario: string;
   private saldo: Dinheiro;
 
-  constructor(idUsuario: string, saldoInicial: number) {
-    this.id = uuidv4();
+  constructor(props: CarteiraProps) {
+    this.id = props.id || uuidv4();
+    this.setIdUsuario(props.idUsuario);
+    this.setSaldoInicial(props.saldoInicial);
+  }
+
+  private setIdUsuario(idUsuario: string): void {
+    if (!idUsuario || typeof idUsuario !== 'string' || idUsuario.trim() === '') {
+      throw new Error('O id do usuário é obrigatório e deve ser uma string válida');
+    }
     this.idUsuario = idUsuario;
-    this.saldo = new Dinheiro(saldoInicial);
+  }
+
+  private setSaldoInicial(saldo: number): void {
+    this.saldo = new Dinheiro(saldo); 
   }
 
   public getId(): string {
@@ -24,11 +41,13 @@ export class Carteira {
     return this.saldo;
   }
 
-  public adicionarTransacao(valor: number, tipo: 'ENTRADA' | 'SAIDA'): void {
-    if (tipo === 'ENTRADA') {
-        this.saldo = new Dinheiro(this.saldo.getValor() + valor);
-    } else {
-        this.saldo = new Dinheiro(this.saldo.getValor() - valor);   
-    }
+  public adicionarSaldo(valor: number): void {
+    const valorDinheiro = new Dinheiro(valor);
+    this.saldo = this.saldo.somar(valorDinheiro);
+  }
+
+  public removerSaldo(valor: number): void {
+    const valorDinheiro = new Dinheiro(valor);
+    this.saldo = this.saldo.subtrair(valorDinheiro);
   }
 }

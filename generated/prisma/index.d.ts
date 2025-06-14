@@ -14,15 +14,20 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model carteiras
+ * Model carteira
  * 
  */
-export type carteiras = $Result.DefaultSelection<Prisma.$carteirasPayload>
+export type carteira = $Result.DefaultSelection<Prisma.$carteiraPayload>
 /**
- * Model lancamento
- * 
+ * Model conta_recorrente
+ * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
  */
-export type lancamento = $Result.DefaultSelection<Prisma.$lancamentoPayload>
+export type conta_recorrente = $Result.DefaultSelection<Prisma.$conta_recorrentePayload>
+/**
+ * Model transacao
+ * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ */
+export type transacao = $Result.DefaultSelection<Prisma.$transacaoPayload>
 /**
  * Model usuario
  * 
@@ -37,7 +42,7 @@ export type usuario = $Result.DefaultSelection<Prisma.$usuarioPayload>
  * ```
  * const prisma = new PrismaClient()
  * // Fetch zero or more Carteiras
- * const carteiras = await prisma.carteiras.findMany()
+ * const carteiras = await prisma.carteira.findMany()
  * ```
  *
  *
@@ -58,7 +63,7 @@ export class PrismaClient<
    * ```
    * const prisma = new PrismaClient()
    * // Fetch zero or more Carteiras
-   * const carteiras = await prisma.carteiras.findMany()
+   * const carteiras = await prisma.carteira.findMany()
    * ```
    *
    *
@@ -155,24 +160,34 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.carteiras`: Exposes CRUD operations for the **carteiras** model.
+   * `prisma.carteira`: Exposes CRUD operations for the **carteira** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Carteiras
-    * const carteiras = await prisma.carteiras.findMany()
+    * const carteiras = await prisma.carteira.findMany()
     * ```
     */
-  get carteiras(): Prisma.carteirasDelegate<ExtArgs, ClientOptions>;
+  get carteira(): Prisma.carteiraDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.lancamento`: Exposes CRUD operations for the **lancamento** model.
+   * `prisma.conta_recorrente`: Exposes CRUD operations for the **conta_recorrente** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Lancamentos
-    * const lancamentos = await prisma.lancamento.findMany()
+    * // Fetch zero or more Conta_recorrentes
+    * const conta_recorrentes = await prisma.conta_recorrente.findMany()
     * ```
     */
-  get lancamento(): Prisma.lancamentoDelegate<ExtArgs, ClientOptions>;
+  get conta_recorrente(): Prisma.conta_recorrenteDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.transacao`: Exposes CRUD operations for the **transacao** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Transacaos
+    * const transacaos = await prisma.transacao.findMany()
+    * ```
+    */
+  get transacao(): Prisma.transacaoDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.usuario`: Exposes CRUD operations for the **usuario** model.
@@ -623,8 +638,9 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    carteiras: 'carteiras',
-    lancamento: 'lancamento',
+    carteira: 'carteira',
+    conta_recorrente: 'conta_recorrente',
+    transacao: 'transacao',
     usuario: 'usuario'
   };
 
@@ -644,155 +660,229 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "carteiras" | "lancamento" | "usuario"
+      modelProps: "carteira" | "conta_recorrente" | "transacao" | "usuario"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      carteiras: {
-        payload: Prisma.$carteirasPayload<ExtArgs>
-        fields: Prisma.carteirasFieldRefs
+      carteira: {
+        payload: Prisma.$carteiraPayload<ExtArgs>
+        fields: Prisma.carteiraFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.carteirasFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload> | null
+            args: Prisma.carteiraFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.carteirasFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload>
+            args: Prisma.carteiraFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload>
           }
           findFirst: {
-            args: Prisma.carteirasFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload> | null
+            args: Prisma.carteiraFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.carteirasFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload>
+            args: Prisma.carteiraFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload>
           }
           findMany: {
-            args: Prisma.carteirasFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload>[]
+            args: Prisma.carteiraFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload>[]
           }
           create: {
-            args: Prisma.carteirasCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload>
+            args: Prisma.carteiraCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload>
           }
           createMany: {
-            args: Prisma.carteirasCreateManyArgs<ExtArgs>
+            args: Prisma.carteiraCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.carteirasCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload>[]
+            args: Prisma.carteiraCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload>[]
           }
           delete: {
-            args: Prisma.carteirasDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload>
+            args: Prisma.carteiraDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload>
           }
           update: {
-            args: Prisma.carteirasUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload>
+            args: Prisma.carteiraUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload>
           }
           deleteMany: {
-            args: Prisma.carteirasDeleteManyArgs<ExtArgs>
+            args: Prisma.carteiraDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.carteirasUpdateManyArgs<ExtArgs>
+            args: Prisma.carteiraUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.carteirasUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload>[]
+            args: Prisma.carteiraUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload>[]
           }
           upsert: {
-            args: Prisma.carteirasUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$carteirasPayload>
+            args: Prisma.carteiraUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$carteiraPayload>
           }
           aggregate: {
-            args: Prisma.CarteirasAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCarteiras>
+            args: Prisma.CarteiraAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCarteira>
           }
           groupBy: {
-            args: Prisma.carteirasGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CarteirasGroupByOutputType>[]
+            args: Prisma.carteiraGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CarteiraGroupByOutputType>[]
           }
           count: {
-            args: Prisma.carteirasCountArgs<ExtArgs>
-            result: $Utils.Optional<CarteirasCountAggregateOutputType> | number
+            args: Prisma.carteiraCountArgs<ExtArgs>
+            result: $Utils.Optional<CarteiraCountAggregateOutputType> | number
           }
         }
       }
-      lancamento: {
-        payload: Prisma.$lancamentoPayload<ExtArgs>
-        fields: Prisma.lancamentoFieldRefs
+      conta_recorrente: {
+        payload: Prisma.$conta_recorrentePayload<ExtArgs>
+        fields: Prisma.conta_recorrenteFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.lancamentoFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload> | null
+            args: Prisma.conta_recorrenteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.lancamentoFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload>
+            args: Prisma.conta_recorrenteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload>
           }
           findFirst: {
-            args: Prisma.lancamentoFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload> | null
+            args: Prisma.conta_recorrenteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.lancamentoFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload>
+            args: Prisma.conta_recorrenteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload>
           }
           findMany: {
-            args: Prisma.lancamentoFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload>[]
+            args: Prisma.conta_recorrenteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload>[]
           }
           create: {
-            args: Prisma.lancamentoCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload>
+            args: Prisma.conta_recorrenteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload>
           }
           createMany: {
-            args: Prisma.lancamentoCreateManyArgs<ExtArgs>
+            args: Prisma.conta_recorrenteCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.lancamentoCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload>[]
+            args: Prisma.conta_recorrenteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload>[]
           }
           delete: {
-            args: Prisma.lancamentoDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload>
+            args: Prisma.conta_recorrenteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload>
           }
           update: {
-            args: Prisma.lancamentoUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload>
+            args: Prisma.conta_recorrenteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload>
           }
           deleteMany: {
-            args: Prisma.lancamentoDeleteManyArgs<ExtArgs>
+            args: Prisma.conta_recorrenteDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.lancamentoUpdateManyArgs<ExtArgs>
+            args: Prisma.conta_recorrenteUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.lancamentoUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload>[]
+            args: Prisma.conta_recorrenteUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload>[]
           }
           upsert: {
-            args: Prisma.lancamentoUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$lancamentoPayload>
+            args: Prisma.conta_recorrenteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$conta_recorrentePayload>
           }
           aggregate: {
-            args: Prisma.LancamentoAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateLancamento>
+            args: Prisma.Conta_recorrenteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateConta_recorrente>
           }
           groupBy: {
-            args: Prisma.lancamentoGroupByArgs<ExtArgs>
-            result: $Utils.Optional<LancamentoGroupByOutputType>[]
+            args: Prisma.conta_recorrenteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Conta_recorrenteGroupByOutputType>[]
           }
           count: {
-            args: Prisma.lancamentoCountArgs<ExtArgs>
-            result: $Utils.Optional<LancamentoCountAggregateOutputType> | number
+            args: Prisma.conta_recorrenteCountArgs<ExtArgs>
+            result: $Utils.Optional<Conta_recorrenteCountAggregateOutputType> | number
+          }
+        }
+      }
+      transacao: {
+        payload: Prisma.$transacaoPayload<ExtArgs>
+        fields: Prisma.transacaoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.transacaoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.transacaoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload>
+          }
+          findFirst: {
+            args: Prisma.transacaoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.transacaoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload>
+          }
+          findMany: {
+            args: Prisma.transacaoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload>[]
+          }
+          create: {
+            args: Prisma.transacaoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload>
+          }
+          createMany: {
+            args: Prisma.transacaoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.transacaoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload>[]
+          }
+          delete: {
+            args: Prisma.transacaoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload>
+          }
+          update: {
+            args: Prisma.transacaoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload>
+          }
+          deleteMany: {
+            args: Prisma.transacaoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.transacaoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.transacaoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload>[]
+          }
+          upsert: {
+            args: Prisma.transacaoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$transacaoPayload>
+          }
+          aggregate: {
+            args: Prisma.TransacaoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTransacao>
+          }
+          groupBy: {
+            args: Prisma.transacaoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TransacaoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.transacaoCountArgs<ExtArgs>
+            result: $Utils.Optional<TransacaoCountAggregateOutputType> | number
           }
         }
       }
@@ -954,8 +1044,9 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    carteiras?: carteirasOmit
-    lancamento?: lancamentoOmit
+    carteira?: carteiraOmit
+    conta_recorrente?: conta_recorrenteOmit
+    transacao?: transacaoOmit
     usuario?: usuarioOmit
   }
 
@@ -1047,33 +1138,42 @@ export namespace Prisma {
 
 
   /**
-   * Count Type CarteirasCountOutputType
+   * Count Type CarteiraCountOutputType
    */
 
-  export type CarteirasCountOutputType = {
-    lancamento: number
+  export type CarteiraCountOutputType = {
+    conta_recorrente: number
+    transacao: number
   }
 
-  export type CarteirasCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    lancamento?: boolean | CarteirasCountOutputTypeCountLancamentoArgs
+  export type CarteiraCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    conta_recorrente?: boolean | CarteiraCountOutputTypeCountConta_recorrenteArgs
+    transacao?: boolean | CarteiraCountOutputTypeCountTransacaoArgs
   }
 
   // Custom InputTypes
   /**
-   * CarteirasCountOutputType without action
+   * CarteiraCountOutputType without action
    */
-  export type CarteirasCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CarteiraCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CarteirasCountOutputType
+     * Select specific fields to fetch from the CarteiraCountOutputType
      */
-    select?: CarteirasCountOutputTypeSelect<ExtArgs> | null
+    select?: CarteiraCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * CarteirasCountOutputType without action
+   * CarteiraCountOutputType without action
    */
-  export type CarteirasCountOutputTypeCountLancamentoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: lancamentoWhereInput
+  export type CarteiraCountOutputTypeCountConta_recorrenteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: conta_recorrenteWhereInput
+  }
+
+  /**
+   * CarteiraCountOutputType without action
+   */
+  export type CarteiraCountOutputTypeCountTransacaoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: transacaoWhereInput
   }
 
 
@@ -1082,11 +1182,11 @@ export namespace Prisma {
    */
 
   export type UsuarioCountOutputType = {
-    carteiras: number
+    carteira: number
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    carteiras?: boolean | UsuarioCountOutputTypeCountCarteirasArgs
+    carteira?: boolean | UsuarioCountOutputTypeCountCarteiraArgs
   }
 
   // Custom InputTypes
@@ -1103,8 +1203,8 @@ export namespace Prisma {
   /**
    * UsuarioCountOutputType without action
    */
-  export type UsuarioCountOutputTypeCountCarteirasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: carteirasWhereInput
+  export type UsuarioCountOutputTypeCountCarteiraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: carteiraWhereInput
   }
 
 
@@ -1113,95 +1213,89 @@ export namespace Prisma {
    */
 
   /**
-   * Model carteiras
+   * Model carteira
    */
 
-  export type AggregateCarteiras = {
-    _count: CarteirasCountAggregateOutputType | null
-    _avg: CarteirasAvgAggregateOutputType | null
-    _sum: CarteirasSumAggregateOutputType | null
-    _min: CarteirasMinAggregateOutputType | null
-    _max: CarteirasMaxAggregateOutputType | null
+  export type AggregateCarteira = {
+    _count: CarteiraCountAggregateOutputType | null
+    _avg: CarteiraAvgAggregateOutputType | null
+    _sum: CarteiraSumAggregateOutputType | null
+    _min: CarteiraMinAggregateOutputType | null
+    _max: CarteiraMaxAggregateOutputType | null
   }
 
-  export type CarteirasAvgAggregateOutputType = {
-    saldo_atual: Decimal | null
+  export type CarteiraAvgAggregateOutputType = {
+    saldo: Decimal | null
   }
 
-  export type CarteirasSumAggregateOutputType = {
-    saldo_atual: Decimal | null
+  export type CarteiraSumAggregateOutputType = {
+    saldo: Decimal | null
   }
 
-  export type CarteirasMinAggregateOutputType = {
-    id: string | null
-    nome: string | null
-    saldo_atual: Decimal | null
-    usuario_id: string | null
+  export type CarteiraMinAggregateOutputType = {
+    id_carteira: string | null
+    id_usuario: string | null
+    saldo: Decimal | null
   }
 
-  export type CarteirasMaxAggregateOutputType = {
-    id: string | null
-    nome: string | null
-    saldo_atual: Decimal | null
-    usuario_id: string | null
+  export type CarteiraMaxAggregateOutputType = {
+    id_carteira: string | null
+    id_usuario: string | null
+    saldo: Decimal | null
   }
 
-  export type CarteirasCountAggregateOutputType = {
-    id: number
-    nome: number
-    saldo_atual: number
-    usuario_id: number
+  export type CarteiraCountAggregateOutputType = {
+    id_carteira: number
+    id_usuario: number
+    saldo: number
     _all: number
   }
 
 
-  export type CarteirasAvgAggregateInputType = {
-    saldo_atual?: true
+  export type CarteiraAvgAggregateInputType = {
+    saldo?: true
   }
 
-  export type CarteirasSumAggregateInputType = {
-    saldo_atual?: true
+  export type CarteiraSumAggregateInputType = {
+    saldo?: true
   }
 
-  export type CarteirasMinAggregateInputType = {
-    id?: true
-    nome?: true
-    saldo_atual?: true
-    usuario_id?: true
+  export type CarteiraMinAggregateInputType = {
+    id_carteira?: true
+    id_usuario?: true
+    saldo?: true
   }
 
-  export type CarteirasMaxAggregateInputType = {
-    id?: true
-    nome?: true
-    saldo_atual?: true
-    usuario_id?: true
+  export type CarteiraMaxAggregateInputType = {
+    id_carteira?: true
+    id_usuario?: true
+    saldo?: true
   }
 
-  export type CarteirasCountAggregateInputType = {
-    id?: true
-    nome?: true
-    saldo_atual?: true
-    usuario_id?: true
+  export type CarteiraCountAggregateInputType = {
+    id_carteira?: true
+    id_usuario?: true
+    saldo?: true
     _all?: true
   }
 
-  export type CarteirasAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CarteiraAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which carteiras to aggregate.
+     * Filter which carteira to aggregate.
      */
-    where?: carteirasWhereInput
+    where?: carteiraWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of carteiras to fetch.
      */
-    orderBy?: carteirasOrderByWithRelationInput | carteirasOrderByWithRelationInput[]
+    orderBy?: carteiraOrderByWithRelationInput | carteiraOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: carteirasWhereUniqueInput
+    cursor?: carteiraWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -1219,272 +1313,269 @@ export namespace Prisma {
      * 
      * Count returned carteiras
     **/
-    _count?: true | CarteirasCountAggregateInputType
+    _count?: true | CarteiraCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: CarteirasAvgAggregateInputType
+    _avg?: CarteiraAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: CarteirasSumAggregateInputType
+    _sum?: CarteiraSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: CarteirasMinAggregateInputType
+    _min?: CarteiraMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: CarteirasMaxAggregateInputType
+    _max?: CarteiraMaxAggregateInputType
   }
 
-  export type GetCarteirasAggregateType<T extends CarteirasAggregateArgs> = {
-        [P in keyof T & keyof AggregateCarteiras]: P extends '_count' | 'count'
+  export type GetCarteiraAggregateType<T extends CarteiraAggregateArgs> = {
+        [P in keyof T & keyof AggregateCarteira]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateCarteiras[P]>
-      : GetScalarType<T[P], AggregateCarteiras[P]>
+        : GetScalarType<T[P], AggregateCarteira[P]>
+      : GetScalarType<T[P], AggregateCarteira[P]>
   }
 
 
 
 
-  export type carteirasGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: carteirasWhereInput
-    orderBy?: carteirasOrderByWithAggregationInput | carteirasOrderByWithAggregationInput[]
-    by: CarteirasScalarFieldEnum[] | CarteirasScalarFieldEnum
-    having?: carteirasScalarWhereWithAggregatesInput
+  export type carteiraGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: carteiraWhereInput
+    orderBy?: carteiraOrderByWithAggregationInput | carteiraOrderByWithAggregationInput[]
+    by: CarteiraScalarFieldEnum[] | CarteiraScalarFieldEnum
+    having?: carteiraScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: CarteirasCountAggregateInputType | true
-    _avg?: CarteirasAvgAggregateInputType
-    _sum?: CarteirasSumAggregateInputType
-    _min?: CarteirasMinAggregateInputType
-    _max?: CarteirasMaxAggregateInputType
+    _count?: CarteiraCountAggregateInputType | true
+    _avg?: CarteiraAvgAggregateInputType
+    _sum?: CarteiraSumAggregateInputType
+    _min?: CarteiraMinAggregateInputType
+    _max?: CarteiraMaxAggregateInputType
   }
 
-  export type CarteirasGroupByOutputType = {
-    id: string
-    nome: string
-    saldo_atual: Decimal | null
-    usuario_id: string | null
-    _count: CarteirasCountAggregateOutputType | null
-    _avg: CarteirasAvgAggregateOutputType | null
-    _sum: CarteirasSumAggregateOutputType | null
-    _min: CarteirasMinAggregateOutputType | null
-    _max: CarteirasMaxAggregateOutputType | null
+  export type CarteiraGroupByOutputType = {
+    id_carteira: string
+    id_usuario: string
+    saldo: Decimal | null
+    _count: CarteiraCountAggregateOutputType | null
+    _avg: CarteiraAvgAggregateOutputType | null
+    _sum: CarteiraSumAggregateOutputType | null
+    _min: CarteiraMinAggregateOutputType | null
+    _max: CarteiraMaxAggregateOutputType | null
   }
 
-  type GetCarteirasGroupByPayload<T extends carteirasGroupByArgs> = Prisma.PrismaPromise<
+  type GetCarteiraGroupByPayload<T extends carteiraGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<CarteirasGroupByOutputType, T['by']> &
+      PickEnumerable<CarteiraGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof CarteirasGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof CarteiraGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], CarteirasGroupByOutputType[P]>
-            : GetScalarType<T[P], CarteirasGroupByOutputType[P]>
+              : GetScalarType<T[P], CarteiraGroupByOutputType[P]>
+            : GetScalarType<T[P], CarteiraGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type carteirasSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    nome?: boolean
-    saldo_atual?: boolean
-    usuario_id?: boolean
-    usuario?: boolean | carteiras$usuarioArgs<ExtArgs>
-    lancamento?: boolean | carteiras$lancamentoArgs<ExtArgs>
-    _count?: boolean | CarteirasCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["carteiras"]>
+  export type carteiraSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_carteira?: boolean
+    id_usuario?: boolean
+    saldo?: boolean
+    usuario?: boolean | usuarioDefaultArgs<ExtArgs>
+    conta_recorrente?: boolean | carteira$conta_recorrenteArgs<ExtArgs>
+    transacao?: boolean | carteira$transacaoArgs<ExtArgs>
+    _count?: boolean | CarteiraCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["carteira"]>
 
-  export type carteirasSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    nome?: boolean
-    saldo_atual?: boolean
-    usuario_id?: boolean
-    usuario?: boolean | carteiras$usuarioArgs<ExtArgs>
-  }, ExtArgs["result"]["carteiras"]>
+  export type carteiraSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_carteira?: boolean
+    id_usuario?: boolean
+    saldo?: boolean
+    usuario?: boolean | usuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["carteira"]>
 
-  export type carteirasSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    nome?: boolean
-    saldo_atual?: boolean
-    usuario_id?: boolean
-    usuario?: boolean | carteiras$usuarioArgs<ExtArgs>
-  }, ExtArgs["result"]["carteiras"]>
+  export type carteiraSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_carteira?: boolean
+    id_usuario?: boolean
+    saldo?: boolean
+    usuario?: boolean | usuarioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["carteira"]>
 
-  export type carteirasSelectScalar = {
-    id?: boolean
-    nome?: boolean
-    saldo_atual?: boolean
-    usuario_id?: boolean
+  export type carteiraSelectScalar = {
+    id_carteira?: boolean
+    id_usuario?: boolean
+    saldo?: boolean
   }
 
-  export type carteirasOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "saldo_atual" | "usuario_id", ExtArgs["result"]["carteiras"]>
-  export type carteirasInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | carteiras$usuarioArgs<ExtArgs>
-    lancamento?: boolean | carteiras$lancamentoArgs<ExtArgs>
-    _count?: boolean | CarteirasCountOutputTypeDefaultArgs<ExtArgs>
+  export type carteiraOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_carteira" | "id_usuario" | "saldo", ExtArgs["result"]["carteira"]>
+  export type carteiraInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | usuarioDefaultArgs<ExtArgs>
+    conta_recorrente?: boolean | carteira$conta_recorrenteArgs<ExtArgs>
+    transacao?: boolean | carteira$transacaoArgs<ExtArgs>
+    _count?: boolean | CarteiraCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type carteirasIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | carteiras$usuarioArgs<ExtArgs>
+  export type carteiraIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | usuarioDefaultArgs<ExtArgs>
   }
-  export type carteirasIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuario?: boolean | carteiras$usuarioArgs<ExtArgs>
+  export type carteiraIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    usuario?: boolean | usuarioDefaultArgs<ExtArgs>
   }
 
-  export type $carteirasPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "carteiras"
+  export type $carteiraPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "carteira"
     objects: {
-      usuario: Prisma.$usuarioPayload<ExtArgs> | null
-      lancamento: Prisma.$lancamentoPayload<ExtArgs>[]
+      usuario: Prisma.$usuarioPayload<ExtArgs>
+      conta_recorrente: Prisma.$conta_recorrentePayload<ExtArgs>[]
+      transacao: Prisma.$transacaoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
-      nome: string
-      saldo_atual: Prisma.Decimal | null
-      usuario_id: string | null
-    }, ExtArgs["result"]["carteiras"]>
+      id_carteira: string
+      id_usuario: string
+      saldo: Prisma.Decimal | null
+    }, ExtArgs["result"]["carteira"]>
     composites: {}
   }
 
-  type carteirasGetPayload<S extends boolean | null | undefined | carteirasDefaultArgs> = $Result.GetResult<Prisma.$carteirasPayload, S>
+  type carteiraGetPayload<S extends boolean | null | undefined | carteiraDefaultArgs> = $Result.GetResult<Prisma.$carteiraPayload, S>
 
-  type carteirasCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<carteirasFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CarteirasCountAggregateInputType | true
+  type carteiraCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<carteiraFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CarteiraCountAggregateInputType | true
     }
 
-  export interface carteirasDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['carteiras'], meta: { name: 'carteiras' } }
+  export interface carteiraDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['carteira'], meta: { name: 'carteira' } }
     /**
-     * Find zero or one Carteiras that matches the filter.
-     * @param {carteirasFindUniqueArgs} args - Arguments to find a Carteiras
+     * Find zero or one Carteira that matches the filter.
+     * @param {carteiraFindUniqueArgs} args - Arguments to find a Carteira
      * @example
-     * // Get one Carteiras
-     * const carteiras = await prisma.carteiras.findUnique({
+     * // Get one Carteira
+     * const carteira = await prisma.carteira.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends carteirasFindUniqueArgs>(args: SelectSubset<T, carteirasFindUniqueArgs<ExtArgs>>): Prisma__carteirasClient<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends carteiraFindUniqueArgs>(args: SelectSubset<T, carteiraFindUniqueArgs<ExtArgs>>): Prisma__carteiraClient<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Carteiras that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Carteira that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {carteirasFindUniqueOrThrowArgs} args - Arguments to find a Carteiras
+     * @param {carteiraFindUniqueOrThrowArgs} args - Arguments to find a Carteira
      * @example
-     * // Get one Carteiras
-     * const carteiras = await prisma.carteiras.findUniqueOrThrow({
+     * // Get one Carteira
+     * const carteira = await prisma.carteira.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends carteirasFindUniqueOrThrowArgs>(args: SelectSubset<T, carteirasFindUniqueOrThrowArgs<ExtArgs>>): Prisma__carteirasClient<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends carteiraFindUniqueOrThrowArgs>(args: SelectSubset<T, carteiraFindUniqueOrThrowArgs<ExtArgs>>): Prisma__carteiraClient<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Carteiras that matches the filter.
+     * Find the first Carteira that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {carteirasFindFirstArgs} args - Arguments to find a Carteiras
+     * @param {carteiraFindFirstArgs} args - Arguments to find a Carteira
      * @example
-     * // Get one Carteiras
-     * const carteiras = await prisma.carteiras.findFirst({
+     * // Get one Carteira
+     * const carteira = await prisma.carteira.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends carteirasFindFirstArgs>(args?: SelectSubset<T, carteirasFindFirstArgs<ExtArgs>>): Prisma__carteirasClient<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends carteiraFindFirstArgs>(args?: SelectSubset<T, carteiraFindFirstArgs<ExtArgs>>): Prisma__carteiraClient<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Carteiras that matches the filter or
+     * Find the first Carteira that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {carteirasFindFirstOrThrowArgs} args - Arguments to find a Carteiras
+     * @param {carteiraFindFirstOrThrowArgs} args - Arguments to find a Carteira
      * @example
-     * // Get one Carteiras
-     * const carteiras = await prisma.carteiras.findFirstOrThrow({
+     * // Get one Carteira
+     * const carteira = await prisma.carteira.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends carteirasFindFirstOrThrowArgs>(args?: SelectSubset<T, carteirasFindFirstOrThrowArgs<ExtArgs>>): Prisma__carteirasClient<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends carteiraFindFirstOrThrowArgs>(args?: SelectSubset<T, carteiraFindFirstOrThrowArgs<ExtArgs>>): Prisma__carteiraClient<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more Carteiras that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {carteirasFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {carteiraFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
      * // Get all Carteiras
-     * const carteiras = await prisma.carteiras.findMany()
+     * const carteiras = await prisma.carteira.findMany()
      * 
      * // Get first 10 Carteiras
-     * const carteiras = await prisma.carteiras.findMany({ take: 10 })
+     * const carteiras = await prisma.carteira.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const carteirasWithIdOnly = await prisma.carteiras.findMany({ select: { id: true } })
+     * // Only select the `id_carteira`
+     * const carteiraWithId_carteiraOnly = await prisma.carteira.findMany({ select: { id_carteira: true } })
      * 
      */
-    findMany<T extends carteirasFindManyArgs>(args?: SelectSubset<T, carteirasFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends carteiraFindManyArgs>(args?: SelectSubset<T, carteiraFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Carteiras.
-     * @param {carteirasCreateArgs} args - Arguments to create a Carteiras.
+     * Create a Carteira.
+     * @param {carteiraCreateArgs} args - Arguments to create a Carteira.
      * @example
-     * // Create one Carteiras
-     * const Carteiras = await prisma.carteiras.create({
+     * // Create one Carteira
+     * const Carteira = await prisma.carteira.create({
      *   data: {
-     *     // ... data to create a Carteiras
+     *     // ... data to create a Carteira
      *   }
      * })
      * 
      */
-    create<T extends carteirasCreateArgs>(args: SelectSubset<T, carteirasCreateArgs<ExtArgs>>): Prisma__carteirasClient<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends carteiraCreateArgs>(args: SelectSubset<T, carteiraCreateArgs<ExtArgs>>): Prisma__carteiraClient<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many Carteiras.
-     * @param {carteirasCreateManyArgs} args - Arguments to create many Carteiras.
+     * @param {carteiraCreateManyArgs} args - Arguments to create many Carteiras.
      * @example
      * // Create many Carteiras
-     * const carteiras = await prisma.carteiras.createMany({
+     * const carteira = await prisma.carteira.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends carteirasCreateManyArgs>(args?: SelectSubset<T, carteirasCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends carteiraCreateManyArgs>(args?: SelectSubset<T, carteiraCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create many Carteiras and returns the data saved in the database.
-     * @param {carteirasCreateManyAndReturnArgs} args - Arguments to create many Carteiras.
+     * @param {carteiraCreateManyAndReturnArgs} args - Arguments to create many Carteiras.
      * @example
      * // Create many Carteiras
-     * const carteiras = await prisma.carteiras.createManyAndReturn({
+     * const carteira = await prisma.carteira.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Carteiras and only return the `id`
-     * const carteirasWithIdOnly = await prisma.carteiras.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many Carteiras and only return the `id_carteira`
+     * const carteiraWithId_carteiraOnly = await prisma.carteira.createManyAndReturn({
+     *   select: { id_carteira: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -1493,28 +1584,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends carteirasCreateManyAndReturnArgs>(args?: SelectSubset<T, carteirasCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends carteiraCreateManyAndReturnArgs>(args?: SelectSubset<T, carteiraCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Carteiras.
-     * @param {carteirasDeleteArgs} args - Arguments to delete one Carteiras.
+     * Delete a Carteira.
+     * @param {carteiraDeleteArgs} args - Arguments to delete one Carteira.
      * @example
-     * // Delete one Carteiras
-     * const Carteiras = await prisma.carteiras.delete({
+     * // Delete one Carteira
+     * const Carteira = await prisma.carteira.delete({
      *   where: {
-     *     // ... filter to delete one Carteiras
+     *     // ... filter to delete one Carteira
      *   }
      * })
      * 
      */
-    delete<T extends carteirasDeleteArgs>(args: SelectSubset<T, carteirasDeleteArgs<ExtArgs>>): Prisma__carteirasClient<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends carteiraDeleteArgs>(args: SelectSubset<T, carteiraDeleteArgs<ExtArgs>>): Prisma__carteiraClient<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Carteiras.
-     * @param {carteirasUpdateArgs} args - Arguments to update one Carteiras.
+     * Update one Carteira.
+     * @param {carteiraUpdateArgs} args - Arguments to update one Carteira.
      * @example
-     * // Update one Carteiras
-     * const carteiras = await prisma.carteiras.update({
+     * // Update one Carteira
+     * const carteira = await prisma.carteira.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1524,30 +1615,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends carteirasUpdateArgs>(args: SelectSubset<T, carteirasUpdateArgs<ExtArgs>>): Prisma__carteirasClient<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends carteiraUpdateArgs>(args: SelectSubset<T, carteiraUpdateArgs<ExtArgs>>): Prisma__carteiraClient<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more Carteiras.
-     * @param {carteirasDeleteManyArgs} args - Arguments to filter Carteiras to delete.
+     * @param {carteiraDeleteManyArgs} args - Arguments to filter Carteiras to delete.
      * @example
      * // Delete a few Carteiras
-     * const { count } = await prisma.carteiras.deleteMany({
+     * const { count } = await prisma.carteira.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends carteirasDeleteManyArgs>(args?: SelectSubset<T, carteirasDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends carteiraDeleteManyArgs>(args?: SelectSubset<T, carteiraDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Carteiras.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {carteirasUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {carteiraUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
      * // Update many Carteiras
-     * const carteiras = await prisma.carteiras.updateMany({
+     * const carteira = await prisma.carteira.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1557,14 +1648,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends carteirasUpdateManyArgs>(args: SelectSubset<T, carteirasUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends carteiraUpdateManyArgs>(args: SelectSubset<T, carteiraUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more Carteiras and returns the data updated in the database.
-     * @param {carteirasUpdateManyAndReturnArgs} args - Arguments to update many Carteiras.
+     * @param {carteiraUpdateManyAndReturnArgs} args - Arguments to update many Carteiras.
      * @example
      * // Update many Carteiras
-     * const carteiras = await prisma.carteiras.updateManyAndReturn({
+     * const carteira = await prisma.carteira.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1573,9 +1664,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Carteiras and only return the `id`
-     * const carteirasWithIdOnly = await prisma.carteiras.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more Carteiras and only return the `id_carteira`
+     * const carteiraWithId_carteiraOnly = await prisma.carteira.updateManyAndReturn({
+     *   select: { id_carteira: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1587,56 +1678,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends carteirasUpdateManyAndReturnArgs>(args: SelectSubset<T, carteirasUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends carteiraUpdateManyAndReturnArgs>(args: SelectSubset<T, carteiraUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Carteiras.
-     * @param {carteirasUpsertArgs} args - Arguments to update or create a Carteiras.
+     * Create or update one Carteira.
+     * @param {carteiraUpsertArgs} args - Arguments to update or create a Carteira.
      * @example
-     * // Update or create a Carteiras
-     * const carteiras = await prisma.carteiras.upsert({
+     * // Update or create a Carteira
+     * const carteira = await prisma.carteira.upsert({
      *   create: {
-     *     // ... data to create a Carteiras
+     *     // ... data to create a Carteira
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Carteiras we want to update
+     *     // ... the filter for the Carteira we want to update
      *   }
      * })
      */
-    upsert<T extends carteirasUpsertArgs>(args: SelectSubset<T, carteirasUpsertArgs<ExtArgs>>): Prisma__carteirasClient<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends carteiraUpsertArgs>(args: SelectSubset<T, carteiraUpsertArgs<ExtArgs>>): Prisma__carteiraClient<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
      * Count the number of Carteiras.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {carteirasCountArgs} args - Arguments to filter Carteiras to count.
+     * @param {carteiraCountArgs} args - Arguments to filter Carteiras to count.
      * @example
      * // Count the number of Carteiras
-     * const count = await prisma.carteiras.count({
+     * const count = await prisma.carteira.count({
      *   where: {
      *     // ... the filter for the Carteiras we want to count
      *   }
      * })
     **/
-    count<T extends carteirasCountArgs>(
-      args?: Subset<T, carteirasCountArgs>,
+    count<T extends carteiraCountArgs>(
+      args?: Subset<T, carteiraCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], CarteirasCountAggregateOutputType>
+          : GetScalarType<T['select'], CarteiraCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Carteiras.
+     * Allows you to perform aggregations operations on a Carteira.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CarteirasAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {CarteiraAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -1656,13 +1747,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends CarteirasAggregateArgs>(args: Subset<T, CarteirasAggregateArgs>): Prisma.PrismaPromise<GetCarteirasAggregateType<T>>
+    aggregate<T extends CarteiraAggregateArgs>(args: Subset<T, CarteiraAggregateArgs>): Prisma.PrismaPromise<GetCarteiraAggregateType<T>>
 
     /**
-     * Group by Carteiras.
+     * Group by Carteira.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {carteirasGroupByArgs} args - Group by arguments.
+     * @param {carteiraGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1677,14 +1768,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends carteirasGroupByArgs,
+      T extends carteiraGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: carteirasGroupByArgs['orderBy'] }
-        : { orderBy?: carteirasGroupByArgs['orderBy'] },
+        ? { orderBy: carteiraGroupByArgs['orderBy'] }
+        : { orderBy?: carteiraGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1733,23 +1824,24 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, carteirasGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCarteirasGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, carteiraGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCarteiraGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the carteiras model
+   * Fields of the carteira model
    */
-  readonly fields: carteirasFieldRefs;
+  readonly fields: carteiraFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for carteiras.
+   * The delegate class that acts as a "Promise-like" for carteira.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__carteirasClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__carteiraClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    usuario<T extends carteiras$usuarioArgs<ExtArgs> = {}>(args?: Subset<T, carteiras$usuarioArgs<ExtArgs>>): Prisma__usuarioClient<$Result.GetResult<Prisma.$usuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    lancamento<T extends carteiras$lancamentoArgs<ExtArgs> = {}>(args?: Subset<T, carteiras$lancamentoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    usuario<T extends usuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usuarioDefaultArgs<ExtArgs>>): Prisma__usuarioClient<$Result.GetResult<Prisma.$usuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    conta_recorrente<T extends carteira$conta_recorrenteArgs<ExtArgs> = {}>(args?: Subset<T, carteira$conta_recorrenteArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transacao<T extends carteira$transacaoArgs<ExtArgs> = {}>(args?: Subset<T, carteira$transacaoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1776,93 +1868,92 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the carteiras model
+   * Fields of the carteira model
    */
-  interface carteirasFieldRefs {
-    readonly id: FieldRef<"carteiras", 'String'>
-    readonly nome: FieldRef<"carteiras", 'String'>
-    readonly saldo_atual: FieldRef<"carteiras", 'Decimal'>
-    readonly usuario_id: FieldRef<"carteiras", 'String'>
+  interface carteiraFieldRefs {
+    readonly id_carteira: FieldRef<"carteira", 'String'>
+    readonly id_usuario: FieldRef<"carteira", 'String'>
+    readonly saldo: FieldRef<"carteira", 'Decimal'>
   }
     
 
   // Custom InputTypes
   /**
-   * carteiras findUnique
+   * carteira findUnique
    */
-  export type carteirasFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: carteiraSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
+    include?: carteiraInclude<ExtArgs> | null
     /**
-     * Filter, which carteiras to fetch.
+     * Filter, which carteira to fetch.
      */
-    where: carteirasWhereUniqueInput
+    where: carteiraWhereUniqueInput
   }
 
   /**
-   * carteiras findUniqueOrThrow
+   * carteira findUniqueOrThrow
    */
-  export type carteirasFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: carteiraSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
+    include?: carteiraInclude<ExtArgs> | null
     /**
-     * Filter, which carteiras to fetch.
+     * Filter, which carteira to fetch.
      */
-    where: carteirasWhereUniqueInput
+    where: carteiraWhereUniqueInput
   }
 
   /**
-   * carteiras findFirst
+   * carteira findFirst
    */
-  export type carteirasFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: carteiraSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
+    include?: carteiraInclude<ExtArgs> | null
     /**
-     * Filter, which carteiras to fetch.
+     * Filter, which carteira to fetch.
      */
-    where?: carteirasWhereInput
+    where?: carteiraWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of carteiras to fetch.
      */
-    orderBy?: carteirasOrderByWithRelationInput | carteirasOrderByWithRelationInput[]
+    orderBy?: carteiraOrderByWithRelationInput | carteiraOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for searching for carteiras.
      */
-    cursor?: carteirasWhereUniqueInput
+    cursor?: carteiraWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -1880,41 +1971,41 @@ export namespace Prisma {
      * 
      * Filter by unique combinations of carteiras.
      */
-    distinct?: CarteirasScalarFieldEnum | CarteirasScalarFieldEnum[]
+    distinct?: CarteiraScalarFieldEnum | CarteiraScalarFieldEnum[]
   }
 
   /**
-   * carteiras findFirstOrThrow
+   * carteira findFirstOrThrow
    */
-  export type carteirasFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: carteiraSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
+    include?: carteiraInclude<ExtArgs> | null
     /**
-     * Filter, which carteiras to fetch.
+     * Filter, which carteira to fetch.
      */
-    where?: carteirasWhereInput
+    where?: carteiraWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of carteiras to fetch.
      */
-    orderBy?: carteirasOrderByWithRelationInput | carteirasOrderByWithRelationInput[]
+    orderBy?: carteiraOrderByWithRelationInput | carteiraOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for searching for carteiras.
      */
-    cursor?: carteirasWhereUniqueInput
+    cursor?: carteiraWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -1932,41 +2023,41 @@ export namespace Prisma {
      * 
      * Filter by unique combinations of carteiras.
      */
-    distinct?: CarteirasScalarFieldEnum | CarteirasScalarFieldEnum[]
+    distinct?: CarteiraScalarFieldEnum | CarteiraScalarFieldEnum[]
   }
 
   /**
-   * carteiras findMany
+   * carteira findMany
    */
-  export type carteirasFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: carteiraSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
+    include?: carteiraInclude<ExtArgs> | null
     /**
      * Filter, which carteiras to fetch.
      */
-    where?: carteirasWhereInput
+    where?: carteiraWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
      * Determine the order of carteiras to fetch.
      */
-    orderBy?: carteirasOrderByWithRelationInput | carteirasOrderByWithRelationInput[]
+    orderBy?: carteiraOrderByWithRelationInput | carteiraOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the position for listing carteiras.
      */
-    cursor?: carteirasWhereUniqueInput
+    cursor?: carteiraWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
@@ -1979,103 +2070,103 @@ export namespace Prisma {
      * Skip the first `n` carteiras.
      */
     skip?: number
-    distinct?: CarteirasScalarFieldEnum | CarteirasScalarFieldEnum[]
+    distinct?: CarteiraScalarFieldEnum | CarteiraScalarFieldEnum[]
   }
 
   /**
-   * carteiras create
+   * carteira create
    */
-  export type carteirasCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: carteiraSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
+    include?: carteiraInclude<ExtArgs> | null
     /**
-     * The data needed to create a carteiras.
+     * The data needed to create a carteira.
      */
-    data: XOR<carteirasCreateInput, carteirasUncheckedCreateInput>
+    data: XOR<carteiraCreateInput, carteiraUncheckedCreateInput>
   }
 
   /**
-   * carteiras createMany
+   * carteira createMany
    */
-  export type carteirasCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to create many carteiras.
      */
-    data: carteirasCreateManyInput | carteirasCreateManyInput[]
+    data: carteiraCreateManyInput | carteiraCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * carteiras createManyAndReturn
+   * carteira createManyAndReturn
    */
-  export type carteirasCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelectCreateManyAndReturn<ExtArgs> | null
+    select?: carteiraSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * The data used to create many carteiras.
      */
-    data: carteirasCreateManyInput | carteirasCreateManyInput[]
+    data: carteiraCreateManyInput | carteiraCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: carteiraIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * carteiras update
+   * carteira update
    */
-  export type carteirasUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: carteiraSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
+    include?: carteiraInclude<ExtArgs> | null
     /**
-     * The data needed to update a carteiras.
+     * The data needed to update a carteira.
      */
-    data: XOR<carteirasUpdateInput, carteirasUncheckedUpdateInput>
+    data: XOR<carteiraUpdateInput, carteiraUncheckedUpdateInput>
     /**
-     * Choose, which carteiras to update.
+     * Choose, which carteira to update.
      */
-    where: carteirasWhereUniqueInput
+    where: carteiraWhereUniqueInput
   }
 
   /**
-   * carteiras updateMany
+   * carteira updateMany
    */
-  export type carteirasUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * The data used to update carteiras.
      */
-    data: XOR<carteirasUpdateManyMutationInput, carteirasUncheckedUpdateManyInput>
+    data: XOR<carteiraUpdateManyMutationInput, carteiraUncheckedUpdateManyInput>
     /**
      * Filter which carteiras to update
      */
-    where?: carteirasWhereInput
+    where?: carteiraWhereInput
     /**
      * Limit how many carteiras to update.
      */
@@ -2083,25 +2174,25 @@ export namespace Prisma {
   }
 
   /**
-   * carteiras updateManyAndReturn
+   * carteira updateManyAndReturn
    */
-  export type carteirasUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: carteiraSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * The data used to update carteiras.
      */
-    data: XOR<carteirasUpdateManyMutationInput, carteirasUncheckedUpdateManyInput>
+    data: XOR<carteiraUpdateManyMutationInput, carteiraUncheckedUpdateManyInput>
     /**
      * Filter which carteiras to update
      */
-    where?: carteirasWhereInput
+    where?: carteiraWhereInput
     /**
      * Limit how many carteiras to update.
      */
@@ -2109,69 +2200,69 @@ export namespace Prisma {
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: carteiraIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * carteiras upsert
+   * carteira upsert
    */
-  export type carteirasUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: carteiraSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
+    include?: carteiraInclude<ExtArgs> | null
     /**
-     * The filter to search for the carteiras to update in case it exists.
+     * The filter to search for the carteira to update in case it exists.
      */
-    where: carteirasWhereUniqueInput
+    where: carteiraWhereUniqueInput
     /**
-     * In case the carteiras found by the `where` argument doesn't exist, create a new carteiras with this data.
+     * In case the carteira found by the `where` argument doesn't exist, create a new carteira with this data.
      */
-    create: XOR<carteirasCreateInput, carteirasUncheckedCreateInput>
+    create: XOR<carteiraCreateInput, carteiraUncheckedCreateInput>
     /**
-     * In case the carteiras was found with the provided `where` argument, update it with this data.
+     * In case the carteira was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<carteirasUpdateInput, carteirasUncheckedUpdateInput>
+    update: XOR<carteiraUpdateInput, carteiraUncheckedUpdateInput>
   }
 
   /**
-   * carteiras delete
+   * carteira delete
    */
-  export type carteirasDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: carteiraSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
+    include?: carteiraInclude<ExtArgs> | null
     /**
-     * Filter which carteiras to delete.
+     * Filter which carteira to delete.
      */
-    where: carteirasWhereUniqueInput
+    where: carteiraWhereUniqueInput
   }
 
   /**
-   * carteiras deleteMany
+   * carteira deleteMany
    */
-  export type carteirasDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteiraDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Filter which carteiras to delete
      */
-    where?: carteirasWhereInput
+    where?: carteiraWhereInput
     /**
      * Limit how many carteiras to delete.
      */
@@ -2179,483 +2270,472 @@ export namespace Prisma {
   }
 
   /**
-   * carteiras.usuario
+   * carteira.conta_recorrente
    */
-  export type carteiras$usuarioArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteira$conta_recorrenteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the usuario
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: usuarioSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the usuario
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: usuarioOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: usuarioInclude<ExtArgs> | null
-    where?: usuarioWhereInput
-  }
-
-  /**
-   * carteiras.lancamento
-   */
-  export type carteiras$lancamentoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the lancamento
-     */
-    select?: lancamentoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the lancamento
-     */
-    omit?: lancamentoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: lancamentoInclude<ExtArgs> | null
-    where?: lancamentoWhereInput
-    orderBy?: lancamentoOrderByWithRelationInput | lancamentoOrderByWithRelationInput[]
-    cursor?: lancamentoWhereUniqueInput
+    include?: conta_recorrenteInclude<ExtArgs> | null
+    where?: conta_recorrenteWhereInput
+    orderBy?: conta_recorrenteOrderByWithRelationInput | conta_recorrenteOrderByWithRelationInput[]
+    cursor?: conta_recorrenteWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: LancamentoScalarFieldEnum | LancamentoScalarFieldEnum[]
+    distinct?: Conta_recorrenteScalarFieldEnum | Conta_recorrenteScalarFieldEnum[]
   }
 
   /**
-   * carteiras without action
+   * carteira.transacao
    */
-  export type carteirasDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type carteira$transacaoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the transacao
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: transacaoSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the transacao
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: transacaoOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
+    include?: transacaoInclude<ExtArgs> | null
+    where?: transacaoWhereInput
+    orderBy?: transacaoOrderByWithRelationInput | transacaoOrderByWithRelationInput[]
+    cursor?: transacaoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TransacaoScalarFieldEnum | TransacaoScalarFieldEnum[]
+  }
+
+  /**
+   * carteira without action
+   */
+  export type carteiraDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the carteira
+     */
+    select?: carteiraSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the carteira
+     */
+    omit?: carteiraOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: carteiraInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model lancamento
+   * Model conta_recorrente
    */
 
-  export type AggregateLancamento = {
-    _count: LancamentoCountAggregateOutputType | null
-    _avg: LancamentoAvgAggregateOutputType | null
-    _sum: LancamentoSumAggregateOutputType | null
-    _min: LancamentoMinAggregateOutputType | null
-    _max: LancamentoMaxAggregateOutputType | null
+  export type AggregateConta_recorrente = {
+    _count: Conta_recorrenteCountAggregateOutputType | null
+    _avg: Conta_recorrenteAvgAggregateOutputType | null
+    _sum: Conta_recorrenteSumAggregateOutputType | null
+    _min: Conta_recorrenteMinAggregateOutputType | null
+    _max: Conta_recorrenteMaxAggregateOutputType | null
   }
 
-  export type LancamentoAvgAggregateOutputType = {
+  export type Conta_recorrenteAvgAggregateOutputType = {
+    id_conta_recorrente: number | null
     valor: Decimal | null
+    intervalo_dias: number | null
   }
 
-  export type LancamentoSumAggregateOutputType = {
+  export type Conta_recorrenteSumAggregateOutputType = {
+    id_conta_recorrente: number | null
     valor: Decimal | null
+    intervalo_dias: number | null
   }
 
-  export type LancamentoMinAggregateOutputType = {
-    id: string | null
-    tipo_lancamento: string | null
-    data_lancamento: Date | null
+  export type Conta_recorrenteMinAggregateOutputType = {
+    id_conta_recorrente: number | null
+    id_carteira: string | null
+    valor: Decimal | null
     descricao: string | null
-    data_cadastro: Date | null
-    valor: Decimal | null
-    forma_pagamento: string | null
-    carteira_id: string | null
+    intervalo_dias: number | null
+    data_inicio: Date | null
   }
 
-  export type LancamentoMaxAggregateOutputType = {
-    id: string | null
-    tipo_lancamento: string | null
-    data_lancamento: Date | null
+  export type Conta_recorrenteMaxAggregateOutputType = {
+    id_conta_recorrente: number | null
+    id_carteira: string | null
+    valor: Decimal | null
     descricao: string | null
-    data_cadastro: Date | null
-    valor: Decimal | null
-    forma_pagamento: string | null
-    carteira_id: string | null
+    intervalo_dias: number | null
+    data_inicio: Date | null
   }
 
-  export type LancamentoCountAggregateOutputType = {
-    id: number
-    tipo_lancamento: number
-    data_lancamento: number
-    descricao: number
-    data_cadastro: number
+  export type Conta_recorrenteCountAggregateOutputType = {
+    id_conta_recorrente: number
+    id_carteira: number
     valor: number
-    forma_pagamento: number
-    carteira_id: number
+    descricao: number
+    intervalo_dias: number
+    data_inicio: number
     _all: number
   }
 
 
-  export type LancamentoAvgAggregateInputType = {
+  export type Conta_recorrenteAvgAggregateInputType = {
+    id_conta_recorrente?: true
     valor?: true
+    intervalo_dias?: true
   }
 
-  export type LancamentoSumAggregateInputType = {
+  export type Conta_recorrenteSumAggregateInputType = {
+    id_conta_recorrente?: true
     valor?: true
+    intervalo_dias?: true
   }
 
-  export type LancamentoMinAggregateInputType = {
-    id?: true
-    tipo_lancamento?: true
-    data_lancamento?: true
+  export type Conta_recorrenteMinAggregateInputType = {
+    id_conta_recorrente?: true
+    id_carteira?: true
+    valor?: true
     descricao?: true
-    data_cadastro?: true
-    valor?: true
-    forma_pagamento?: true
-    carteira_id?: true
+    intervalo_dias?: true
+    data_inicio?: true
   }
 
-  export type LancamentoMaxAggregateInputType = {
-    id?: true
-    tipo_lancamento?: true
-    data_lancamento?: true
-    descricao?: true
-    data_cadastro?: true
+  export type Conta_recorrenteMaxAggregateInputType = {
+    id_conta_recorrente?: true
+    id_carteira?: true
     valor?: true
-    forma_pagamento?: true
-    carteira_id?: true
+    descricao?: true
+    intervalo_dias?: true
+    data_inicio?: true
   }
 
-  export type LancamentoCountAggregateInputType = {
-    id?: true
-    tipo_lancamento?: true
-    data_lancamento?: true
-    descricao?: true
-    data_cadastro?: true
+  export type Conta_recorrenteCountAggregateInputType = {
+    id_conta_recorrente?: true
+    id_carteira?: true
     valor?: true
-    forma_pagamento?: true
-    carteira_id?: true
+    descricao?: true
+    intervalo_dias?: true
+    data_inicio?: true
     _all?: true
   }
 
-  export type LancamentoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Conta_recorrenteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which lancamento to aggregate.
+     * Filter which conta_recorrente to aggregate.
      */
-    where?: lancamentoWhereInput
+    where?: conta_recorrenteWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of lancamentos to fetch.
+     * Determine the order of conta_recorrentes to fetch.
      */
-    orderBy?: lancamentoOrderByWithRelationInput | lancamentoOrderByWithRelationInput[]
+    orderBy?: conta_recorrenteOrderByWithRelationInput | conta_recorrenteOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: lancamentoWhereUniqueInput
+    cursor?: conta_recorrenteWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` lancamentos from the position of the cursor.
+     * Take `±n` conta_recorrentes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` lancamentos.
+     * Skip the first `n` conta_recorrentes.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned lancamentos
+     * Count returned conta_recorrentes
     **/
-    _count?: true | LancamentoCountAggregateInputType
+    _count?: true | Conta_recorrenteCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: LancamentoAvgAggregateInputType
+    _avg?: Conta_recorrenteAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: LancamentoSumAggregateInputType
+    _sum?: Conta_recorrenteSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: LancamentoMinAggregateInputType
+    _min?: Conta_recorrenteMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: LancamentoMaxAggregateInputType
+    _max?: Conta_recorrenteMaxAggregateInputType
   }
 
-  export type GetLancamentoAggregateType<T extends LancamentoAggregateArgs> = {
-        [P in keyof T & keyof AggregateLancamento]: P extends '_count' | 'count'
+  export type GetConta_recorrenteAggregateType<T extends Conta_recorrenteAggregateArgs> = {
+        [P in keyof T & keyof AggregateConta_recorrente]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateLancamento[P]>
-      : GetScalarType<T[P], AggregateLancamento[P]>
+        : GetScalarType<T[P], AggregateConta_recorrente[P]>
+      : GetScalarType<T[P], AggregateConta_recorrente[P]>
   }
 
 
 
 
-  export type lancamentoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: lancamentoWhereInput
-    orderBy?: lancamentoOrderByWithAggregationInput | lancamentoOrderByWithAggregationInput[]
-    by: LancamentoScalarFieldEnum[] | LancamentoScalarFieldEnum
-    having?: lancamentoScalarWhereWithAggregatesInput
+  export type conta_recorrenteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: conta_recorrenteWhereInput
+    orderBy?: conta_recorrenteOrderByWithAggregationInput | conta_recorrenteOrderByWithAggregationInput[]
+    by: Conta_recorrenteScalarFieldEnum[] | Conta_recorrenteScalarFieldEnum
+    having?: conta_recorrenteScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: LancamentoCountAggregateInputType | true
-    _avg?: LancamentoAvgAggregateInputType
-    _sum?: LancamentoSumAggregateInputType
-    _min?: LancamentoMinAggregateInputType
-    _max?: LancamentoMaxAggregateInputType
+    _count?: Conta_recorrenteCountAggregateInputType | true
+    _avg?: Conta_recorrenteAvgAggregateInputType
+    _sum?: Conta_recorrenteSumAggregateInputType
+    _min?: Conta_recorrenteMinAggregateInputType
+    _max?: Conta_recorrenteMaxAggregateInputType
   }
 
-  export type LancamentoGroupByOutputType = {
-    id: string
-    tipo_lancamento: string
-    data_lancamento: Date | null
+  export type Conta_recorrenteGroupByOutputType = {
+    id_conta_recorrente: number
+    id_carteira: string
+    valor: Decimal
     descricao: string | null
-    data_cadastro: Date | null
-    valor: Decimal | null
-    forma_pagamento: string | null
-    carteira_id: string | null
-    _count: LancamentoCountAggregateOutputType | null
-    _avg: LancamentoAvgAggregateOutputType | null
-    _sum: LancamentoSumAggregateOutputType | null
-    _min: LancamentoMinAggregateOutputType | null
-    _max: LancamentoMaxAggregateOutputType | null
+    intervalo_dias: number
+    data_inicio: Date
+    _count: Conta_recorrenteCountAggregateOutputType | null
+    _avg: Conta_recorrenteAvgAggregateOutputType | null
+    _sum: Conta_recorrenteSumAggregateOutputType | null
+    _min: Conta_recorrenteMinAggregateOutputType | null
+    _max: Conta_recorrenteMaxAggregateOutputType | null
   }
 
-  type GetLancamentoGroupByPayload<T extends lancamentoGroupByArgs> = Prisma.PrismaPromise<
+  type GetConta_recorrenteGroupByPayload<T extends conta_recorrenteGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<LancamentoGroupByOutputType, T['by']> &
+      PickEnumerable<Conta_recorrenteGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof LancamentoGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof Conta_recorrenteGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], LancamentoGroupByOutputType[P]>
-            : GetScalarType<T[P], LancamentoGroupByOutputType[P]>
+              : GetScalarType<T[P], Conta_recorrenteGroupByOutputType[P]>
+            : GetScalarType<T[P], Conta_recorrenteGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type lancamentoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    tipo_lancamento?: boolean
-    data_lancamento?: boolean
-    descricao?: boolean
-    data_cadastro?: boolean
+  export type conta_recorrenteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_conta_recorrente?: boolean
+    id_carteira?: boolean
     valor?: boolean
-    forma_pagamento?: boolean
-    carteira_id?: boolean
-    carteiras?: boolean | lancamento$carteirasArgs<ExtArgs>
-  }, ExtArgs["result"]["lancamento"]>
+    descricao?: boolean
+    intervalo_dias?: boolean
+    data_inicio?: boolean
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["conta_recorrente"]>
 
-  export type lancamentoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    tipo_lancamento?: boolean
-    data_lancamento?: boolean
-    descricao?: boolean
-    data_cadastro?: boolean
+  export type conta_recorrenteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_conta_recorrente?: boolean
+    id_carteira?: boolean
     valor?: boolean
-    forma_pagamento?: boolean
-    carteira_id?: boolean
-    carteiras?: boolean | lancamento$carteirasArgs<ExtArgs>
-  }, ExtArgs["result"]["lancamento"]>
+    descricao?: boolean
+    intervalo_dias?: boolean
+    data_inicio?: boolean
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["conta_recorrente"]>
 
-  export type lancamentoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    tipo_lancamento?: boolean
-    data_lancamento?: boolean
-    descricao?: boolean
-    data_cadastro?: boolean
+  export type conta_recorrenteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_conta_recorrente?: boolean
+    id_carteira?: boolean
     valor?: boolean
-    forma_pagamento?: boolean
-    carteira_id?: boolean
-    carteiras?: boolean | lancamento$carteirasArgs<ExtArgs>
-  }, ExtArgs["result"]["lancamento"]>
+    descricao?: boolean
+    intervalo_dias?: boolean
+    data_inicio?: boolean
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["conta_recorrente"]>
 
-  export type lancamentoSelectScalar = {
-    id?: boolean
-    tipo_lancamento?: boolean
-    data_lancamento?: boolean
-    descricao?: boolean
-    data_cadastro?: boolean
+  export type conta_recorrenteSelectScalar = {
+    id_conta_recorrente?: boolean
+    id_carteira?: boolean
     valor?: boolean
-    forma_pagamento?: boolean
-    carteira_id?: boolean
+    descricao?: boolean
+    intervalo_dias?: boolean
+    data_inicio?: boolean
   }
 
-  export type lancamentoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tipo_lancamento" | "data_lancamento" | "descricao" | "data_cadastro" | "valor" | "forma_pagamento" | "carteira_id", ExtArgs["result"]["lancamento"]>
-  export type lancamentoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    carteiras?: boolean | lancamento$carteirasArgs<ExtArgs>
+  export type conta_recorrenteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_conta_recorrente" | "id_carteira" | "valor" | "descricao" | "intervalo_dias" | "data_inicio", ExtArgs["result"]["conta_recorrente"]>
+  export type conta_recorrenteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
   }
-  export type lancamentoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    carteiras?: boolean | lancamento$carteirasArgs<ExtArgs>
+  export type conta_recorrenteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
   }
-  export type lancamentoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    carteiras?: boolean | lancamento$carteirasArgs<ExtArgs>
+  export type conta_recorrenteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
   }
 
-  export type $lancamentoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "lancamento"
+  export type $conta_recorrentePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "conta_recorrente"
     objects: {
-      carteiras: Prisma.$carteirasPayload<ExtArgs> | null
+      carteira: Prisma.$carteiraPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
-      tipo_lancamento: string
-      data_lancamento: Date | null
+      id_conta_recorrente: number
+      id_carteira: string
+      valor: Prisma.Decimal
       descricao: string | null
-      data_cadastro: Date | null
-      valor: Prisma.Decimal | null
-      forma_pagamento: string | null
-      carteira_id: string | null
-    }, ExtArgs["result"]["lancamento"]>
+      intervalo_dias: number
+      data_inicio: Date
+    }, ExtArgs["result"]["conta_recorrente"]>
     composites: {}
   }
 
-  type lancamentoGetPayload<S extends boolean | null | undefined | lancamentoDefaultArgs> = $Result.GetResult<Prisma.$lancamentoPayload, S>
+  type conta_recorrenteGetPayload<S extends boolean | null | undefined | conta_recorrenteDefaultArgs> = $Result.GetResult<Prisma.$conta_recorrentePayload, S>
 
-  type lancamentoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<lancamentoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: LancamentoCountAggregateInputType | true
+  type conta_recorrenteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<conta_recorrenteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Conta_recorrenteCountAggregateInputType | true
     }
 
-  export interface lancamentoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['lancamento'], meta: { name: 'lancamento' } }
+  export interface conta_recorrenteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['conta_recorrente'], meta: { name: 'conta_recorrente' } }
     /**
-     * Find zero or one Lancamento that matches the filter.
-     * @param {lancamentoFindUniqueArgs} args - Arguments to find a Lancamento
+     * Find zero or one Conta_recorrente that matches the filter.
+     * @param {conta_recorrenteFindUniqueArgs} args - Arguments to find a Conta_recorrente
      * @example
-     * // Get one Lancamento
-     * const lancamento = await prisma.lancamento.findUnique({
+     * // Get one Conta_recorrente
+     * const conta_recorrente = await prisma.conta_recorrente.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends lancamentoFindUniqueArgs>(args: SelectSubset<T, lancamentoFindUniqueArgs<ExtArgs>>): Prisma__lancamentoClient<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends conta_recorrenteFindUniqueArgs>(args: SelectSubset<T, conta_recorrenteFindUniqueArgs<ExtArgs>>): Prisma__conta_recorrenteClient<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Lancamento that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Conta_recorrente that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {lancamentoFindUniqueOrThrowArgs} args - Arguments to find a Lancamento
+     * @param {conta_recorrenteFindUniqueOrThrowArgs} args - Arguments to find a Conta_recorrente
      * @example
-     * // Get one Lancamento
-     * const lancamento = await prisma.lancamento.findUniqueOrThrow({
+     * // Get one Conta_recorrente
+     * const conta_recorrente = await prisma.conta_recorrente.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends lancamentoFindUniqueOrThrowArgs>(args: SelectSubset<T, lancamentoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__lancamentoClient<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends conta_recorrenteFindUniqueOrThrowArgs>(args: SelectSubset<T, conta_recorrenteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__conta_recorrenteClient<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Lancamento that matches the filter.
+     * Find the first Conta_recorrente that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {lancamentoFindFirstArgs} args - Arguments to find a Lancamento
+     * @param {conta_recorrenteFindFirstArgs} args - Arguments to find a Conta_recorrente
      * @example
-     * // Get one Lancamento
-     * const lancamento = await prisma.lancamento.findFirst({
+     * // Get one Conta_recorrente
+     * const conta_recorrente = await prisma.conta_recorrente.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends lancamentoFindFirstArgs>(args?: SelectSubset<T, lancamentoFindFirstArgs<ExtArgs>>): Prisma__lancamentoClient<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends conta_recorrenteFindFirstArgs>(args?: SelectSubset<T, conta_recorrenteFindFirstArgs<ExtArgs>>): Prisma__conta_recorrenteClient<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Lancamento that matches the filter or
+     * Find the first Conta_recorrente that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {lancamentoFindFirstOrThrowArgs} args - Arguments to find a Lancamento
+     * @param {conta_recorrenteFindFirstOrThrowArgs} args - Arguments to find a Conta_recorrente
      * @example
-     * // Get one Lancamento
-     * const lancamento = await prisma.lancamento.findFirstOrThrow({
+     * // Get one Conta_recorrente
+     * const conta_recorrente = await prisma.conta_recorrente.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends lancamentoFindFirstOrThrowArgs>(args?: SelectSubset<T, lancamentoFindFirstOrThrowArgs<ExtArgs>>): Prisma__lancamentoClient<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends conta_recorrenteFindFirstOrThrowArgs>(args?: SelectSubset<T, conta_recorrenteFindFirstOrThrowArgs<ExtArgs>>): Prisma__conta_recorrenteClient<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Lancamentos that matches the filter.
+     * Find zero or more Conta_recorrentes that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {lancamentoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {conta_recorrenteFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Lancamentos
-     * const lancamentos = await prisma.lancamento.findMany()
+     * // Get all Conta_recorrentes
+     * const conta_recorrentes = await prisma.conta_recorrente.findMany()
      * 
-     * // Get first 10 Lancamentos
-     * const lancamentos = await prisma.lancamento.findMany({ take: 10 })
+     * // Get first 10 Conta_recorrentes
+     * const conta_recorrentes = await prisma.conta_recorrente.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const lancamentoWithIdOnly = await prisma.lancamento.findMany({ select: { id: true } })
+     * // Only select the `id_conta_recorrente`
+     * const conta_recorrenteWithId_conta_recorrenteOnly = await prisma.conta_recorrente.findMany({ select: { id_conta_recorrente: true } })
      * 
      */
-    findMany<T extends lancamentoFindManyArgs>(args?: SelectSubset<T, lancamentoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends conta_recorrenteFindManyArgs>(args?: SelectSubset<T, conta_recorrenteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Lancamento.
-     * @param {lancamentoCreateArgs} args - Arguments to create a Lancamento.
+     * Create a Conta_recorrente.
+     * @param {conta_recorrenteCreateArgs} args - Arguments to create a Conta_recorrente.
      * @example
-     * // Create one Lancamento
-     * const Lancamento = await prisma.lancamento.create({
+     * // Create one Conta_recorrente
+     * const Conta_recorrente = await prisma.conta_recorrente.create({
      *   data: {
-     *     // ... data to create a Lancamento
+     *     // ... data to create a Conta_recorrente
      *   }
      * })
      * 
      */
-    create<T extends lancamentoCreateArgs>(args: SelectSubset<T, lancamentoCreateArgs<ExtArgs>>): Prisma__lancamentoClient<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends conta_recorrenteCreateArgs>(args: SelectSubset<T, conta_recorrenteCreateArgs<ExtArgs>>): Prisma__conta_recorrenteClient<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Lancamentos.
-     * @param {lancamentoCreateManyArgs} args - Arguments to create many Lancamentos.
+     * Create many Conta_recorrentes.
+     * @param {conta_recorrenteCreateManyArgs} args - Arguments to create many Conta_recorrentes.
      * @example
-     * // Create many Lancamentos
-     * const lancamento = await prisma.lancamento.createMany({
+     * // Create many Conta_recorrentes
+     * const conta_recorrente = await prisma.conta_recorrente.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends lancamentoCreateManyArgs>(args?: SelectSubset<T, lancamentoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends conta_recorrenteCreateManyArgs>(args?: SelectSubset<T, conta_recorrenteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Lancamentos and returns the data saved in the database.
-     * @param {lancamentoCreateManyAndReturnArgs} args - Arguments to create many Lancamentos.
+     * Create many Conta_recorrentes and returns the data saved in the database.
+     * @param {conta_recorrenteCreateManyAndReturnArgs} args - Arguments to create many Conta_recorrentes.
      * @example
-     * // Create many Lancamentos
-     * const lancamento = await prisma.lancamento.createManyAndReturn({
+     * // Create many Conta_recorrentes
+     * const conta_recorrente = await prisma.conta_recorrente.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Lancamentos and only return the `id`
-     * const lancamentoWithIdOnly = await prisma.lancamento.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many Conta_recorrentes and only return the `id_conta_recorrente`
+     * const conta_recorrenteWithId_conta_recorrenteOnly = await prisma.conta_recorrente.createManyAndReturn({
+     *   select: { id_conta_recorrente: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -2664,28 +2744,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends lancamentoCreateManyAndReturnArgs>(args?: SelectSubset<T, lancamentoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends conta_recorrenteCreateManyAndReturnArgs>(args?: SelectSubset<T, conta_recorrenteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Lancamento.
-     * @param {lancamentoDeleteArgs} args - Arguments to delete one Lancamento.
+     * Delete a Conta_recorrente.
+     * @param {conta_recorrenteDeleteArgs} args - Arguments to delete one Conta_recorrente.
      * @example
-     * // Delete one Lancamento
-     * const Lancamento = await prisma.lancamento.delete({
+     * // Delete one Conta_recorrente
+     * const Conta_recorrente = await prisma.conta_recorrente.delete({
      *   where: {
-     *     // ... filter to delete one Lancamento
+     *     // ... filter to delete one Conta_recorrente
      *   }
      * })
      * 
      */
-    delete<T extends lancamentoDeleteArgs>(args: SelectSubset<T, lancamentoDeleteArgs<ExtArgs>>): Prisma__lancamentoClient<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends conta_recorrenteDeleteArgs>(args: SelectSubset<T, conta_recorrenteDeleteArgs<ExtArgs>>): Prisma__conta_recorrenteClient<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Lancamento.
-     * @param {lancamentoUpdateArgs} args - Arguments to update one Lancamento.
+     * Update one Conta_recorrente.
+     * @param {conta_recorrenteUpdateArgs} args - Arguments to update one Conta_recorrente.
      * @example
-     * // Update one Lancamento
-     * const lancamento = await prisma.lancamento.update({
+     * // Update one Conta_recorrente
+     * const conta_recorrente = await prisma.conta_recorrente.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2695,30 +2775,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends lancamentoUpdateArgs>(args: SelectSubset<T, lancamentoUpdateArgs<ExtArgs>>): Prisma__lancamentoClient<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends conta_recorrenteUpdateArgs>(args: SelectSubset<T, conta_recorrenteUpdateArgs<ExtArgs>>): Prisma__conta_recorrenteClient<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Lancamentos.
-     * @param {lancamentoDeleteManyArgs} args - Arguments to filter Lancamentos to delete.
+     * Delete zero or more Conta_recorrentes.
+     * @param {conta_recorrenteDeleteManyArgs} args - Arguments to filter Conta_recorrentes to delete.
      * @example
-     * // Delete a few Lancamentos
-     * const { count } = await prisma.lancamento.deleteMany({
+     * // Delete a few Conta_recorrentes
+     * const { count } = await prisma.conta_recorrente.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends lancamentoDeleteManyArgs>(args?: SelectSubset<T, lancamentoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends conta_recorrenteDeleteManyArgs>(args?: SelectSubset<T, conta_recorrenteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Lancamentos.
+     * Update zero or more Conta_recorrentes.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {lancamentoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {conta_recorrenteUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Lancamentos
-     * const lancamento = await prisma.lancamento.updateMany({
+     * // Update many Conta_recorrentes
+     * const conta_recorrente = await prisma.conta_recorrente.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2728,14 +2808,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends lancamentoUpdateManyArgs>(args: SelectSubset<T, lancamentoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends conta_recorrenteUpdateManyArgs>(args: SelectSubset<T, conta_recorrenteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Lancamentos and returns the data updated in the database.
-     * @param {lancamentoUpdateManyAndReturnArgs} args - Arguments to update many Lancamentos.
+     * Update zero or more Conta_recorrentes and returns the data updated in the database.
+     * @param {conta_recorrenteUpdateManyAndReturnArgs} args - Arguments to update many Conta_recorrentes.
      * @example
-     * // Update many Lancamentos
-     * const lancamento = await prisma.lancamento.updateManyAndReturn({
+     * // Update many Conta_recorrentes
+     * const conta_recorrente = await prisma.conta_recorrente.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2744,9 +2824,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Lancamentos and only return the `id`
-     * const lancamentoWithIdOnly = await prisma.lancamento.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more Conta_recorrentes and only return the `id_conta_recorrente`
+     * const conta_recorrenteWithId_conta_recorrenteOnly = await prisma.conta_recorrente.updateManyAndReturn({
+     *   select: { id_conta_recorrente: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2758,56 +2838,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends lancamentoUpdateManyAndReturnArgs>(args: SelectSubset<T, lancamentoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends conta_recorrenteUpdateManyAndReturnArgs>(args: SelectSubset<T, conta_recorrenteUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Lancamento.
-     * @param {lancamentoUpsertArgs} args - Arguments to update or create a Lancamento.
+     * Create or update one Conta_recorrente.
+     * @param {conta_recorrenteUpsertArgs} args - Arguments to update or create a Conta_recorrente.
      * @example
-     * // Update or create a Lancamento
-     * const lancamento = await prisma.lancamento.upsert({
+     * // Update or create a Conta_recorrente
+     * const conta_recorrente = await prisma.conta_recorrente.upsert({
      *   create: {
-     *     // ... data to create a Lancamento
+     *     // ... data to create a Conta_recorrente
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Lancamento we want to update
+     *     // ... the filter for the Conta_recorrente we want to update
      *   }
      * })
      */
-    upsert<T extends lancamentoUpsertArgs>(args: SelectSubset<T, lancamentoUpsertArgs<ExtArgs>>): Prisma__lancamentoClient<$Result.GetResult<Prisma.$lancamentoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends conta_recorrenteUpsertArgs>(args: SelectSubset<T, conta_recorrenteUpsertArgs<ExtArgs>>): Prisma__conta_recorrenteClient<$Result.GetResult<Prisma.$conta_recorrentePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Lancamentos.
+     * Count the number of Conta_recorrentes.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {lancamentoCountArgs} args - Arguments to filter Lancamentos to count.
+     * @param {conta_recorrenteCountArgs} args - Arguments to filter Conta_recorrentes to count.
      * @example
-     * // Count the number of Lancamentos
-     * const count = await prisma.lancamento.count({
+     * // Count the number of Conta_recorrentes
+     * const count = await prisma.conta_recorrente.count({
      *   where: {
-     *     // ... the filter for the Lancamentos we want to count
+     *     // ... the filter for the Conta_recorrentes we want to count
      *   }
      * })
     **/
-    count<T extends lancamentoCountArgs>(
-      args?: Subset<T, lancamentoCountArgs>,
+    count<T extends conta_recorrenteCountArgs>(
+      args?: Subset<T, conta_recorrenteCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], LancamentoCountAggregateOutputType>
+          : GetScalarType<T['select'], Conta_recorrenteCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Lancamento.
+     * Allows you to perform aggregations operations on a Conta_recorrente.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {LancamentoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {Conta_recorrenteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2827,13 +2907,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends LancamentoAggregateArgs>(args: Subset<T, LancamentoAggregateArgs>): Prisma.PrismaPromise<GetLancamentoAggregateType<T>>
+    aggregate<T extends Conta_recorrenteAggregateArgs>(args: Subset<T, Conta_recorrenteAggregateArgs>): Prisma.PrismaPromise<GetConta_recorrenteAggregateType<T>>
 
     /**
-     * Group by Lancamento.
+     * Group by Conta_recorrente.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {lancamentoGroupByArgs} args - Group by arguments.
+     * @param {conta_recorrenteGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2848,14 +2928,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends lancamentoGroupByArgs,
+      T extends conta_recorrenteGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: lancamentoGroupByArgs['orderBy'] }
-        : { orderBy?: lancamentoGroupByArgs['orderBy'] },
+        ? { orderBy: conta_recorrenteGroupByArgs['orderBy'] }
+        : { orderBy?: conta_recorrenteGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2904,22 +2984,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, lancamentoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLancamentoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, conta_recorrenteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetConta_recorrenteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the lancamento model
+   * Fields of the conta_recorrente model
    */
-  readonly fields: lancamentoFieldRefs;
+  readonly fields: conta_recorrenteFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for lancamento.
+   * The delegate class that acts as a "Promise-like" for conta_recorrente.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__lancamentoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__conta_recorrenteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    carteiras<T extends lancamento$carteirasArgs<ExtArgs> = {}>(args?: Subset<T, lancamento$carteirasArgs<ExtArgs>>): Prisma__carteirasClient<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    carteira<T extends carteiraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, carteiraDefaultArgs<ExtArgs>>): Prisma__carteiraClient<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2946,447 +3026,1535 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the lancamento model
+   * Fields of the conta_recorrente model
    */
-  interface lancamentoFieldRefs {
-    readonly id: FieldRef<"lancamento", 'String'>
-    readonly tipo_lancamento: FieldRef<"lancamento", 'String'>
-    readonly data_lancamento: FieldRef<"lancamento", 'DateTime'>
-    readonly descricao: FieldRef<"lancamento", 'String'>
-    readonly data_cadastro: FieldRef<"lancamento", 'DateTime'>
-    readonly valor: FieldRef<"lancamento", 'Decimal'>
-    readonly forma_pagamento: FieldRef<"lancamento", 'String'>
-    readonly carteira_id: FieldRef<"lancamento", 'String'>
+  interface conta_recorrenteFieldRefs {
+    readonly id_conta_recorrente: FieldRef<"conta_recorrente", 'Int'>
+    readonly id_carteira: FieldRef<"conta_recorrente", 'String'>
+    readonly valor: FieldRef<"conta_recorrente", 'Decimal'>
+    readonly descricao: FieldRef<"conta_recorrente", 'String'>
+    readonly intervalo_dias: FieldRef<"conta_recorrente", 'Int'>
+    readonly data_inicio: FieldRef<"conta_recorrente", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * lancamento findUnique
+   * conta_recorrente findUnique
    */
-  export type lancamentoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoInclude<ExtArgs> | null
+    include?: conta_recorrenteInclude<ExtArgs> | null
     /**
-     * Filter, which lancamento to fetch.
+     * Filter, which conta_recorrente to fetch.
      */
-    where: lancamentoWhereUniqueInput
+    where: conta_recorrenteWhereUniqueInput
   }
 
   /**
-   * lancamento findUniqueOrThrow
+   * conta_recorrente findUniqueOrThrow
    */
-  export type lancamentoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoInclude<ExtArgs> | null
+    include?: conta_recorrenteInclude<ExtArgs> | null
     /**
-     * Filter, which lancamento to fetch.
+     * Filter, which conta_recorrente to fetch.
      */
-    where: lancamentoWhereUniqueInput
+    where: conta_recorrenteWhereUniqueInput
   }
 
   /**
-   * lancamento findFirst
+   * conta_recorrente findFirst
    */
-  export type lancamentoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoInclude<ExtArgs> | null
+    include?: conta_recorrenteInclude<ExtArgs> | null
     /**
-     * Filter, which lancamento to fetch.
+     * Filter, which conta_recorrente to fetch.
      */
-    where?: lancamentoWhereInput
+    where?: conta_recorrenteWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of lancamentos to fetch.
+     * Determine the order of conta_recorrentes to fetch.
      */
-    orderBy?: lancamentoOrderByWithRelationInput | lancamentoOrderByWithRelationInput[]
+    orderBy?: conta_recorrenteOrderByWithRelationInput | conta_recorrenteOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for lancamentos.
+     * Sets the position for searching for conta_recorrentes.
      */
-    cursor?: lancamentoWhereUniqueInput
+    cursor?: conta_recorrenteWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` lancamentos from the position of the cursor.
+     * Take `±n` conta_recorrentes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` lancamentos.
+     * Skip the first `n` conta_recorrentes.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of lancamentos.
+     * Filter by unique combinations of conta_recorrentes.
      */
-    distinct?: LancamentoScalarFieldEnum | LancamentoScalarFieldEnum[]
+    distinct?: Conta_recorrenteScalarFieldEnum | Conta_recorrenteScalarFieldEnum[]
   }
 
   /**
-   * lancamento findFirstOrThrow
+   * conta_recorrente findFirstOrThrow
    */
-  export type lancamentoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoInclude<ExtArgs> | null
+    include?: conta_recorrenteInclude<ExtArgs> | null
     /**
-     * Filter, which lancamento to fetch.
+     * Filter, which conta_recorrente to fetch.
      */
-    where?: lancamentoWhereInput
+    where?: conta_recorrenteWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of lancamentos to fetch.
+     * Determine the order of conta_recorrentes to fetch.
      */
-    orderBy?: lancamentoOrderByWithRelationInput | lancamentoOrderByWithRelationInput[]
+    orderBy?: conta_recorrenteOrderByWithRelationInput | conta_recorrenteOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for lancamentos.
+     * Sets the position for searching for conta_recorrentes.
      */
-    cursor?: lancamentoWhereUniqueInput
+    cursor?: conta_recorrenteWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` lancamentos from the position of the cursor.
+     * Take `±n` conta_recorrentes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` lancamentos.
+     * Skip the first `n` conta_recorrentes.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of lancamentos.
+     * Filter by unique combinations of conta_recorrentes.
      */
-    distinct?: LancamentoScalarFieldEnum | LancamentoScalarFieldEnum[]
+    distinct?: Conta_recorrenteScalarFieldEnum | Conta_recorrenteScalarFieldEnum[]
   }
 
   /**
-   * lancamento findMany
+   * conta_recorrente findMany
    */
-  export type lancamentoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoInclude<ExtArgs> | null
+    include?: conta_recorrenteInclude<ExtArgs> | null
     /**
-     * Filter, which lancamentos to fetch.
+     * Filter, which conta_recorrentes to fetch.
      */
-    where?: lancamentoWhereInput
+    where?: conta_recorrenteWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of lancamentos to fetch.
+     * Determine the order of conta_recorrentes to fetch.
      */
-    orderBy?: lancamentoOrderByWithRelationInput | lancamentoOrderByWithRelationInput[]
+    orderBy?: conta_recorrenteOrderByWithRelationInput | conta_recorrenteOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing lancamentos.
+     * Sets the position for listing conta_recorrentes.
      */
-    cursor?: lancamentoWhereUniqueInput
+    cursor?: conta_recorrenteWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` lancamentos from the position of the cursor.
+     * Take `±n` conta_recorrentes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` lancamentos.
+     * Skip the first `n` conta_recorrentes.
      */
     skip?: number
-    distinct?: LancamentoScalarFieldEnum | LancamentoScalarFieldEnum[]
+    distinct?: Conta_recorrenteScalarFieldEnum | Conta_recorrenteScalarFieldEnum[]
   }
 
   /**
-   * lancamento create
+   * conta_recorrente create
    */
-  export type lancamentoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoInclude<ExtArgs> | null
+    include?: conta_recorrenteInclude<ExtArgs> | null
     /**
-     * The data needed to create a lancamento.
+     * The data needed to create a conta_recorrente.
      */
-    data: XOR<lancamentoCreateInput, lancamentoUncheckedCreateInput>
+    data: XOR<conta_recorrenteCreateInput, conta_recorrenteUncheckedCreateInput>
   }
 
   /**
-   * lancamento createMany
+   * conta_recorrente createMany
    */
-  export type lancamentoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many lancamentos.
+     * The data used to create many conta_recorrentes.
      */
-    data: lancamentoCreateManyInput | lancamentoCreateManyInput[]
+    data: conta_recorrenteCreateManyInput | conta_recorrenteCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * lancamento createManyAndReturn
+   * conta_recorrente createManyAndReturn
    */
-  export type lancamentoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelectCreateManyAndReturn<ExtArgs> | null
+    select?: conta_recorrenteSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
-     * The data used to create many lancamentos.
+     * The data used to create many conta_recorrentes.
      */
-    data: lancamentoCreateManyInput | lancamentoCreateManyInput[]
+    data: conta_recorrenteCreateManyInput | conta_recorrenteCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: conta_recorrenteIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * lancamento update
+   * conta_recorrente update
    */
-  export type lancamentoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoInclude<ExtArgs> | null
+    include?: conta_recorrenteInclude<ExtArgs> | null
     /**
-     * The data needed to update a lancamento.
+     * The data needed to update a conta_recorrente.
      */
-    data: XOR<lancamentoUpdateInput, lancamentoUncheckedUpdateInput>
+    data: XOR<conta_recorrenteUpdateInput, conta_recorrenteUncheckedUpdateInput>
     /**
-     * Choose, which lancamento to update.
+     * Choose, which conta_recorrente to update.
      */
-    where: lancamentoWhereUniqueInput
+    where: conta_recorrenteWhereUniqueInput
   }
 
   /**
-   * lancamento updateMany
+   * conta_recorrente updateMany
    */
-  export type lancamentoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update lancamentos.
+     * The data used to update conta_recorrentes.
      */
-    data: XOR<lancamentoUpdateManyMutationInput, lancamentoUncheckedUpdateManyInput>
+    data: XOR<conta_recorrenteUpdateManyMutationInput, conta_recorrenteUncheckedUpdateManyInput>
     /**
-     * Filter which lancamentos to update
+     * Filter which conta_recorrentes to update
      */
-    where?: lancamentoWhereInput
+    where?: conta_recorrenteWhereInput
     /**
-     * Limit how many lancamentos to update.
+     * Limit how many conta_recorrentes to update.
      */
     limit?: number
   }
 
   /**
-   * lancamento updateManyAndReturn
+   * conta_recorrente updateManyAndReturn
    */
-  export type lancamentoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: conta_recorrenteSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
-     * The data used to update lancamentos.
+     * The data used to update conta_recorrentes.
      */
-    data: XOR<lancamentoUpdateManyMutationInput, lancamentoUncheckedUpdateManyInput>
+    data: XOR<conta_recorrenteUpdateManyMutationInput, conta_recorrenteUncheckedUpdateManyInput>
     /**
-     * Filter which lancamentos to update
+     * Filter which conta_recorrentes to update
      */
-    where?: lancamentoWhereInput
+    where?: conta_recorrenteWhereInput
     /**
-     * Limit how many lancamentos to update.
+     * Limit how many conta_recorrentes to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: conta_recorrenteIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * lancamento upsert
+   * conta_recorrente upsert
    */
-  export type lancamentoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoInclude<ExtArgs> | null
+    include?: conta_recorrenteInclude<ExtArgs> | null
     /**
-     * The filter to search for the lancamento to update in case it exists.
+     * The filter to search for the conta_recorrente to update in case it exists.
      */
-    where: lancamentoWhereUniqueInput
+    where: conta_recorrenteWhereUniqueInput
     /**
-     * In case the lancamento found by the `where` argument doesn't exist, create a new lancamento with this data.
+     * In case the conta_recorrente found by the `where` argument doesn't exist, create a new conta_recorrente with this data.
      */
-    create: XOR<lancamentoCreateInput, lancamentoUncheckedCreateInput>
+    create: XOR<conta_recorrenteCreateInput, conta_recorrenteUncheckedCreateInput>
     /**
-     * In case the lancamento was found with the provided `where` argument, update it with this data.
+     * In case the conta_recorrente was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<lancamentoUpdateInput, lancamentoUncheckedUpdateInput>
+    update: XOR<conta_recorrenteUpdateInput, conta_recorrenteUncheckedUpdateInput>
   }
 
   /**
-   * lancamento delete
+   * conta_recorrente delete
    */
-  export type lancamentoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the lancamento
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: lancamentoSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the lancamento
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoInclude<ExtArgs> | null
+    include?: conta_recorrenteInclude<ExtArgs> | null
     /**
-     * Filter which lancamento to delete.
+     * Filter which conta_recorrente to delete.
      */
-    where: lancamentoWhereUniqueInput
+    where: conta_recorrenteWhereUniqueInput
   }
 
   /**
-   * lancamento deleteMany
+   * conta_recorrente deleteMany
    */
-  export type lancamentoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which lancamentos to delete
+     * Filter which conta_recorrentes to delete
      */
-    where?: lancamentoWhereInput
+    where?: conta_recorrenteWhereInput
     /**
-     * Limit how many lancamentos to delete.
+     * Limit how many conta_recorrentes to delete.
      */
     limit?: number
   }
 
   /**
-   * lancamento.carteiras
+   * conta_recorrente without action
    */
-  export type lancamento$carteirasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type conta_recorrenteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the conta_recorrente
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: conta_recorrenteSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the conta_recorrente
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: conta_recorrenteOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
-    where?: carteirasWhereInput
+    include?: conta_recorrenteInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model transacao
+   */
+
+  export type AggregateTransacao = {
+    _count: TransacaoCountAggregateOutputType | null
+    _avg: TransacaoAvgAggregateOutputType | null
+    _sum: TransacaoSumAggregateOutputType | null
+    _min: TransacaoMinAggregateOutputType | null
+    _max: TransacaoMaxAggregateOutputType | null
+  }
+
+  export type TransacaoAvgAggregateOutputType = {
+    id_transacao: number | null
+    valor: Decimal | null
+  }
+
+  export type TransacaoSumAggregateOutputType = {
+    id_transacao: number | null
+    valor: Decimal | null
+  }
+
+  export type TransacaoMinAggregateOutputType = {
+    id_transacao: number | null
+    id_carteira: string | null
+    valor: Decimal | null
+    tipo: string | null
+    descricao: string | null
+    data: Date | null
+  }
+
+  export type TransacaoMaxAggregateOutputType = {
+    id_transacao: number | null
+    id_carteira: string | null
+    valor: Decimal | null
+    tipo: string | null
+    descricao: string | null
+    data: Date | null
+  }
+
+  export type TransacaoCountAggregateOutputType = {
+    id_transacao: number
+    id_carteira: number
+    valor: number
+    tipo: number
+    descricao: number
+    data: number
+    _all: number
+  }
+
+
+  export type TransacaoAvgAggregateInputType = {
+    id_transacao?: true
+    valor?: true
+  }
+
+  export type TransacaoSumAggregateInputType = {
+    id_transacao?: true
+    valor?: true
+  }
+
+  export type TransacaoMinAggregateInputType = {
+    id_transacao?: true
+    id_carteira?: true
+    valor?: true
+    tipo?: true
+    descricao?: true
+    data?: true
+  }
+
+  export type TransacaoMaxAggregateInputType = {
+    id_transacao?: true
+    id_carteira?: true
+    valor?: true
+    tipo?: true
+    descricao?: true
+    data?: true
+  }
+
+  export type TransacaoCountAggregateInputType = {
+    id_transacao?: true
+    id_carteira?: true
+    valor?: true
+    tipo?: true
+    descricao?: true
+    data?: true
+    _all?: true
+  }
+
+  export type TransacaoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which transacao to aggregate.
+     */
+    where?: transacaoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of transacaos to fetch.
+     */
+    orderBy?: transacaoOrderByWithRelationInput | transacaoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: transacaoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` transacaos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` transacaos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned transacaos
+    **/
+    _count?: true | TransacaoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TransacaoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TransacaoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TransacaoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TransacaoMaxAggregateInputType
+  }
+
+  export type GetTransacaoAggregateType<T extends TransacaoAggregateArgs> = {
+        [P in keyof T & keyof AggregateTransacao]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTransacao[P]>
+      : GetScalarType<T[P], AggregateTransacao[P]>
+  }
+
+
+
+
+  export type transacaoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: transacaoWhereInput
+    orderBy?: transacaoOrderByWithAggregationInput | transacaoOrderByWithAggregationInput[]
+    by: TransacaoScalarFieldEnum[] | TransacaoScalarFieldEnum
+    having?: transacaoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TransacaoCountAggregateInputType | true
+    _avg?: TransacaoAvgAggregateInputType
+    _sum?: TransacaoSumAggregateInputType
+    _min?: TransacaoMinAggregateInputType
+    _max?: TransacaoMaxAggregateInputType
+  }
+
+  export type TransacaoGroupByOutputType = {
+    id_transacao: number
+    id_carteira: string
+    valor: Decimal
+    tipo: string
+    descricao: string | null
+    data: Date
+    _count: TransacaoCountAggregateOutputType | null
+    _avg: TransacaoAvgAggregateOutputType | null
+    _sum: TransacaoSumAggregateOutputType | null
+    _min: TransacaoMinAggregateOutputType | null
+    _max: TransacaoMaxAggregateOutputType | null
+  }
+
+  type GetTransacaoGroupByPayload<T extends transacaoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TransacaoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TransacaoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TransacaoGroupByOutputType[P]>
+            : GetScalarType<T[P], TransacaoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type transacaoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_transacao?: boolean
+    id_carteira?: boolean
+    valor?: boolean
+    tipo?: boolean
+    descricao?: boolean
+    data?: boolean
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transacao"]>
+
+  export type transacaoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_transacao?: boolean
+    id_carteira?: boolean
+    valor?: boolean
+    tipo?: boolean
+    descricao?: boolean
+    data?: boolean
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transacao"]>
+
+  export type transacaoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_transacao?: boolean
+    id_carteira?: boolean
+    valor?: boolean
+    tipo?: boolean
+    descricao?: boolean
+    data?: boolean
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transacao"]>
+
+  export type transacaoSelectScalar = {
+    id_transacao?: boolean
+    id_carteira?: boolean
+    valor?: boolean
+    tipo?: boolean
+    descricao?: boolean
+    data?: boolean
+  }
+
+  export type transacaoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_transacao" | "id_carteira" | "valor" | "tipo" | "descricao" | "data", ExtArgs["result"]["transacao"]>
+  export type transacaoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
+  }
+  export type transacaoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
+  }
+  export type transacaoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    carteira?: boolean | carteiraDefaultArgs<ExtArgs>
+  }
+
+  export type $transacaoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "transacao"
+    objects: {
+      carteira: Prisma.$carteiraPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id_transacao: number
+      id_carteira: string
+      valor: Prisma.Decimal
+      tipo: string
+      descricao: string | null
+      data: Date
+    }, ExtArgs["result"]["transacao"]>
+    composites: {}
+  }
+
+  type transacaoGetPayload<S extends boolean | null | undefined | transacaoDefaultArgs> = $Result.GetResult<Prisma.$transacaoPayload, S>
+
+  type transacaoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<transacaoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TransacaoCountAggregateInputType | true
+    }
+
+  export interface transacaoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['transacao'], meta: { name: 'transacao' } }
+    /**
+     * Find zero or one Transacao that matches the filter.
+     * @param {transacaoFindUniqueArgs} args - Arguments to find a Transacao
+     * @example
+     * // Get one Transacao
+     * const transacao = await prisma.transacao.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends transacaoFindUniqueArgs>(args: SelectSubset<T, transacaoFindUniqueArgs<ExtArgs>>): Prisma__transacaoClient<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Transacao that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {transacaoFindUniqueOrThrowArgs} args - Arguments to find a Transacao
+     * @example
+     * // Get one Transacao
+     * const transacao = await prisma.transacao.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends transacaoFindUniqueOrThrowArgs>(args: SelectSubset<T, transacaoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__transacaoClient<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Transacao that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {transacaoFindFirstArgs} args - Arguments to find a Transacao
+     * @example
+     * // Get one Transacao
+     * const transacao = await prisma.transacao.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends transacaoFindFirstArgs>(args?: SelectSubset<T, transacaoFindFirstArgs<ExtArgs>>): Prisma__transacaoClient<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Transacao that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {transacaoFindFirstOrThrowArgs} args - Arguments to find a Transacao
+     * @example
+     * // Get one Transacao
+     * const transacao = await prisma.transacao.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends transacaoFindFirstOrThrowArgs>(args?: SelectSubset<T, transacaoFindFirstOrThrowArgs<ExtArgs>>): Prisma__transacaoClient<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Transacaos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {transacaoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Transacaos
+     * const transacaos = await prisma.transacao.findMany()
+     * 
+     * // Get first 10 Transacaos
+     * const transacaos = await prisma.transacao.findMany({ take: 10 })
+     * 
+     * // Only select the `id_transacao`
+     * const transacaoWithId_transacaoOnly = await prisma.transacao.findMany({ select: { id_transacao: true } })
+     * 
+     */
+    findMany<T extends transacaoFindManyArgs>(args?: SelectSubset<T, transacaoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Transacao.
+     * @param {transacaoCreateArgs} args - Arguments to create a Transacao.
+     * @example
+     * // Create one Transacao
+     * const Transacao = await prisma.transacao.create({
+     *   data: {
+     *     // ... data to create a Transacao
+     *   }
+     * })
+     * 
+     */
+    create<T extends transacaoCreateArgs>(args: SelectSubset<T, transacaoCreateArgs<ExtArgs>>): Prisma__transacaoClient<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Transacaos.
+     * @param {transacaoCreateManyArgs} args - Arguments to create many Transacaos.
+     * @example
+     * // Create many Transacaos
+     * const transacao = await prisma.transacao.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends transacaoCreateManyArgs>(args?: SelectSubset<T, transacaoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Transacaos and returns the data saved in the database.
+     * @param {transacaoCreateManyAndReturnArgs} args - Arguments to create many Transacaos.
+     * @example
+     * // Create many Transacaos
+     * const transacao = await prisma.transacao.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Transacaos and only return the `id_transacao`
+     * const transacaoWithId_transacaoOnly = await prisma.transacao.createManyAndReturn({
+     *   select: { id_transacao: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends transacaoCreateManyAndReturnArgs>(args?: SelectSubset<T, transacaoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Transacao.
+     * @param {transacaoDeleteArgs} args - Arguments to delete one Transacao.
+     * @example
+     * // Delete one Transacao
+     * const Transacao = await prisma.transacao.delete({
+     *   where: {
+     *     // ... filter to delete one Transacao
+     *   }
+     * })
+     * 
+     */
+    delete<T extends transacaoDeleteArgs>(args: SelectSubset<T, transacaoDeleteArgs<ExtArgs>>): Prisma__transacaoClient<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Transacao.
+     * @param {transacaoUpdateArgs} args - Arguments to update one Transacao.
+     * @example
+     * // Update one Transacao
+     * const transacao = await prisma.transacao.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends transacaoUpdateArgs>(args: SelectSubset<T, transacaoUpdateArgs<ExtArgs>>): Prisma__transacaoClient<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Transacaos.
+     * @param {transacaoDeleteManyArgs} args - Arguments to filter Transacaos to delete.
+     * @example
+     * // Delete a few Transacaos
+     * const { count } = await prisma.transacao.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends transacaoDeleteManyArgs>(args?: SelectSubset<T, transacaoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Transacaos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {transacaoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Transacaos
+     * const transacao = await prisma.transacao.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends transacaoUpdateManyArgs>(args: SelectSubset<T, transacaoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Transacaos and returns the data updated in the database.
+     * @param {transacaoUpdateManyAndReturnArgs} args - Arguments to update many Transacaos.
+     * @example
+     * // Update many Transacaos
+     * const transacao = await prisma.transacao.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Transacaos and only return the `id_transacao`
+     * const transacaoWithId_transacaoOnly = await prisma.transacao.updateManyAndReturn({
+     *   select: { id_transacao: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends transacaoUpdateManyAndReturnArgs>(args: SelectSubset<T, transacaoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Transacao.
+     * @param {transacaoUpsertArgs} args - Arguments to update or create a Transacao.
+     * @example
+     * // Update or create a Transacao
+     * const transacao = await prisma.transacao.upsert({
+     *   create: {
+     *     // ... data to create a Transacao
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Transacao we want to update
+     *   }
+     * })
+     */
+    upsert<T extends transacaoUpsertArgs>(args: SelectSubset<T, transacaoUpsertArgs<ExtArgs>>): Prisma__transacaoClient<$Result.GetResult<Prisma.$transacaoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Transacaos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {transacaoCountArgs} args - Arguments to filter Transacaos to count.
+     * @example
+     * // Count the number of Transacaos
+     * const count = await prisma.transacao.count({
+     *   where: {
+     *     // ... the filter for the Transacaos we want to count
+     *   }
+     * })
+    **/
+    count<T extends transacaoCountArgs>(
+      args?: Subset<T, transacaoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TransacaoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Transacao.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransacaoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TransacaoAggregateArgs>(args: Subset<T, TransacaoAggregateArgs>): Prisma.PrismaPromise<GetTransacaoAggregateType<T>>
+
+    /**
+     * Group by Transacao.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {transacaoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends transacaoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: transacaoGroupByArgs['orderBy'] }
+        : { orderBy?: transacaoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, transacaoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTransacaoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the transacao model
+   */
+  readonly fields: transacaoFieldRefs;
   }
 
   /**
-   * lancamento without action
+   * The delegate class that acts as a "Promise-like" for transacao.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export type lancamentoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface Prisma__transacaoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    carteira<T extends carteiraDefaultArgs<ExtArgs> = {}>(args?: Subset<T, carteiraDefaultArgs<ExtArgs>>): Prisma__carteiraClient<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
-     * Select specific fields to fetch from the lancamento
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
      */
-    select?: lancamentoSelect<ExtArgs> | null
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
-     * Omit specific fields from the lancamento
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
      */
-    omit?: lancamentoOmit<ExtArgs> | null
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the transacao model
+   */
+  interface transacaoFieldRefs {
+    readonly id_transacao: FieldRef<"transacao", 'Int'>
+    readonly id_carteira: FieldRef<"transacao", 'String'>
+    readonly valor: FieldRef<"transacao", 'Decimal'>
+    readonly tipo: FieldRef<"transacao", 'String'>
+    readonly descricao: FieldRef<"transacao", 'String'>
+    readonly data: FieldRef<"transacao", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * transacao findUnique
+   */
+  export type transacaoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: lancamentoInclude<ExtArgs> | null
+    include?: transacaoInclude<ExtArgs> | null
+    /**
+     * Filter, which transacao to fetch.
+     */
+    where: transacaoWhereUniqueInput
+  }
+
+  /**
+   * transacao findUniqueOrThrow
+   */
+  export type transacaoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoInclude<ExtArgs> | null
+    /**
+     * Filter, which transacao to fetch.
+     */
+    where: transacaoWhereUniqueInput
+  }
+
+  /**
+   * transacao findFirst
+   */
+  export type transacaoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoInclude<ExtArgs> | null
+    /**
+     * Filter, which transacao to fetch.
+     */
+    where?: transacaoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of transacaos to fetch.
+     */
+    orderBy?: transacaoOrderByWithRelationInput | transacaoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for transacaos.
+     */
+    cursor?: transacaoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` transacaos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` transacaos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of transacaos.
+     */
+    distinct?: TransacaoScalarFieldEnum | TransacaoScalarFieldEnum[]
+  }
+
+  /**
+   * transacao findFirstOrThrow
+   */
+  export type transacaoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoInclude<ExtArgs> | null
+    /**
+     * Filter, which transacao to fetch.
+     */
+    where?: transacaoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of transacaos to fetch.
+     */
+    orderBy?: transacaoOrderByWithRelationInput | transacaoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for transacaos.
+     */
+    cursor?: transacaoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` transacaos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` transacaos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of transacaos.
+     */
+    distinct?: TransacaoScalarFieldEnum | TransacaoScalarFieldEnum[]
+  }
+
+  /**
+   * transacao findMany
+   */
+  export type transacaoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoInclude<ExtArgs> | null
+    /**
+     * Filter, which transacaos to fetch.
+     */
+    where?: transacaoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of transacaos to fetch.
+     */
+    orderBy?: transacaoOrderByWithRelationInput | transacaoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing transacaos.
+     */
+    cursor?: transacaoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` transacaos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` transacaos.
+     */
+    skip?: number
+    distinct?: TransacaoScalarFieldEnum | TransacaoScalarFieldEnum[]
+  }
+
+  /**
+   * transacao create
+   */
+  export type transacaoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a transacao.
+     */
+    data: XOR<transacaoCreateInput, transacaoUncheckedCreateInput>
+  }
+
+  /**
+   * transacao createMany
+   */
+  export type transacaoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many transacaos.
+     */
+    data: transacaoCreateManyInput | transacaoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * transacao createManyAndReturn
+   */
+  export type transacaoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * The data used to create many transacaos.
+     */
+    data: transacaoCreateManyInput | transacaoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * transacao update
+   */
+  export type transacaoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a transacao.
+     */
+    data: XOR<transacaoUpdateInput, transacaoUncheckedUpdateInput>
+    /**
+     * Choose, which transacao to update.
+     */
+    where: transacaoWhereUniqueInput
+  }
+
+  /**
+   * transacao updateMany
+   */
+  export type transacaoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update transacaos.
+     */
+    data: XOR<transacaoUpdateManyMutationInput, transacaoUncheckedUpdateManyInput>
+    /**
+     * Filter which transacaos to update
+     */
+    where?: transacaoWhereInput
+    /**
+     * Limit how many transacaos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * transacao updateManyAndReturn
+   */
+  export type transacaoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * The data used to update transacaos.
+     */
+    data: XOR<transacaoUpdateManyMutationInput, transacaoUncheckedUpdateManyInput>
+    /**
+     * Filter which transacaos to update
+     */
+    where?: transacaoWhereInput
+    /**
+     * Limit how many transacaos to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * transacao upsert
+   */
+  export type transacaoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the transacao to update in case it exists.
+     */
+    where: transacaoWhereUniqueInput
+    /**
+     * In case the transacao found by the `where` argument doesn't exist, create a new transacao with this data.
+     */
+    create: XOR<transacaoCreateInput, transacaoUncheckedCreateInput>
+    /**
+     * In case the transacao was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<transacaoUpdateInput, transacaoUncheckedUpdateInput>
+  }
+
+  /**
+   * transacao delete
+   */
+  export type transacaoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoInclude<ExtArgs> | null
+    /**
+     * Filter which transacao to delete.
+     */
+    where: transacaoWhereUniqueInput
+  }
+
+  /**
+   * transacao deleteMany
+   */
+  export type transacaoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which transacaos to delete
+     */
+    where?: transacaoWhereInput
+    /**
+     * Limit how many transacaos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * transacao without action
+   */
+  export type transacaoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the transacao
+     */
+    select?: transacaoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the transacao
+     */
+    omit?: transacaoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: transacaoInclude<ExtArgs> | null
   }
 
 
@@ -3401,47 +4569,47 @@ export namespace Prisma {
   }
 
   export type UsuarioMinAggregateOutputType = {
-    id: string | null
+    id_usuario: string | null
     nome: string | null
-    senha: string | null
     email: string | null
+    senha: string | null
   }
 
   export type UsuarioMaxAggregateOutputType = {
-    id: string | null
+    id_usuario: string | null
     nome: string | null
-    senha: string | null
     email: string | null
+    senha: string | null
   }
 
   export type UsuarioCountAggregateOutputType = {
-    id: number
+    id_usuario: number
     nome: number
-    senha: number
     email: number
+    senha: number
     _all: number
   }
 
 
   export type UsuarioMinAggregateInputType = {
-    id?: true
+    id_usuario?: true
     nome?: true
-    senha?: true
     email?: true
+    senha?: true
   }
 
   export type UsuarioMaxAggregateInputType = {
-    id?: true
+    id_usuario?: true
     nome?: true
-    senha?: true
     email?: true
+    senha?: true
   }
 
   export type UsuarioCountAggregateInputType = {
-    id?: true
+    id_usuario?: true
     nome?: true
-    senha?: true
     email?: true
+    senha?: true
     _all?: true
   }
 
@@ -3518,10 +4686,10 @@ export namespace Prisma {
   }
 
   export type UsuarioGroupByOutputType = {
-    id: string
+    id_usuario: string
     nome: string
-    senha: string
     email: string
+    senha: string
     _count: UsuarioCountAggregateOutputType | null
     _min: UsuarioMinAggregateOutputType | null
     _max: UsuarioMaxAggregateOutputType | null
@@ -3542,38 +4710,38 @@ export namespace Prisma {
 
 
   export type usuarioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
+    id_usuario?: boolean
     nome?: boolean
-    senha?: boolean
     email?: boolean
-    carteiras?: boolean | usuario$carteirasArgs<ExtArgs>
+    senha?: boolean
+    carteira?: boolean | usuario$carteiraArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
   export type usuarioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
+    id_usuario?: boolean
     nome?: boolean
-    senha?: boolean
     email?: boolean
+    senha?: boolean
   }, ExtArgs["result"]["usuario"]>
 
   export type usuarioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
+    id_usuario?: boolean
     nome?: boolean
-    senha?: boolean
     email?: boolean
+    senha?: boolean
   }, ExtArgs["result"]["usuario"]>
 
   export type usuarioSelectScalar = {
-    id?: boolean
+    id_usuario?: boolean
     nome?: boolean
-    senha?: boolean
     email?: boolean
+    senha?: boolean
   }
 
-  export type usuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "senha" | "email", ExtArgs["result"]["usuario"]>
+  export type usuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_usuario" | "nome" | "email" | "senha", ExtArgs["result"]["usuario"]>
   export type usuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    carteiras?: boolean | usuario$carteirasArgs<ExtArgs>
+    carteira?: boolean | usuario$carteiraArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type usuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3582,13 +4750,13 @@ export namespace Prisma {
   export type $usuarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "usuario"
     objects: {
-      carteiras: Prisma.$carteirasPayload<ExtArgs>[]
+      carteira: Prisma.$carteiraPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
+      id_usuario: string
       nome: string
-      senha: string
       email: string
+      senha: string
     }, ExtArgs["result"]["usuario"]>
     composites: {}
   }
@@ -3672,8 +4840,8 @@ export namespace Prisma {
      * // Get first 10 Usuarios
      * const usuarios = await prisma.usuario.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const usuarioWithIdOnly = await prisma.usuario.findMany({ select: { id: true } })
+     * // Only select the `id_usuario`
+     * const usuarioWithId_usuarioOnly = await prisma.usuario.findMany({ select: { id_usuario: true } })
      * 
      */
     findMany<T extends usuarioFindManyArgs>(args?: SelectSubset<T, usuarioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$usuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -3717,9 +4885,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Usuarios and only return the `id`
-     * const usuarioWithIdOnly = await prisma.usuario.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many Usuarios and only return the `id_usuario`
+     * const usuarioWithId_usuarioOnly = await prisma.usuario.createManyAndReturn({
+     *   select: { id_usuario: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -3808,9 +4976,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Usuarios and only return the `id`
-     * const usuarioWithIdOnly = await prisma.usuario.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more Usuarios and only return the `id_usuario`
+     * const usuarioWithId_usuarioOnly = await prisma.usuario.updateManyAndReturn({
+     *   select: { id_usuario: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3983,7 +5151,7 @@ export namespace Prisma {
    */
   export interface Prisma__usuarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    carteiras<T extends usuario$carteirasArgs<ExtArgs> = {}>(args?: Subset<T, usuario$carteirasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$carteirasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    carteira<T extends usuario$carteiraArgs<ExtArgs> = {}>(args?: Subset<T, usuario$carteiraArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$carteiraPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4013,10 +5181,10 @@ export namespace Prisma {
    * Fields of the usuario model
    */
   interface usuarioFieldRefs {
-    readonly id: FieldRef<"usuario", 'String'>
+    readonly id_usuario: FieldRef<"usuario", 'String'>
     readonly nome: FieldRef<"usuario", 'String'>
-    readonly senha: FieldRef<"usuario", 'String'>
     readonly email: FieldRef<"usuario", 'String'>
+    readonly senha: FieldRef<"usuario", 'String'>
   }
     
 
@@ -4405,27 +5573,27 @@ export namespace Prisma {
   }
 
   /**
-   * usuario.carteiras
+   * usuario.carteira
    */
-  export type usuario$carteirasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type usuario$carteiraArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the carteiras
+     * Select specific fields to fetch from the carteira
      */
-    select?: carteirasSelect<ExtArgs> | null
+    select?: carteiraSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the carteiras
+     * Omit specific fields from the carteira
      */
-    omit?: carteirasOmit<ExtArgs> | null
+    omit?: carteiraOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: carteirasInclude<ExtArgs> | null
-    where?: carteirasWhereInput
-    orderBy?: carteirasOrderByWithRelationInput | carteirasOrderByWithRelationInput[]
-    cursor?: carteirasWhereUniqueInput
+    include?: carteiraInclude<ExtArgs> | null
+    where?: carteiraWhereInput
+    orderBy?: carteiraOrderByWithRelationInput | carteiraOrderByWithRelationInput[]
+    cursor?: carteiraWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: CarteirasScalarFieldEnum | CarteirasScalarFieldEnum[]
+    distinct?: CarteiraScalarFieldEnum | CarteiraScalarFieldEnum[]
   }
 
   /**
@@ -4461,35 +5629,44 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const CarteirasScalarFieldEnum: {
-    id: 'id',
-    nome: 'nome',
-    saldo_atual: 'saldo_atual',
-    usuario_id: 'usuario_id'
+  export const CarteiraScalarFieldEnum: {
+    id_carteira: 'id_carteira',
+    id_usuario: 'id_usuario',
+    saldo: 'saldo'
   };
 
-  export type CarteirasScalarFieldEnum = (typeof CarteirasScalarFieldEnum)[keyof typeof CarteirasScalarFieldEnum]
+  export type CarteiraScalarFieldEnum = (typeof CarteiraScalarFieldEnum)[keyof typeof CarteiraScalarFieldEnum]
 
 
-  export const LancamentoScalarFieldEnum: {
-    id: 'id',
-    tipo_lancamento: 'tipo_lancamento',
-    data_lancamento: 'data_lancamento',
-    descricao: 'descricao',
-    data_cadastro: 'data_cadastro',
+  export const Conta_recorrenteScalarFieldEnum: {
+    id_conta_recorrente: 'id_conta_recorrente',
+    id_carteira: 'id_carteira',
     valor: 'valor',
-    forma_pagamento: 'forma_pagamento',
-    carteira_id: 'carteira_id'
+    descricao: 'descricao',
+    intervalo_dias: 'intervalo_dias',
+    data_inicio: 'data_inicio'
   };
 
-  export type LancamentoScalarFieldEnum = (typeof LancamentoScalarFieldEnum)[keyof typeof LancamentoScalarFieldEnum]
+  export type Conta_recorrenteScalarFieldEnum = (typeof Conta_recorrenteScalarFieldEnum)[keyof typeof Conta_recorrenteScalarFieldEnum]
+
+
+  export const TransacaoScalarFieldEnum: {
+    id_transacao: 'id_transacao',
+    id_carteira: 'id_carteira',
+    valor: 'valor',
+    tipo: 'tipo',
+    descricao: 'descricao',
+    data: 'data'
+  };
+
+  export type TransacaoScalarFieldEnum = (typeof TransacaoScalarFieldEnum)[keyof typeof TransacaoScalarFieldEnum]
 
 
   export const UsuarioScalarFieldEnum: {
-    id: 'id',
+    id_usuario: 'id_usuario',
     nome: 'nome',
-    senha: 'senha',
-    email: 'email'
+    email: 'email',
+    senha: 'senha'
   };
 
   export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
@@ -4553,6 +5730,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -4567,184 +5758,234 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'Float'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
   /**
-   * Reference to a field of type 'Int[]'
+   * Reference to a field of type 'Float[]'
    */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
    */
 
 
-  export type carteirasWhereInput = {
-    AND?: carteirasWhereInput | carteirasWhereInput[]
-    OR?: carteirasWhereInput[]
-    NOT?: carteirasWhereInput | carteirasWhereInput[]
-    id?: UuidFilter<"carteiras"> | string
-    nome?: StringFilter<"carteiras"> | string
-    saldo_atual?: DecimalNullableFilter<"carteiras"> | Decimal | DecimalJsLike | number | string | null
-    usuario_id?: UuidNullableFilter<"carteiras"> | string | null
-    usuario?: XOR<UsuarioNullableScalarRelationFilter, usuarioWhereInput> | null
-    lancamento?: LancamentoListRelationFilter
+  export type carteiraWhereInput = {
+    AND?: carteiraWhereInput | carteiraWhereInput[]
+    OR?: carteiraWhereInput[]
+    NOT?: carteiraWhereInput | carteiraWhereInput[]
+    id_carteira?: StringFilter<"carteira"> | string
+    id_usuario?: StringFilter<"carteira"> | string
+    saldo?: DecimalNullableFilter<"carteira"> | Decimal | DecimalJsLike | number | string | null
+    usuario?: XOR<UsuarioScalarRelationFilter, usuarioWhereInput>
+    conta_recorrente?: Conta_recorrenteListRelationFilter
+    transacao?: TransacaoListRelationFilter
   }
 
-  export type carteirasOrderByWithRelationInput = {
-    id?: SortOrder
-    nome?: SortOrder
-    saldo_atual?: SortOrderInput | SortOrder
-    usuario_id?: SortOrderInput | SortOrder
+  export type carteiraOrderByWithRelationInput = {
+    id_carteira?: SortOrder
+    id_usuario?: SortOrder
+    saldo?: SortOrderInput | SortOrder
     usuario?: usuarioOrderByWithRelationInput
-    lancamento?: lancamentoOrderByRelationAggregateInput
+    conta_recorrente?: conta_recorrenteOrderByRelationAggregateInput
+    transacao?: transacaoOrderByRelationAggregateInput
   }
 
-  export type carteirasWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: carteirasWhereInput | carteirasWhereInput[]
-    OR?: carteirasWhereInput[]
-    NOT?: carteirasWhereInput | carteirasWhereInput[]
-    nome?: StringFilter<"carteiras"> | string
-    saldo_atual?: DecimalNullableFilter<"carteiras"> | Decimal | DecimalJsLike | number | string | null
-    usuario_id?: UuidNullableFilter<"carteiras"> | string | null
-    usuario?: XOR<UsuarioNullableScalarRelationFilter, usuarioWhereInput> | null
-    lancamento?: LancamentoListRelationFilter
-  }, "id">
+  export type carteiraWhereUniqueInput = Prisma.AtLeast<{
+    id_carteira?: string
+    AND?: carteiraWhereInput | carteiraWhereInput[]
+    OR?: carteiraWhereInput[]
+    NOT?: carteiraWhereInput | carteiraWhereInput[]
+    id_usuario?: StringFilter<"carteira"> | string
+    saldo?: DecimalNullableFilter<"carteira"> | Decimal | DecimalJsLike | number | string | null
+    usuario?: XOR<UsuarioScalarRelationFilter, usuarioWhereInput>
+    conta_recorrente?: Conta_recorrenteListRelationFilter
+    transacao?: TransacaoListRelationFilter
+  }, "id_carteira">
 
-  export type carteirasOrderByWithAggregationInput = {
-    id?: SortOrder
-    nome?: SortOrder
-    saldo_atual?: SortOrderInput | SortOrder
-    usuario_id?: SortOrderInput | SortOrder
-    _count?: carteirasCountOrderByAggregateInput
-    _avg?: carteirasAvgOrderByAggregateInput
-    _max?: carteirasMaxOrderByAggregateInput
-    _min?: carteirasMinOrderByAggregateInput
-    _sum?: carteirasSumOrderByAggregateInput
+  export type carteiraOrderByWithAggregationInput = {
+    id_carteira?: SortOrder
+    id_usuario?: SortOrder
+    saldo?: SortOrderInput | SortOrder
+    _count?: carteiraCountOrderByAggregateInput
+    _avg?: carteiraAvgOrderByAggregateInput
+    _max?: carteiraMaxOrderByAggregateInput
+    _min?: carteiraMinOrderByAggregateInput
+    _sum?: carteiraSumOrderByAggregateInput
   }
 
-  export type carteirasScalarWhereWithAggregatesInput = {
-    AND?: carteirasScalarWhereWithAggregatesInput | carteirasScalarWhereWithAggregatesInput[]
-    OR?: carteirasScalarWhereWithAggregatesInput[]
-    NOT?: carteirasScalarWhereWithAggregatesInput | carteirasScalarWhereWithAggregatesInput[]
-    id?: UuidWithAggregatesFilter<"carteiras"> | string
-    nome?: StringWithAggregatesFilter<"carteiras"> | string
-    saldo_atual?: DecimalNullableWithAggregatesFilter<"carteiras"> | Decimal | DecimalJsLike | number | string | null
-    usuario_id?: UuidNullableWithAggregatesFilter<"carteiras"> | string | null
+  export type carteiraScalarWhereWithAggregatesInput = {
+    AND?: carteiraScalarWhereWithAggregatesInput | carteiraScalarWhereWithAggregatesInput[]
+    OR?: carteiraScalarWhereWithAggregatesInput[]
+    NOT?: carteiraScalarWhereWithAggregatesInput | carteiraScalarWhereWithAggregatesInput[]
+    id_carteira?: StringWithAggregatesFilter<"carteira"> | string
+    id_usuario?: StringWithAggregatesFilter<"carteira"> | string
+    saldo?: DecimalNullableWithAggregatesFilter<"carteira"> | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type lancamentoWhereInput = {
-    AND?: lancamentoWhereInput | lancamentoWhereInput[]
-    OR?: lancamentoWhereInput[]
-    NOT?: lancamentoWhereInput | lancamentoWhereInput[]
-    id?: UuidFilter<"lancamento"> | string
-    tipo_lancamento?: StringFilter<"lancamento"> | string
-    data_lancamento?: DateTimeNullableFilter<"lancamento"> | Date | string | null
-    descricao?: StringNullableFilter<"lancamento"> | string | null
-    data_cadastro?: DateTimeNullableFilter<"lancamento"> | Date | string | null
-    valor?: DecimalNullableFilter<"lancamento"> | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: StringNullableFilter<"lancamento"> | string | null
-    carteira_id?: UuidNullableFilter<"lancamento"> | string | null
-    carteiras?: XOR<CarteirasNullableScalarRelationFilter, carteirasWhereInput> | null
+  export type conta_recorrenteWhereInput = {
+    AND?: conta_recorrenteWhereInput | conta_recorrenteWhereInput[]
+    OR?: conta_recorrenteWhereInput[]
+    NOT?: conta_recorrenteWhereInput | conta_recorrenteWhereInput[]
+    id_conta_recorrente?: IntFilter<"conta_recorrente"> | number
+    id_carteira?: StringFilter<"conta_recorrente"> | string
+    valor?: DecimalFilter<"conta_recorrente"> | Decimal | DecimalJsLike | number | string
+    descricao?: StringNullableFilter<"conta_recorrente"> | string | null
+    intervalo_dias?: IntFilter<"conta_recorrente"> | number
+    data_inicio?: DateTimeFilter<"conta_recorrente"> | Date | string
+    carteira?: XOR<CarteiraScalarRelationFilter, carteiraWhereInput>
   }
 
-  export type lancamentoOrderByWithRelationInput = {
-    id?: SortOrder
-    tipo_lancamento?: SortOrder
-    data_lancamento?: SortOrderInput | SortOrder
+  export type conta_recorrenteOrderByWithRelationInput = {
+    id_conta_recorrente?: SortOrder
+    id_carteira?: SortOrder
+    valor?: SortOrder
     descricao?: SortOrderInput | SortOrder
-    data_cadastro?: SortOrderInput | SortOrder
-    valor?: SortOrderInput | SortOrder
-    forma_pagamento?: SortOrderInput | SortOrder
-    carteira_id?: SortOrderInput | SortOrder
-    carteiras?: carteirasOrderByWithRelationInput
+    intervalo_dias?: SortOrder
+    data_inicio?: SortOrder
+    carteira?: carteiraOrderByWithRelationInput
   }
 
-  export type lancamentoWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: lancamentoWhereInput | lancamentoWhereInput[]
-    OR?: lancamentoWhereInput[]
-    NOT?: lancamentoWhereInput | lancamentoWhereInput[]
-    tipo_lancamento?: StringFilter<"lancamento"> | string
-    data_lancamento?: DateTimeNullableFilter<"lancamento"> | Date | string | null
-    descricao?: StringNullableFilter<"lancamento"> | string | null
-    data_cadastro?: DateTimeNullableFilter<"lancamento"> | Date | string | null
-    valor?: DecimalNullableFilter<"lancamento"> | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: StringNullableFilter<"lancamento"> | string | null
-    carteira_id?: UuidNullableFilter<"lancamento"> | string | null
-    carteiras?: XOR<CarteirasNullableScalarRelationFilter, carteirasWhereInput> | null
-  }, "id">
+  export type conta_recorrenteWhereUniqueInput = Prisma.AtLeast<{
+    id_conta_recorrente?: number
+    AND?: conta_recorrenteWhereInput | conta_recorrenteWhereInput[]
+    OR?: conta_recorrenteWhereInput[]
+    NOT?: conta_recorrenteWhereInput | conta_recorrenteWhereInput[]
+    id_carteira?: StringFilter<"conta_recorrente"> | string
+    valor?: DecimalFilter<"conta_recorrente"> | Decimal | DecimalJsLike | number | string
+    descricao?: StringNullableFilter<"conta_recorrente"> | string | null
+    intervalo_dias?: IntFilter<"conta_recorrente"> | number
+    data_inicio?: DateTimeFilter<"conta_recorrente"> | Date | string
+    carteira?: XOR<CarteiraScalarRelationFilter, carteiraWhereInput>
+  }, "id_conta_recorrente">
 
-  export type lancamentoOrderByWithAggregationInput = {
-    id?: SortOrder
-    tipo_lancamento?: SortOrder
-    data_lancamento?: SortOrderInput | SortOrder
+  export type conta_recorrenteOrderByWithAggregationInput = {
+    id_conta_recorrente?: SortOrder
+    id_carteira?: SortOrder
+    valor?: SortOrder
     descricao?: SortOrderInput | SortOrder
-    data_cadastro?: SortOrderInput | SortOrder
-    valor?: SortOrderInput | SortOrder
-    forma_pagamento?: SortOrderInput | SortOrder
-    carteira_id?: SortOrderInput | SortOrder
-    _count?: lancamentoCountOrderByAggregateInput
-    _avg?: lancamentoAvgOrderByAggregateInput
-    _max?: lancamentoMaxOrderByAggregateInput
-    _min?: lancamentoMinOrderByAggregateInput
-    _sum?: lancamentoSumOrderByAggregateInput
+    intervalo_dias?: SortOrder
+    data_inicio?: SortOrder
+    _count?: conta_recorrenteCountOrderByAggregateInput
+    _avg?: conta_recorrenteAvgOrderByAggregateInput
+    _max?: conta_recorrenteMaxOrderByAggregateInput
+    _min?: conta_recorrenteMinOrderByAggregateInput
+    _sum?: conta_recorrenteSumOrderByAggregateInput
   }
 
-  export type lancamentoScalarWhereWithAggregatesInput = {
-    AND?: lancamentoScalarWhereWithAggregatesInput | lancamentoScalarWhereWithAggregatesInput[]
-    OR?: lancamentoScalarWhereWithAggregatesInput[]
-    NOT?: lancamentoScalarWhereWithAggregatesInput | lancamentoScalarWhereWithAggregatesInput[]
-    id?: UuidWithAggregatesFilter<"lancamento"> | string
-    tipo_lancamento?: StringWithAggregatesFilter<"lancamento"> | string
-    data_lancamento?: DateTimeNullableWithAggregatesFilter<"lancamento"> | Date | string | null
-    descricao?: StringNullableWithAggregatesFilter<"lancamento"> | string | null
-    data_cadastro?: DateTimeNullableWithAggregatesFilter<"lancamento"> | Date | string | null
-    valor?: DecimalNullableWithAggregatesFilter<"lancamento"> | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: StringNullableWithAggregatesFilter<"lancamento"> | string | null
-    carteira_id?: UuidNullableWithAggregatesFilter<"lancamento"> | string | null
+  export type conta_recorrenteScalarWhereWithAggregatesInput = {
+    AND?: conta_recorrenteScalarWhereWithAggregatesInput | conta_recorrenteScalarWhereWithAggregatesInput[]
+    OR?: conta_recorrenteScalarWhereWithAggregatesInput[]
+    NOT?: conta_recorrenteScalarWhereWithAggregatesInput | conta_recorrenteScalarWhereWithAggregatesInput[]
+    id_conta_recorrente?: IntWithAggregatesFilter<"conta_recorrente"> | number
+    id_carteira?: StringWithAggregatesFilter<"conta_recorrente"> | string
+    valor?: DecimalWithAggregatesFilter<"conta_recorrente"> | Decimal | DecimalJsLike | number | string
+    descricao?: StringNullableWithAggregatesFilter<"conta_recorrente"> | string | null
+    intervalo_dias?: IntWithAggregatesFilter<"conta_recorrente"> | number
+    data_inicio?: DateTimeWithAggregatesFilter<"conta_recorrente"> | Date | string
+  }
+
+  export type transacaoWhereInput = {
+    AND?: transacaoWhereInput | transacaoWhereInput[]
+    OR?: transacaoWhereInput[]
+    NOT?: transacaoWhereInput | transacaoWhereInput[]
+    id_transacao?: IntFilter<"transacao"> | number
+    id_carteira?: StringFilter<"transacao"> | string
+    valor?: DecimalFilter<"transacao"> | Decimal | DecimalJsLike | number | string
+    tipo?: StringFilter<"transacao"> | string
+    descricao?: StringNullableFilter<"transacao"> | string | null
+    data?: DateTimeFilter<"transacao"> | Date | string
+    carteira?: XOR<CarteiraScalarRelationFilter, carteiraWhereInput>
+  }
+
+  export type transacaoOrderByWithRelationInput = {
+    id_transacao?: SortOrder
+    id_carteira?: SortOrder
+    valor?: SortOrder
+    tipo?: SortOrder
+    descricao?: SortOrderInput | SortOrder
+    data?: SortOrder
+    carteira?: carteiraOrderByWithRelationInput
+  }
+
+  export type transacaoWhereUniqueInput = Prisma.AtLeast<{
+    id_transacao?: number
+    AND?: transacaoWhereInput | transacaoWhereInput[]
+    OR?: transacaoWhereInput[]
+    NOT?: transacaoWhereInput | transacaoWhereInput[]
+    id_carteira?: StringFilter<"transacao"> | string
+    valor?: DecimalFilter<"transacao"> | Decimal | DecimalJsLike | number | string
+    tipo?: StringFilter<"transacao"> | string
+    descricao?: StringNullableFilter<"transacao"> | string | null
+    data?: DateTimeFilter<"transacao"> | Date | string
+    carteira?: XOR<CarteiraScalarRelationFilter, carteiraWhereInput>
+  }, "id_transacao">
+
+  export type transacaoOrderByWithAggregationInput = {
+    id_transacao?: SortOrder
+    id_carteira?: SortOrder
+    valor?: SortOrder
+    tipo?: SortOrder
+    descricao?: SortOrderInput | SortOrder
+    data?: SortOrder
+    _count?: transacaoCountOrderByAggregateInput
+    _avg?: transacaoAvgOrderByAggregateInput
+    _max?: transacaoMaxOrderByAggregateInput
+    _min?: transacaoMinOrderByAggregateInput
+    _sum?: transacaoSumOrderByAggregateInput
+  }
+
+  export type transacaoScalarWhereWithAggregatesInput = {
+    AND?: transacaoScalarWhereWithAggregatesInput | transacaoScalarWhereWithAggregatesInput[]
+    OR?: transacaoScalarWhereWithAggregatesInput[]
+    NOT?: transacaoScalarWhereWithAggregatesInput | transacaoScalarWhereWithAggregatesInput[]
+    id_transacao?: IntWithAggregatesFilter<"transacao"> | number
+    id_carteira?: StringWithAggregatesFilter<"transacao"> | string
+    valor?: DecimalWithAggregatesFilter<"transacao"> | Decimal | DecimalJsLike | number | string
+    tipo?: StringWithAggregatesFilter<"transacao"> | string
+    descricao?: StringNullableWithAggregatesFilter<"transacao"> | string | null
+    data?: DateTimeWithAggregatesFilter<"transacao"> | Date | string
   }
 
   export type usuarioWhereInput = {
     AND?: usuarioWhereInput | usuarioWhereInput[]
     OR?: usuarioWhereInput[]
     NOT?: usuarioWhereInput | usuarioWhereInput[]
-    id?: UuidFilter<"usuario"> | string
+    id_usuario?: StringFilter<"usuario"> | string
     nome?: StringFilter<"usuario"> | string
-    senha?: StringFilter<"usuario"> | string
     email?: StringFilter<"usuario"> | string
-    carteiras?: CarteirasListRelationFilter
+    senha?: StringFilter<"usuario"> | string
+    carteira?: CarteiraListRelationFilter
   }
 
   export type usuarioOrderByWithRelationInput = {
-    id?: SortOrder
+    id_usuario?: SortOrder
     nome?: SortOrder
-    senha?: SortOrder
     email?: SortOrder
-    carteiras?: carteirasOrderByRelationAggregateInput
+    senha?: SortOrder
+    carteira?: carteiraOrderByRelationAggregateInput
   }
 
   export type usuarioWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id_usuario?: string
     email?: string
     AND?: usuarioWhereInput | usuarioWhereInput[]
     OR?: usuarioWhereInput[]
     NOT?: usuarioWhereInput | usuarioWhereInput[]
     nome?: StringFilter<"usuario"> | string
     senha?: StringFilter<"usuario"> | string
-    carteiras?: CarteirasListRelationFilter
-  }, "id" | "email">
+    carteira?: CarteiraListRelationFilter
+  }, "id_usuario" | "email">
 
   export type usuarioOrderByWithAggregationInput = {
-    id?: SortOrder
+    id_usuario?: SortOrder
     nome?: SortOrder
-    senha?: SortOrder
     email?: SortOrder
+    senha?: SortOrder
     _count?: usuarioCountOrderByAggregateInput
     _max?: usuarioMaxOrderByAggregateInput
     _min?: usuarioMinOrderByAggregateInput
@@ -4754,203 +5995,230 @@ export namespace Prisma {
     AND?: usuarioScalarWhereWithAggregatesInput | usuarioScalarWhereWithAggregatesInput[]
     OR?: usuarioScalarWhereWithAggregatesInput[]
     NOT?: usuarioScalarWhereWithAggregatesInput | usuarioScalarWhereWithAggregatesInput[]
-    id?: UuidWithAggregatesFilter<"usuario"> | string
+    id_usuario?: StringWithAggregatesFilter<"usuario"> | string
     nome?: StringWithAggregatesFilter<"usuario"> | string
-    senha?: StringWithAggregatesFilter<"usuario"> | string
     email?: StringWithAggregatesFilter<"usuario"> | string
+    senha?: StringWithAggregatesFilter<"usuario"> | string
   }
 
-  export type carteirasCreateInput = {
-    id?: string
-    nome: string
-    saldo_atual?: Decimal | DecimalJsLike | number | string | null
-    usuario?: usuarioCreateNestedOneWithoutCarteirasInput
-    lancamento?: lancamentoCreateNestedManyWithoutCarteirasInput
+  export type carteiraCreateInput = {
+    id_carteira: string
+    saldo?: Decimal | DecimalJsLike | number | string | null
+    usuario: usuarioCreateNestedOneWithoutCarteiraInput
+    conta_recorrente?: conta_recorrenteCreateNestedManyWithoutCarteiraInput
+    transacao?: transacaoCreateNestedManyWithoutCarteiraInput
   }
 
-  export type carteirasUncheckedCreateInput = {
-    id?: string
-    nome: string
-    saldo_atual?: Decimal | DecimalJsLike | number | string | null
-    usuario_id?: string | null
-    lancamento?: lancamentoUncheckedCreateNestedManyWithoutCarteirasInput
+  export type carteiraUncheckedCreateInput = {
+    id_carteira: string
+    id_usuario: string
+    saldo?: Decimal | DecimalJsLike | number | string | null
+    conta_recorrente?: conta_recorrenteUncheckedCreateNestedManyWithoutCarteiraInput
+    transacao?: transacaoUncheckedCreateNestedManyWithoutCarteiraInput
   }
 
-  export type carteirasUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    saldo_atual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    usuario?: usuarioUpdateOneWithoutCarteirasNestedInput
-    lancamento?: lancamentoUpdateManyWithoutCarteirasNestedInput
+  export type carteiraUpdateInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    usuario?: usuarioUpdateOneRequiredWithoutCarteiraNestedInput
+    conta_recorrente?: conta_recorrenteUpdateManyWithoutCarteiraNestedInput
+    transacao?: transacaoUpdateManyWithoutCarteiraNestedInput
   }
 
-  export type carteirasUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    saldo_atual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    usuario_id?: NullableStringFieldUpdateOperationsInput | string | null
-    lancamento?: lancamentoUncheckedUpdateManyWithoutCarteirasNestedInput
+  export type carteiraUncheckedUpdateInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    id_usuario?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    conta_recorrente?: conta_recorrenteUncheckedUpdateManyWithoutCarteiraNestedInput
+    transacao?: transacaoUncheckedUpdateManyWithoutCarteiraNestedInput
   }
 
-  export type carteirasCreateManyInput = {
-    id?: string
-    nome: string
-    saldo_atual?: Decimal | DecimalJsLike | number | string | null
-    usuario_id?: string | null
+  export type carteiraCreateManyInput = {
+    id_carteira: string
+    id_usuario: string
+    saldo?: Decimal | DecimalJsLike | number | string | null
   }
 
-  export type carteirasUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    saldo_atual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+  export type carteiraUpdateManyMutationInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type carteirasUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    saldo_atual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    usuario_id?: NullableStringFieldUpdateOperationsInput | string | null
+  export type carteiraUncheckedUpdateManyInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    id_usuario?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type lancamentoCreateInput = {
-    id?: string
-    tipo_lancamento: string
-    data_lancamento?: Date | string | null
+  export type conta_recorrenteCreateInput = {
+    valor: Decimal | DecimalJsLike | number | string
     descricao?: string | null
-    data_cadastro?: Date | string | null
-    valor?: Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: string | null
-    carteiras?: carteirasCreateNestedOneWithoutLancamentoInput
+    intervalo_dias: number
+    data_inicio: Date | string
+    carteira: carteiraCreateNestedOneWithoutConta_recorrenteInput
   }
 
-  export type lancamentoUncheckedCreateInput = {
-    id?: string
-    tipo_lancamento: string
-    data_lancamento?: Date | string | null
+  export type conta_recorrenteUncheckedCreateInput = {
+    id_conta_recorrente?: number
+    id_carteira: string
+    valor: Decimal | DecimalJsLike | number | string
     descricao?: string | null
-    data_cadastro?: Date | string | null
-    valor?: Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: string | null
-    carteira_id?: string | null
+    intervalo_dias: number
+    data_inicio: Date | string
   }
 
-  export type lancamentoUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    tipo_lancamento?: StringFieldUpdateOperationsInput | string
-    data_lancamento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type conta_recorrenteUpdateInput = {
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    data_cadastro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    valor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: NullableStringFieldUpdateOperationsInput | string | null
-    carteiras?: carteirasUpdateOneWithoutLancamentoNestedInput
+    intervalo_dias?: IntFieldUpdateOperationsInput | number
+    data_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
+    carteira?: carteiraUpdateOneRequiredWithoutConta_recorrenteNestedInput
   }
 
-  export type lancamentoUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    tipo_lancamento?: StringFieldUpdateOperationsInput | string
-    data_lancamento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type conta_recorrenteUncheckedUpdateInput = {
+    id_conta_recorrente?: IntFieldUpdateOperationsInput | number
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    data_cadastro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    valor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: NullableStringFieldUpdateOperationsInput | string | null
-    carteira_id?: NullableStringFieldUpdateOperationsInput | string | null
+    intervalo_dias?: IntFieldUpdateOperationsInput | number
+    data_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type lancamentoCreateManyInput = {
-    id?: string
-    tipo_lancamento: string
-    data_lancamento?: Date | string | null
+  export type conta_recorrenteCreateManyInput = {
+    id_conta_recorrente?: number
+    id_carteira: string
+    valor: Decimal | DecimalJsLike | number | string
     descricao?: string | null
-    data_cadastro?: Date | string | null
-    valor?: Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: string | null
-    carteira_id?: string | null
+    intervalo_dias: number
+    data_inicio: Date | string
   }
 
-  export type lancamentoUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    tipo_lancamento?: StringFieldUpdateOperationsInput | string
-    data_lancamento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type conta_recorrenteUpdateManyMutationInput = {
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    data_cadastro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    valor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: NullableStringFieldUpdateOperationsInput | string | null
+    intervalo_dias?: IntFieldUpdateOperationsInput | number
+    data_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type lancamentoUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    tipo_lancamento?: StringFieldUpdateOperationsInput | string
-    data_lancamento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type conta_recorrenteUncheckedUpdateManyInput = {
+    id_conta_recorrente?: IntFieldUpdateOperationsInput | number
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    data_cadastro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    valor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: NullableStringFieldUpdateOperationsInput | string | null
-    carteira_id?: NullableStringFieldUpdateOperationsInput | string | null
+    intervalo_dias?: IntFieldUpdateOperationsInput | number
+    data_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type transacaoCreateInput = {
+    valor: Decimal | DecimalJsLike | number | string
+    tipo: string
+    descricao?: string | null
+    data?: Date | string
+    carteira: carteiraCreateNestedOneWithoutTransacaoInput
+  }
+
+  export type transacaoUncheckedCreateInput = {
+    id_transacao?: number
+    id_carteira: string
+    valor: Decimal | DecimalJsLike | number | string
+    tipo: string
+    descricao?: string | null
+    data?: Date | string
+  }
+
+  export type transacaoUpdateInput = {
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
+    carteira?: carteiraUpdateOneRequiredWithoutTransacaoNestedInput
+  }
+
+  export type transacaoUncheckedUpdateInput = {
+    id_transacao?: IntFieldUpdateOperationsInput | number
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type transacaoCreateManyInput = {
+    id_transacao?: number
+    id_carteira: string
+    valor: Decimal | DecimalJsLike | number | string
+    tipo: string
+    descricao?: string | null
+    data?: Date | string
+  }
+
+  export type transacaoUpdateManyMutationInput = {
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type transacaoUncheckedUpdateManyInput = {
+    id_transacao?: IntFieldUpdateOperationsInput | number
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type usuarioCreateInput = {
-    id?: string
+    id_usuario: string
     nome: string
-    senha: string
     email: string
-    carteiras?: carteirasCreateNestedManyWithoutUsuarioInput
+    senha: string
+    carteira?: carteiraCreateNestedManyWithoutUsuarioInput
   }
 
   export type usuarioUncheckedCreateInput = {
-    id?: string
+    id_usuario: string
     nome: string
-    senha: string
     email: string
-    carteiras?: carteirasUncheckedCreateNestedManyWithoutUsuarioInput
+    senha: string
+    carteira?: carteiraUncheckedCreateNestedManyWithoutUsuarioInput
   }
 
   export type usuarioUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id_usuario?: StringFieldUpdateOperationsInput | string
     nome?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    carteiras?: carteirasUpdateManyWithoutUsuarioNestedInput
+    senha?: StringFieldUpdateOperationsInput | string
+    carteira?: carteiraUpdateManyWithoutUsuarioNestedInput
   }
 
   export type usuarioUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id_usuario?: StringFieldUpdateOperationsInput | string
     nome?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    carteiras?: carteirasUncheckedUpdateManyWithoutUsuarioNestedInput
+    senha?: StringFieldUpdateOperationsInput | string
+    carteira?: carteiraUncheckedUpdateManyWithoutUsuarioNestedInput
   }
 
   export type usuarioCreateManyInput = {
-    id?: string
+    id_usuario: string
     nome: string
-    senha: string
     email: string
+    senha: string
   }
 
   export type usuarioUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id_usuario?: StringFieldUpdateOperationsInput | string
     nome?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
   }
 
   export type usuarioUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
+    id_usuario?: StringFieldUpdateOperationsInput | string
     nome?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type UuidFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidFilter<$PrismaModel> | string
+    senha?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4979,27 +6247,21 @@ export namespace Prisma {
     not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type UuidNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
+  export type UsuarioScalarRelationFilter = {
+    is?: usuarioWhereInput
+    isNot?: usuarioWhereInput
   }
 
-  export type UsuarioNullableScalarRelationFilter = {
-    is?: usuarioWhereInput | null
-    isNot?: usuarioWhereInput | null
+  export type Conta_recorrenteListRelationFilter = {
+    every?: conta_recorrenteWhereInput
+    some?: conta_recorrenteWhereInput
+    none?: conta_recorrenteWhereInput
   }
 
-  export type LancamentoListRelationFilter = {
-    every?: lancamentoWhereInput
-    some?: lancamentoWhereInput
-    none?: lancamentoWhereInput
+  export type TransacaoListRelationFilter = {
+    every?: transacaoWhereInput
+    some?: transacaoWhereInput
+    none?: transacaoWhereInput
   }
 
   export type SortOrderInput = {
@@ -5007,52 +6269,38 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type lancamentoOrderByRelationAggregateInput = {
+  export type conta_recorrenteOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type carteirasCountOrderByAggregateInput = {
-    id?: SortOrder
-    nome?: SortOrder
-    saldo_atual?: SortOrder
-    usuario_id?: SortOrder
+  export type transacaoOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
-  export type carteirasAvgOrderByAggregateInput = {
-    saldo_atual?: SortOrder
+  export type carteiraCountOrderByAggregateInput = {
+    id_carteira?: SortOrder
+    id_usuario?: SortOrder
+    saldo?: SortOrder
   }
 
-  export type carteirasMaxOrderByAggregateInput = {
-    id?: SortOrder
-    nome?: SortOrder
-    saldo_atual?: SortOrder
-    usuario_id?: SortOrder
+  export type carteiraAvgOrderByAggregateInput = {
+    saldo?: SortOrder
   }
 
-  export type carteirasMinOrderByAggregateInput = {
-    id?: SortOrder
-    nome?: SortOrder
-    saldo_atual?: SortOrder
-    usuario_id?: SortOrder
+  export type carteiraMaxOrderByAggregateInput = {
+    id_carteira?: SortOrder
+    id_usuario?: SortOrder
+    saldo?: SortOrder
   }
 
-  export type carteirasSumOrderByAggregateInput = {
-    saldo_atual?: SortOrder
+  export type carteiraMinOrderByAggregateInput = {
+    id_carteira?: SortOrder
+    id_usuario?: SortOrder
+    saldo?: SortOrder
   }
 
-  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
+  export type carteiraSumOrderByAggregateInput = {
+    saldo?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5089,30 +6337,26 @@ export namespace Prisma {
     _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
-  export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -5130,64 +6374,91 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type CarteirasNullableScalarRelationFilter = {
-    is?: carteirasWhereInput | null
-    isNot?: carteirasWhereInput | null
-  }
-
-  export type lancamentoCountOrderByAggregateInput = {
-    id?: SortOrder
-    tipo_lancamento?: SortOrder
-    data_lancamento?: SortOrder
-    descricao?: SortOrder
-    data_cadastro?: SortOrder
-    valor?: SortOrder
-    forma_pagamento?: SortOrder
-    carteira_id?: SortOrder
-  }
-
-  export type lancamentoAvgOrderByAggregateInput = {
-    valor?: SortOrder
-  }
-
-  export type lancamentoMaxOrderByAggregateInput = {
-    id?: SortOrder
-    tipo_lancamento?: SortOrder
-    data_lancamento?: SortOrder
-    descricao?: SortOrder
-    data_cadastro?: SortOrder
-    valor?: SortOrder
-    forma_pagamento?: SortOrder
-    carteira_id?: SortOrder
-  }
-
-  export type lancamentoMinOrderByAggregateInput = {
-    id?: SortOrder
-    tipo_lancamento?: SortOrder
-    data_lancamento?: SortOrder
-    descricao?: SortOrder
-    data_cadastro?: SortOrder
-    valor?: SortOrder
-    forma_pagamento?: SortOrder
-    carteira_id?: SortOrder
-  }
-
-  export type lancamentoSumOrderByAggregateInput = {
-    valor?: SortOrder
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type CarteiraScalarRelationFilter = {
+    is?: carteiraWhereInput
+    isNot?: carteiraWhereInput
+  }
+
+  export type conta_recorrenteCountOrderByAggregateInput = {
+    id_conta_recorrente?: SortOrder
+    id_carteira?: SortOrder
+    valor?: SortOrder
+    descricao?: SortOrder
+    intervalo_dias?: SortOrder
+    data_inicio?: SortOrder
+  }
+
+  export type conta_recorrenteAvgOrderByAggregateInput = {
+    id_conta_recorrente?: SortOrder
+    valor?: SortOrder
+    intervalo_dias?: SortOrder
+  }
+
+  export type conta_recorrenteMaxOrderByAggregateInput = {
+    id_conta_recorrente?: SortOrder
+    id_carteira?: SortOrder
+    valor?: SortOrder
+    descricao?: SortOrder
+    intervalo_dias?: SortOrder
+    data_inicio?: SortOrder
+  }
+
+  export type conta_recorrenteMinOrderByAggregateInput = {
+    id_conta_recorrente?: SortOrder
+    id_carteira?: SortOrder
+    valor?: SortOrder
+    descricao?: SortOrder
+    intervalo_dias?: SortOrder
+    data_inicio?: SortOrder
+  }
+
+  export type conta_recorrenteSumOrderByAggregateInput = {
+    id_conta_recorrente?: SortOrder
+    valor?: SortOrder
+    intervalo_dias?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5208,55 +6479,120 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type CarteirasListRelationFilter = {
-    every?: carteirasWhereInput
-    some?: carteirasWhereInput
-    none?: carteirasWhereInput
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type carteirasOrderByRelationAggregateInput = {
+  export type transacaoCountOrderByAggregateInput = {
+    id_transacao?: SortOrder
+    id_carteira?: SortOrder
+    valor?: SortOrder
+    tipo?: SortOrder
+    descricao?: SortOrder
+    data?: SortOrder
+  }
+
+  export type transacaoAvgOrderByAggregateInput = {
+    id_transacao?: SortOrder
+    valor?: SortOrder
+  }
+
+  export type transacaoMaxOrderByAggregateInput = {
+    id_transacao?: SortOrder
+    id_carteira?: SortOrder
+    valor?: SortOrder
+    tipo?: SortOrder
+    descricao?: SortOrder
+    data?: SortOrder
+  }
+
+  export type transacaoMinOrderByAggregateInput = {
+    id_transacao?: SortOrder
+    id_carteira?: SortOrder
+    valor?: SortOrder
+    tipo?: SortOrder
+    descricao?: SortOrder
+    data?: SortOrder
+  }
+
+  export type transacaoSumOrderByAggregateInput = {
+    id_transacao?: SortOrder
+    valor?: SortOrder
+  }
+
+  export type CarteiraListRelationFilter = {
+    every?: carteiraWhereInput
+    some?: carteiraWhereInput
+    none?: carteiraWhereInput
+  }
+
+  export type carteiraOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type usuarioCountOrderByAggregateInput = {
-    id?: SortOrder
+    id_usuario?: SortOrder
     nome?: SortOrder
-    senha?: SortOrder
     email?: SortOrder
+    senha?: SortOrder
   }
 
   export type usuarioMaxOrderByAggregateInput = {
-    id?: SortOrder
+    id_usuario?: SortOrder
     nome?: SortOrder
-    senha?: SortOrder
     email?: SortOrder
+    senha?: SortOrder
   }
 
   export type usuarioMinOrderByAggregateInput = {
-    id?: SortOrder
+    id_usuario?: SortOrder
     nome?: SortOrder
-    senha?: SortOrder
     email?: SortOrder
+    senha?: SortOrder
   }
 
-  export type usuarioCreateNestedOneWithoutCarteirasInput = {
-    create?: XOR<usuarioCreateWithoutCarteirasInput, usuarioUncheckedCreateWithoutCarteirasInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutCarteirasInput
+  export type usuarioCreateNestedOneWithoutCarteiraInput = {
+    create?: XOR<usuarioCreateWithoutCarteiraInput, usuarioUncheckedCreateWithoutCarteiraInput>
+    connectOrCreate?: usuarioCreateOrConnectWithoutCarteiraInput
     connect?: usuarioWhereUniqueInput
   }
 
-  export type lancamentoCreateNestedManyWithoutCarteirasInput = {
-    create?: XOR<lancamentoCreateWithoutCarteirasInput, lancamentoUncheckedCreateWithoutCarteirasInput> | lancamentoCreateWithoutCarteirasInput[] | lancamentoUncheckedCreateWithoutCarteirasInput[]
-    connectOrCreate?: lancamentoCreateOrConnectWithoutCarteirasInput | lancamentoCreateOrConnectWithoutCarteirasInput[]
-    createMany?: lancamentoCreateManyCarteirasInputEnvelope
-    connect?: lancamentoWhereUniqueInput | lancamentoWhereUniqueInput[]
+  export type conta_recorrenteCreateNestedManyWithoutCarteiraInput = {
+    create?: XOR<conta_recorrenteCreateWithoutCarteiraInput, conta_recorrenteUncheckedCreateWithoutCarteiraInput> | conta_recorrenteCreateWithoutCarteiraInput[] | conta_recorrenteUncheckedCreateWithoutCarteiraInput[]
+    connectOrCreate?: conta_recorrenteCreateOrConnectWithoutCarteiraInput | conta_recorrenteCreateOrConnectWithoutCarteiraInput[]
+    createMany?: conta_recorrenteCreateManyCarteiraInputEnvelope
+    connect?: conta_recorrenteWhereUniqueInput | conta_recorrenteWhereUniqueInput[]
   }
 
-  export type lancamentoUncheckedCreateNestedManyWithoutCarteirasInput = {
-    create?: XOR<lancamentoCreateWithoutCarteirasInput, lancamentoUncheckedCreateWithoutCarteirasInput> | lancamentoCreateWithoutCarteirasInput[] | lancamentoUncheckedCreateWithoutCarteirasInput[]
-    connectOrCreate?: lancamentoCreateOrConnectWithoutCarteirasInput | lancamentoCreateOrConnectWithoutCarteirasInput[]
-    createMany?: lancamentoCreateManyCarteirasInputEnvelope
-    connect?: lancamentoWhereUniqueInput | lancamentoWhereUniqueInput[]
+  export type transacaoCreateNestedManyWithoutCarteiraInput = {
+    create?: XOR<transacaoCreateWithoutCarteiraInput, transacaoUncheckedCreateWithoutCarteiraInput> | transacaoCreateWithoutCarteiraInput[] | transacaoUncheckedCreateWithoutCarteiraInput[]
+    connectOrCreate?: transacaoCreateOrConnectWithoutCarteiraInput | transacaoCreateOrConnectWithoutCarteiraInput[]
+    createMany?: transacaoCreateManyCarteiraInputEnvelope
+    connect?: transacaoWhereUniqueInput | transacaoWhereUniqueInput[]
+  }
+
+  export type conta_recorrenteUncheckedCreateNestedManyWithoutCarteiraInput = {
+    create?: XOR<conta_recorrenteCreateWithoutCarteiraInput, conta_recorrenteUncheckedCreateWithoutCarteiraInput> | conta_recorrenteCreateWithoutCarteiraInput[] | conta_recorrenteUncheckedCreateWithoutCarteiraInput[]
+    connectOrCreate?: conta_recorrenteCreateOrConnectWithoutCarteiraInput | conta_recorrenteCreateOrConnectWithoutCarteiraInput[]
+    createMany?: conta_recorrenteCreateManyCarteiraInputEnvelope
+    connect?: conta_recorrenteWhereUniqueInput | conta_recorrenteWhereUniqueInput[]
+  }
+
+  export type transacaoUncheckedCreateNestedManyWithoutCarteiraInput = {
+    create?: XOR<transacaoCreateWithoutCarteiraInput, transacaoUncheckedCreateWithoutCarteiraInput> | transacaoCreateWithoutCarteiraInput[] | transacaoUncheckedCreateWithoutCarteiraInput[]
+    connectOrCreate?: transacaoCreateOrConnectWithoutCarteiraInput | transacaoCreateOrConnectWithoutCarteiraInput[]
+    createMany?: transacaoCreateManyCarteiraInputEnvelope
+    connect?: transacaoWhereUniqueInput | transacaoWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5271,119 +6607,162 @@ export namespace Prisma {
     divide?: Decimal | DecimalJsLike | number | string
   }
 
-  export type usuarioUpdateOneWithoutCarteirasNestedInput = {
-    create?: XOR<usuarioCreateWithoutCarteirasInput, usuarioUncheckedCreateWithoutCarteirasInput>
-    connectOrCreate?: usuarioCreateOrConnectWithoutCarteirasInput
-    upsert?: usuarioUpsertWithoutCarteirasInput
-    disconnect?: usuarioWhereInput | boolean
-    delete?: usuarioWhereInput | boolean
+  export type usuarioUpdateOneRequiredWithoutCarteiraNestedInput = {
+    create?: XOR<usuarioCreateWithoutCarteiraInput, usuarioUncheckedCreateWithoutCarteiraInput>
+    connectOrCreate?: usuarioCreateOrConnectWithoutCarteiraInput
+    upsert?: usuarioUpsertWithoutCarteiraInput
     connect?: usuarioWhereUniqueInput
-    update?: XOR<XOR<usuarioUpdateToOneWithWhereWithoutCarteirasInput, usuarioUpdateWithoutCarteirasInput>, usuarioUncheckedUpdateWithoutCarteirasInput>
+    update?: XOR<XOR<usuarioUpdateToOneWithWhereWithoutCarteiraInput, usuarioUpdateWithoutCarteiraInput>, usuarioUncheckedUpdateWithoutCarteiraInput>
   }
 
-  export type lancamentoUpdateManyWithoutCarteirasNestedInput = {
-    create?: XOR<lancamentoCreateWithoutCarteirasInput, lancamentoUncheckedCreateWithoutCarteirasInput> | lancamentoCreateWithoutCarteirasInput[] | lancamentoUncheckedCreateWithoutCarteirasInput[]
-    connectOrCreate?: lancamentoCreateOrConnectWithoutCarteirasInput | lancamentoCreateOrConnectWithoutCarteirasInput[]
-    upsert?: lancamentoUpsertWithWhereUniqueWithoutCarteirasInput | lancamentoUpsertWithWhereUniqueWithoutCarteirasInput[]
-    createMany?: lancamentoCreateManyCarteirasInputEnvelope
-    set?: lancamentoWhereUniqueInput | lancamentoWhereUniqueInput[]
-    disconnect?: lancamentoWhereUniqueInput | lancamentoWhereUniqueInput[]
-    delete?: lancamentoWhereUniqueInput | lancamentoWhereUniqueInput[]
-    connect?: lancamentoWhereUniqueInput | lancamentoWhereUniqueInput[]
-    update?: lancamentoUpdateWithWhereUniqueWithoutCarteirasInput | lancamentoUpdateWithWhereUniqueWithoutCarteirasInput[]
-    updateMany?: lancamentoUpdateManyWithWhereWithoutCarteirasInput | lancamentoUpdateManyWithWhereWithoutCarteirasInput[]
-    deleteMany?: lancamentoScalarWhereInput | lancamentoScalarWhereInput[]
+  export type conta_recorrenteUpdateManyWithoutCarteiraNestedInput = {
+    create?: XOR<conta_recorrenteCreateWithoutCarteiraInput, conta_recorrenteUncheckedCreateWithoutCarteiraInput> | conta_recorrenteCreateWithoutCarteiraInput[] | conta_recorrenteUncheckedCreateWithoutCarteiraInput[]
+    connectOrCreate?: conta_recorrenteCreateOrConnectWithoutCarteiraInput | conta_recorrenteCreateOrConnectWithoutCarteiraInput[]
+    upsert?: conta_recorrenteUpsertWithWhereUniqueWithoutCarteiraInput | conta_recorrenteUpsertWithWhereUniqueWithoutCarteiraInput[]
+    createMany?: conta_recorrenteCreateManyCarteiraInputEnvelope
+    set?: conta_recorrenteWhereUniqueInput | conta_recorrenteWhereUniqueInput[]
+    disconnect?: conta_recorrenteWhereUniqueInput | conta_recorrenteWhereUniqueInput[]
+    delete?: conta_recorrenteWhereUniqueInput | conta_recorrenteWhereUniqueInput[]
+    connect?: conta_recorrenteWhereUniqueInput | conta_recorrenteWhereUniqueInput[]
+    update?: conta_recorrenteUpdateWithWhereUniqueWithoutCarteiraInput | conta_recorrenteUpdateWithWhereUniqueWithoutCarteiraInput[]
+    updateMany?: conta_recorrenteUpdateManyWithWhereWithoutCarteiraInput | conta_recorrenteUpdateManyWithWhereWithoutCarteiraInput[]
+    deleteMany?: conta_recorrenteScalarWhereInput | conta_recorrenteScalarWhereInput[]
+  }
+
+  export type transacaoUpdateManyWithoutCarteiraNestedInput = {
+    create?: XOR<transacaoCreateWithoutCarteiraInput, transacaoUncheckedCreateWithoutCarteiraInput> | transacaoCreateWithoutCarteiraInput[] | transacaoUncheckedCreateWithoutCarteiraInput[]
+    connectOrCreate?: transacaoCreateOrConnectWithoutCarteiraInput | transacaoCreateOrConnectWithoutCarteiraInput[]
+    upsert?: transacaoUpsertWithWhereUniqueWithoutCarteiraInput | transacaoUpsertWithWhereUniqueWithoutCarteiraInput[]
+    createMany?: transacaoCreateManyCarteiraInputEnvelope
+    set?: transacaoWhereUniqueInput | transacaoWhereUniqueInput[]
+    disconnect?: transacaoWhereUniqueInput | transacaoWhereUniqueInput[]
+    delete?: transacaoWhereUniqueInput | transacaoWhereUniqueInput[]
+    connect?: transacaoWhereUniqueInput | transacaoWhereUniqueInput[]
+    update?: transacaoUpdateWithWhereUniqueWithoutCarteiraInput | transacaoUpdateWithWhereUniqueWithoutCarteiraInput[]
+    updateMany?: transacaoUpdateManyWithWhereWithoutCarteiraInput | transacaoUpdateManyWithWhereWithoutCarteiraInput[]
+    deleteMany?: transacaoScalarWhereInput | transacaoScalarWhereInput[]
+  }
+
+  export type conta_recorrenteUncheckedUpdateManyWithoutCarteiraNestedInput = {
+    create?: XOR<conta_recorrenteCreateWithoutCarteiraInput, conta_recorrenteUncheckedCreateWithoutCarteiraInput> | conta_recorrenteCreateWithoutCarteiraInput[] | conta_recorrenteUncheckedCreateWithoutCarteiraInput[]
+    connectOrCreate?: conta_recorrenteCreateOrConnectWithoutCarteiraInput | conta_recorrenteCreateOrConnectWithoutCarteiraInput[]
+    upsert?: conta_recorrenteUpsertWithWhereUniqueWithoutCarteiraInput | conta_recorrenteUpsertWithWhereUniqueWithoutCarteiraInput[]
+    createMany?: conta_recorrenteCreateManyCarteiraInputEnvelope
+    set?: conta_recorrenteWhereUniqueInput | conta_recorrenteWhereUniqueInput[]
+    disconnect?: conta_recorrenteWhereUniqueInput | conta_recorrenteWhereUniqueInput[]
+    delete?: conta_recorrenteWhereUniqueInput | conta_recorrenteWhereUniqueInput[]
+    connect?: conta_recorrenteWhereUniqueInput | conta_recorrenteWhereUniqueInput[]
+    update?: conta_recorrenteUpdateWithWhereUniqueWithoutCarteiraInput | conta_recorrenteUpdateWithWhereUniqueWithoutCarteiraInput[]
+    updateMany?: conta_recorrenteUpdateManyWithWhereWithoutCarteiraInput | conta_recorrenteUpdateManyWithWhereWithoutCarteiraInput[]
+    deleteMany?: conta_recorrenteScalarWhereInput | conta_recorrenteScalarWhereInput[]
+  }
+
+  export type transacaoUncheckedUpdateManyWithoutCarteiraNestedInput = {
+    create?: XOR<transacaoCreateWithoutCarteiraInput, transacaoUncheckedCreateWithoutCarteiraInput> | transacaoCreateWithoutCarteiraInput[] | transacaoUncheckedCreateWithoutCarteiraInput[]
+    connectOrCreate?: transacaoCreateOrConnectWithoutCarteiraInput | transacaoCreateOrConnectWithoutCarteiraInput[]
+    upsert?: transacaoUpsertWithWhereUniqueWithoutCarteiraInput | transacaoUpsertWithWhereUniqueWithoutCarteiraInput[]
+    createMany?: transacaoCreateManyCarteiraInputEnvelope
+    set?: transacaoWhereUniqueInput | transacaoWhereUniqueInput[]
+    disconnect?: transacaoWhereUniqueInput | transacaoWhereUniqueInput[]
+    delete?: transacaoWhereUniqueInput | transacaoWhereUniqueInput[]
+    connect?: transacaoWhereUniqueInput | transacaoWhereUniqueInput[]
+    update?: transacaoUpdateWithWhereUniqueWithoutCarteiraInput | transacaoUpdateWithWhereUniqueWithoutCarteiraInput[]
+    updateMany?: transacaoUpdateManyWithWhereWithoutCarteiraInput | transacaoUpdateManyWithWhereWithoutCarteiraInput[]
+    deleteMany?: transacaoScalarWhereInput | transacaoScalarWhereInput[]
+  }
+
+  export type carteiraCreateNestedOneWithoutConta_recorrenteInput = {
+    create?: XOR<carteiraCreateWithoutConta_recorrenteInput, carteiraUncheckedCreateWithoutConta_recorrenteInput>
+    connectOrCreate?: carteiraCreateOrConnectWithoutConta_recorrenteInput
+    connect?: carteiraWhereUniqueInput
+  }
+
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
 
-  export type lancamentoUncheckedUpdateManyWithoutCarteirasNestedInput = {
-    create?: XOR<lancamentoCreateWithoutCarteirasInput, lancamentoUncheckedCreateWithoutCarteirasInput> | lancamentoCreateWithoutCarteirasInput[] | lancamentoUncheckedCreateWithoutCarteirasInput[]
-    connectOrCreate?: lancamentoCreateOrConnectWithoutCarteirasInput | lancamentoCreateOrConnectWithoutCarteirasInput[]
-    upsert?: lancamentoUpsertWithWhereUniqueWithoutCarteirasInput | lancamentoUpsertWithWhereUniqueWithoutCarteirasInput[]
-    createMany?: lancamentoCreateManyCarteirasInputEnvelope
-    set?: lancamentoWhereUniqueInput | lancamentoWhereUniqueInput[]
-    disconnect?: lancamentoWhereUniqueInput | lancamentoWhereUniqueInput[]
-    delete?: lancamentoWhereUniqueInput | lancamentoWhereUniqueInput[]
-    connect?: lancamentoWhereUniqueInput | lancamentoWhereUniqueInput[]
-    update?: lancamentoUpdateWithWhereUniqueWithoutCarteirasInput | lancamentoUpdateWithWhereUniqueWithoutCarteirasInput[]
-    updateMany?: lancamentoUpdateManyWithWhereWithoutCarteirasInput | lancamentoUpdateManyWithWhereWithoutCarteirasInput[]
-    deleteMany?: lancamentoScalarWhereInput | lancamentoScalarWhereInput[]
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
-  export type carteirasCreateNestedOneWithoutLancamentoInput = {
-    create?: XOR<carteirasCreateWithoutLancamentoInput, carteirasUncheckedCreateWithoutLancamentoInput>
-    connectOrCreate?: carteirasCreateOrConnectWithoutLancamentoInput
-    connect?: carteirasWhereUniqueInput
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
+  export type carteiraUpdateOneRequiredWithoutConta_recorrenteNestedInput = {
+    create?: XOR<carteiraCreateWithoutConta_recorrenteInput, carteiraUncheckedCreateWithoutConta_recorrenteInput>
+    connectOrCreate?: carteiraCreateOrConnectWithoutConta_recorrenteInput
+    upsert?: carteiraUpsertWithoutConta_recorrenteInput
+    connect?: carteiraWhereUniqueInput
+    update?: XOR<XOR<carteiraUpdateToOneWithWhereWithoutConta_recorrenteInput, carteiraUpdateWithoutConta_recorrenteInput>, carteiraUncheckedUpdateWithoutConta_recorrenteInput>
   }
 
-  export type carteirasUpdateOneWithoutLancamentoNestedInput = {
-    create?: XOR<carteirasCreateWithoutLancamentoInput, carteirasUncheckedCreateWithoutLancamentoInput>
-    connectOrCreate?: carteirasCreateOrConnectWithoutLancamentoInput
-    upsert?: carteirasUpsertWithoutLancamentoInput
-    disconnect?: carteirasWhereInput | boolean
-    delete?: carteirasWhereInput | boolean
-    connect?: carteirasWhereUniqueInput
-    update?: XOR<XOR<carteirasUpdateToOneWithWhereWithoutLancamentoInput, carteirasUpdateWithoutLancamentoInput>, carteirasUncheckedUpdateWithoutLancamentoInput>
+  export type carteiraCreateNestedOneWithoutTransacaoInput = {
+    create?: XOR<carteiraCreateWithoutTransacaoInput, carteiraUncheckedCreateWithoutTransacaoInput>
+    connectOrCreate?: carteiraCreateOrConnectWithoutTransacaoInput
+    connect?: carteiraWhereUniqueInput
   }
 
-  export type carteirasCreateNestedManyWithoutUsuarioInput = {
-    create?: XOR<carteirasCreateWithoutUsuarioInput, carteirasUncheckedCreateWithoutUsuarioInput> | carteirasCreateWithoutUsuarioInput[] | carteirasUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: carteirasCreateOrConnectWithoutUsuarioInput | carteirasCreateOrConnectWithoutUsuarioInput[]
-    createMany?: carteirasCreateManyUsuarioInputEnvelope
-    connect?: carteirasWhereUniqueInput | carteirasWhereUniqueInput[]
+  export type carteiraUpdateOneRequiredWithoutTransacaoNestedInput = {
+    create?: XOR<carteiraCreateWithoutTransacaoInput, carteiraUncheckedCreateWithoutTransacaoInput>
+    connectOrCreate?: carteiraCreateOrConnectWithoutTransacaoInput
+    upsert?: carteiraUpsertWithoutTransacaoInput
+    connect?: carteiraWhereUniqueInput
+    update?: XOR<XOR<carteiraUpdateToOneWithWhereWithoutTransacaoInput, carteiraUpdateWithoutTransacaoInput>, carteiraUncheckedUpdateWithoutTransacaoInput>
   }
 
-  export type carteirasUncheckedCreateNestedManyWithoutUsuarioInput = {
-    create?: XOR<carteirasCreateWithoutUsuarioInput, carteirasUncheckedCreateWithoutUsuarioInput> | carteirasCreateWithoutUsuarioInput[] | carteirasUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: carteirasCreateOrConnectWithoutUsuarioInput | carteirasCreateOrConnectWithoutUsuarioInput[]
-    createMany?: carteirasCreateManyUsuarioInputEnvelope
-    connect?: carteirasWhereUniqueInput | carteirasWhereUniqueInput[]
+  export type carteiraCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<carteiraCreateWithoutUsuarioInput, carteiraUncheckedCreateWithoutUsuarioInput> | carteiraCreateWithoutUsuarioInput[] | carteiraUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: carteiraCreateOrConnectWithoutUsuarioInput | carteiraCreateOrConnectWithoutUsuarioInput[]
+    createMany?: carteiraCreateManyUsuarioInputEnvelope
+    connect?: carteiraWhereUniqueInput | carteiraWhereUniqueInput[]
   }
 
-  export type carteirasUpdateManyWithoutUsuarioNestedInput = {
-    create?: XOR<carteirasCreateWithoutUsuarioInput, carteirasUncheckedCreateWithoutUsuarioInput> | carteirasCreateWithoutUsuarioInput[] | carteirasUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: carteirasCreateOrConnectWithoutUsuarioInput | carteirasCreateOrConnectWithoutUsuarioInput[]
-    upsert?: carteirasUpsertWithWhereUniqueWithoutUsuarioInput | carteirasUpsertWithWhereUniqueWithoutUsuarioInput[]
-    createMany?: carteirasCreateManyUsuarioInputEnvelope
-    set?: carteirasWhereUniqueInput | carteirasWhereUniqueInput[]
-    disconnect?: carteirasWhereUniqueInput | carteirasWhereUniqueInput[]
-    delete?: carteirasWhereUniqueInput | carteirasWhereUniqueInput[]
-    connect?: carteirasWhereUniqueInput | carteirasWhereUniqueInput[]
-    update?: carteirasUpdateWithWhereUniqueWithoutUsuarioInput | carteirasUpdateWithWhereUniqueWithoutUsuarioInput[]
-    updateMany?: carteirasUpdateManyWithWhereWithoutUsuarioInput | carteirasUpdateManyWithWhereWithoutUsuarioInput[]
-    deleteMany?: carteirasScalarWhereInput | carteirasScalarWhereInput[]
+  export type carteiraUncheckedCreateNestedManyWithoutUsuarioInput = {
+    create?: XOR<carteiraCreateWithoutUsuarioInput, carteiraUncheckedCreateWithoutUsuarioInput> | carteiraCreateWithoutUsuarioInput[] | carteiraUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: carteiraCreateOrConnectWithoutUsuarioInput | carteiraCreateOrConnectWithoutUsuarioInput[]
+    createMany?: carteiraCreateManyUsuarioInputEnvelope
+    connect?: carteiraWhereUniqueInput | carteiraWhereUniqueInput[]
   }
 
-  export type carteirasUncheckedUpdateManyWithoutUsuarioNestedInput = {
-    create?: XOR<carteirasCreateWithoutUsuarioInput, carteirasUncheckedCreateWithoutUsuarioInput> | carteirasCreateWithoutUsuarioInput[] | carteirasUncheckedCreateWithoutUsuarioInput[]
-    connectOrCreate?: carteirasCreateOrConnectWithoutUsuarioInput | carteirasCreateOrConnectWithoutUsuarioInput[]
-    upsert?: carteirasUpsertWithWhereUniqueWithoutUsuarioInput | carteirasUpsertWithWhereUniqueWithoutUsuarioInput[]
-    createMany?: carteirasCreateManyUsuarioInputEnvelope
-    set?: carteirasWhereUniqueInput | carteirasWhereUniqueInput[]
-    disconnect?: carteirasWhereUniqueInput | carteirasWhereUniqueInput[]
-    delete?: carteirasWhereUniqueInput | carteirasWhereUniqueInput[]
-    connect?: carteirasWhereUniqueInput | carteirasWhereUniqueInput[]
-    update?: carteirasUpdateWithWhereUniqueWithoutUsuarioInput | carteirasUpdateWithWhereUniqueWithoutUsuarioInput[]
-    updateMany?: carteirasUpdateManyWithWhereWithoutUsuarioInput | carteirasUpdateManyWithWhereWithoutUsuarioInput[]
-    deleteMany?: carteirasScalarWhereInput | carteirasScalarWhereInput[]
+  export type carteiraUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<carteiraCreateWithoutUsuarioInput, carteiraUncheckedCreateWithoutUsuarioInput> | carteiraCreateWithoutUsuarioInput[] | carteiraUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: carteiraCreateOrConnectWithoutUsuarioInput | carteiraCreateOrConnectWithoutUsuarioInput[]
+    upsert?: carteiraUpsertWithWhereUniqueWithoutUsuarioInput | carteiraUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: carteiraCreateManyUsuarioInputEnvelope
+    set?: carteiraWhereUniqueInput | carteiraWhereUniqueInput[]
+    disconnect?: carteiraWhereUniqueInput | carteiraWhereUniqueInput[]
+    delete?: carteiraWhereUniqueInput | carteiraWhereUniqueInput[]
+    connect?: carteiraWhereUniqueInput | carteiraWhereUniqueInput[]
+    update?: carteiraUpdateWithWhereUniqueWithoutUsuarioInput | carteiraUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: carteiraUpdateManyWithWhereWithoutUsuarioInput | carteiraUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: carteiraScalarWhereInput | carteiraScalarWhereInput[]
   }
 
-  export type NestedUuidFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidFilter<$PrismaModel> | string
+  export type carteiraUncheckedUpdateManyWithoutUsuarioNestedInput = {
+    create?: XOR<carteiraCreateWithoutUsuarioInput, carteiraUncheckedCreateWithoutUsuarioInput> | carteiraCreateWithoutUsuarioInput[] | carteiraUncheckedCreateWithoutUsuarioInput[]
+    connectOrCreate?: carteiraCreateOrConnectWithoutUsuarioInput | carteiraCreateOrConnectWithoutUsuarioInput[]
+    upsert?: carteiraUpsertWithWhereUniqueWithoutUsuarioInput | carteiraUpsertWithWhereUniqueWithoutUsuarioInput[]
+    createMany?: carteiraCreateManyUsuarioInputEnvelope
+    set?: carteiraWhereUniqueInput | carteiraWhereUniqueInput[]
+    disconnect?: carteiraWhereUniqueInput | carteiraWhereUniqueInput[]
+    delete?: carteiraWhereUniqueInput | carteiraWhereUniqueInput[]
+    connect?: carteiraWhereUniqueInput | carteiraWhereUniqueInput[]
+    update?: carteiraUpdateWithWhereUniqueWithoutUsuarioInput | carteiraUpdateWithWhereUniqueWithoutUsuarioInput[]
+    updateMany?: carteiraUpdateManyWithWhereWithoutUsuarioInput | carteiraUpdateManyWithWhereWithoutUsuarioInput[]
+    deleteMany?: carteiraScalarWhereInput | carteiraScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5411,42 +6790,6 @@ export namespace Prisma {
     not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type NestedUuidNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5462,6 +6805,17 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5491,18 +6845,15 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -5519,29 +6870,58 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5561,268 +6941,391 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type usuarioCreateWithoutCarteirasInput = {
-    id?: string
-    nome: string
-    senha: string
-    email: string
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type usuarioUncheckedCreateWithoutCarteirasInput = {
-    id?: string
+  export type usuarioCreateWithoutCarteiraInput = {
+    id_usuario: string
     nome: string
-    senha: string
     email: string
+    senha: string
   }
 
-  export type usuarioCreateOrConnectWithoutCarteirasInput = {
+  export type usuarioUncheckedCreateWithoutCarteiraInput = {
+    id_usuario: string
+    nome: string
+    email: string
+    senha: string
+  }
+
+  export type usuarioCreateOrConnectWithoutCarteiraInput = {
     where: usuarioWhereUniqueInput
-    create: XOR<usuarioCreateWithoutCarteirasInput, usuarioUncheckedCreateWithoutCarteirasInput>
+    create: XOR<usuarioCreateWithoutCarteiraInput, usuarioUncheckedCreateWithoutCarteiraInput>
   }
 
-  export type lancamentoCreateWithoutCarteirasInput = {
-    id?: string
-    tipo_lancamento: string
-    data_lancamento?: Date | string | null
+  export type conta_recorrenteCreateWithoutCarteiraInput = {
+    valor: Decimal | DecimalJsLike | number | string
     descricao?: string | null
-    data_cadastro?: Date | string | null
-    valor?: Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: string | null
+    intervalo_dias: number
+    data_inicio: Date | string
   }
 
-  export type lancamentoUncheckedCreateWithoutCarteirasInput = {
-    id?: string
-    tipo_lancamento: string
-    data_lancamento?: Date | string | null
+  export type conta_recorrenteUncheckedCreateWithoutCarteiraInput = {
+    id_conta_recorrente?: number
+    valor: Decimal | DecimalJsLike | number | string
     descricao?: string | null
-    data_cadastro?: Date | string | null
-    valor?: Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: string | null
+    intervalo_dias: number
+    data_inicio: Date | string
   }
 
-  export type lancamentoCreateOrConnectWithoutCarteirasInput = {
-    where: lancamentoWhereUniqueInput
-    create: XOR<lancamentoCreateWithoutCarteirasInput, lancamentoUncheckedCreateWithoutCarteirasInput>
+  export type conta_recorrenteCreateOrConnectWithoutCarteiraInput = {
+    where: conta_recorrenteWhereUniqueInput
+    create: XOR<conta_recorrenteCreateWithoutCarteiraInput, conta_recorrenteUncheckedCreateWithoutCarteiraInput>
   }
 
-  export type lancamentoCreateManyCarteirasInputEnvelope = {
-    data: lancamentoCreateManyCarteirasInput | lancamentoCreateManyCarteirasInput[]
+  export type conta_recorrenteCreateManyCarteiraInputEnvelope = {
+    data: conta_recorrenteCreateManyCarteiraInput | conta_recorrenteCreateManyCarteiraInput[]
     skipDuplicates?: boolean
   }
 
-  export type usuarioUpsertWithoutCarteirasInput = {
-    update: XOR<usuarioUpdateWithoutCarteirasInput, usuarioUncheckedUpdateWithoutCarteirasInput>
-    create: XOR<usuarioCreateWithoutCarteirasInput, usuarioUncheckedCreateWithoutCarteirasInput>
-    where?: usuarioWhereInput
+  export type transacaoCreateWithoutCarteiraInput = {
+    valor: Decimal | DecimalJsLike | number | string
+    tipo: string
+    descricao?: string | null
+    data?: Date | string
   }
 
-  export type usuarioUpdateToOneWithWhereWithoutCarteirasInput = {
-    where?: usuarioWhereInput
-    data: XOR<usuarioUpdateWithoutCarteirasInput, usuarioUncheckedUpdateWithoutCarteirasInput>
+  export type transacaoUncheckedCreateWithoutCarteiraInput = {
+    id_transacao?: number
+    valor: Decimal | DecimalJsLike | number | string
+    tipo: string
+    descricao?: string | null
+    data?: Date | string
   }
 
-  export type usuarioUpdateWithoutCarteirasInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+  export type transacaoCreateOrConnectWithoutCarteiraInput = {
+    where: transacaoWhereUniqueInput
+    create: XOR<transacaoCreateWithoutCarteiraInput, transacaoUncheckedCreateWithoutCarteiraInput>
   }
 
-  export type usuarioUncheckedUpdateWithoutCarteirasInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    senha?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type lancamentoUpsertWithWhereUniqueWithoutCarteirasInput = {
-    where: lancamentoWhereUniqueInput
-    update: XOR<lancamentoUpdateWithoutCarteirasInput, lancamentoUncheckedUpdateWithoutCarteirasInput>
-    create: XOR<lancamentoCreateWithoutCarteirasInput, lancamentoUncheckedCreateWithoutCarteirasInput>
-  }
-
-  export type lancamentoUpdateWithWhereUniqueWithoutCarteirasInput = {
-    where: lancamentoWhereUniqueInput
-    data: XOR<lancamentoUpdateWithoutCarteirasInput, lancamentoUncheckedUpdateWithoutCarteirasInput>
-  }
-
-  export type lancamentoUpdateManyWithWhereWithoutCarteirasInput = {
-    where: lancamentoScalarWhereInput
-    data: XOR<lancamentoUpdateManyMutationInput, lancamentoUncheckedUpdateManyWithoutCarteirasInput>
-  }
-
-  export type lancamentoScalarWhereInput = {
-    AND?: lancamentoScalarWhereInput | lancamentoScalarWhereInput[]
-    OR?: lancamentoScalarWhereInput[]
-    NOT?: lancamentoScalarWhereInput | lancamentoScalarWhereInput[]
-    id?: UuidFilter<"lancamento"> | string
-    tipo_lancamento?: StringFilter<"lancamento"> | string
-    data_lancamento?: DateTimeNullableFilter<"lancamento"> | Date | string | null
-    descricao?: StringNullableFilter<"lancamento"> | string | null
-    data_cadastro?: DateTimeNullableFilter<"lancamento"> | Date | string | null
-    valor?: DecimalNullableFilter<"lancamento"> | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: StringNullableFilter<"lancamento"> | string | null
-    carteira_id?: UuidNullableFilter<"lancamento"> | string | null
-  }
-
-  export type carteirasCreateWithoutLancamentoInput = {
-    id?: string
-    nome: string
-    saldo_atual?: Decimal | DecimalJsLike | number | string | null
-    usuario?: usuarioCreateNestedOneWithoutCarteirasInput
-  }
-
-  export type carteirasUncheckedCreateWithoutLancamentoInput = {
-    id?: string
-    nome: string
-    saldo_atual?: Decimal | DecimalJsLike | number | string | null
-    usuario_id?: string | null
-  }
-
-  export type carteirasCreateOrConnectWithoutLancamentoInput = {
-    where: carteirasWhereUniqueInput
-    create: XOR<carteirasCreateWithoutLancamentoInput, carteirasUncheckedCreateWithoutLancamentoInput>
-  }
-
-  export type carteirasUpsertWithoutLancamentoInput = {
-    update: XOR<carteirasUpdateWithoutLancamentoInput, carteirasUncheckedUpdateWithoutLancamentoInput>
-    create: XOR<carteirasCreateWithoutLancamentoInput, carteirasUncheckedCreateWithoutLancamentoInput>
-    where?: carteirasWhereInput
-  }
-
-  export type carteirasUpdateToOneWithWhereWithoutLancamentoInput = {
-    where?: carteirasWhereInput
-    data: XOR<carteirasUpdateWithoutLancamentoInput, carteirasUncheckedUpdateWithoutLancamentoInput>
-  }
-
-  export type carteirasUpdateWithoutLancamentoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    saldo_atual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    usuario?: usuarioUpdateOneWithoutCarteirasNestedInput
-  }
-
-  export type carteirasUncheckedUpdateWithoutLancamentoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    saldo_atual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    usuario_id?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type carteirasCreateWithoutUsuarioInput = {
-    id?: string
-    nome: string
-    saldo_atual?: Decimal | DecimalJsLike | number | string | null
-    lancamento?: lancamentoCreateNestedManyWithoutCarteirasInput
-  }
-
-  export type carteirasUncheckedCreateWithoutUsuarioInput = {
-    id?: string
-    nome: string
-    saldo_atual?: Decimal | DecimalJsLike | number | string | null
-    lancamento?: lancamentoUncheckedCreateNestedManyWithoutCarteirasInput
-  }
-
-  export type carteirasCreateOrConnectWithoutUsuarioInput = {
-    where: carteirasWhereUniqueInput
-    create: XOR<carteirasCreateWithoutUsuarioInput, carteirasUncheckedCreateWithoutUsuarioInput>
-  }
-
-  export type carteirasCreateManyUsuarioInputEnvelope = {
-    data: carteirasCreateManyUsuarioInput | carteirasCreateManyUsuarioInput[]
+  export type transacaoCreateManyCarteiraInputEnvelope = {
+    data: transacaoCreateManyCarteiraInput | transacaoCreateManyCarteiraInput[]
     skipDuplicates?: boolean
   }
 
-  export type carteirasUpsertWithWhereUniqueWithoutUsuarioInput = {
-    where: carteirasWhereUniqueInput
-    update: XOR<carteirasUpdateWithoutUsuarioInput, carteirasUncheckedUpdateWithoutUsuarioInput>
-    create: XOR<carteirasCreateWithoutUsuarioInput, carteirasUncheckedCreateWithoutUsuarioInput>
+  export type usuarioUpsertWithoutCarteiraInput = {
+    update: XOR<usuarioUpdateWithoutCarteiraInput, usuarioUncheckedUpdateWithoutCarteiraInput>
+    create: XOR<usuarioCreateWithoutCarteiraInput, usuarioUncheckedCreateWithoutCarteiraInput>
+    where?: usuarioWhereInput
   }
 
-  export type carteirasUpdateWithWhereUniqueWithoutUsuarioInput = {
-    where: carteirasWhereUniqueInput
-    data: XOR<carteirasUpdateWithoutUsuarioInput, carteirasUncheckedUpdateWithoutUsuarioInput>
+  export type usuarioUpdateToOneWithWhereWithoutCarteiraInput = {
+    where?: usuarioWhereInput
+    data: XOR<usuarioUpdateWithoutCarteiraInput, usuarioUncheckedUpdateWithoutCarteiraInput>
   }
 
-  export type carteirasUpdateManyWithWhereWithoutUsuarioInput = {
-    where: carteirasScalarWhereInput
-    data: XOR<carteirasUpdateManyMutationInput, carteirasUncheckedUpdateManyWithoutUsuarioInput>
+  export type usuarioUpdateWithoutCarteiraInput = {
+    id_usuario?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
   }
 
-  export type carteirasScalarWhereInput = {
-    AND?: carteirasScalarWhereInput | carteirasScalarWhereInput[]
-    OR?: carteirasScalarWhereInput[]
-    NOT?: carteirasScalarWhereInput | carteirasScalarWhereInput[]
-    id?: UuidFilter<"carteiras"> | string
-    nome?: StringFilter<"carteiras"> | string
-    saldo_atual?: DecimalNullableFilter<"carteiras"> | Decimal | DecimalJsLike | number | string | null
-    usuario_id?: UuidNullableFilter<"carteiras"> | string | null
+  export type usuarioUncheckedUpdateWithoutCarteiraInput = {
+    id_usuario?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    senha?: StringFieldUpdateOperationsInput | string
   }
 
-  export type lancamentoCreateManyCarteirasInput = {
-    id?: string
-    tipo_lancamento: string
-    data_lancamento?: Date | string | null
+  export type conta_recorrenteUpsertWithWhereUniqueWithoutCarteiraInput = {
+    where: conta_recorrenteWhereUniqueInput
+    update: XOR<conta_recorrenteUpdateWithoutCarteiraInput, conta_recorrenteUncheckedUpdateWithoutCarteiraInput>
+    create: XOR<conta_recorrenteCreateWithoutCarteiraInput, conta_recorrenteUncheckedCreateWithoutCarteiraInput>
+  }
+
+  export type conta_recorrenteUpdateWithWhereUniqueWithoutCarteiraInput = {
+    where: conta_recorrenteWhereUniqueInput
+    data: XOR<conta_recorrenteUpdateWithoutCarteiraInput, conta_recorrenteUncheckedUpdateWithoutCarteiraInput>
+  }
+
+  export type conta_recorrenteUpdateManyWithWhereWithoutCarteiraInput = {
+    where: conta_recorrenteScalarWhereInput
+    data: XOR<conta_recorrenteUpdateManyMutationInput, conta_recorrenteUncheckedUpdateManyWithoutCarteiraInput>
+  }
+
+  export type conta_recorrenteScalarWhereInput = {
+    AND?: conta_recorrenteScalarWhereInput | conta_recorrenteScalarWhereInput[]
+    OR?: conta_recorrenteScalarWhereInput[]
+    NOT?: conta_recorrenteScalarWhereInput | conta_recorrenteScalarWhereInput[]
+    id_conta_recorrente?: IntFilter<"conta_recorrente"> | number
+    id_carteira?: StringFilter<"conta_recorrente"> | string
+    valor?: DecimalFilter<"conta_recorrente"> | Decimal | DecimalJsLike | number | string
+    descricao?: StringNullableFilter<"conta_recorrente"> | string | null
+    intervalo_dias?: IntFilter<"conta_recorrente"> | number
+    data_inicio?: DateTimeFilter<"conta_recorrente"> | Date | string
+  }
+
+  export type transacaoUpsertWithWhereUniqueWithoutCarteiraInput = {
+    where: transacaoWhereUniqueInput
+    update: XOR<transacaoUpdateWithoutCarteiraInput, transacaoUncheckedUpdateWithoutCarteiraInput>
+    create: XOR<transacaoCreateWithoutCarteiraInput, transacaoUncheckedCreateWithoutCarteiraInput>
+  }
+
+  export type transacaoUpdateWithWhereUniqueWithoutCarteiraInput = {
+    where: transacaoWhereUniqueInput
+    data: XOR<transacaoUpdateWithoutCarteiraInput, transacaoUncheckedUpdateWithoutCarteiraInput>
+  }
+
+  export type transacaoUpdateManyWithWhereWithoutCarteiraInput = {
+    where: transacaoScalarWhereInput
+    data: XOR<transacaoUpdateManyMutationInput, transacaoUncheckedUpdateManyWithoutCarteiraInput>
+  }
+
+  export type transacaoScalarWhereInput = {
+    AND?: transacaoScalarWhereInput | transacaoScalarWhereInput[]
+    OR?: transacaoScalarWhereInput[]
+    NOT?: transacaoScalarWhereInput | transacaoScalarWhereInput[]
+    id_transacao?: IntFilter<"transacao"> | number
+    id_carteira?: StringFilter<"transacao"> | string
+    valor?: DecimalFilter<"transacao"> | Decimal | DecimalJsLike | number | string
+    tipo?: StringFilter<"transacao"> | string
+    descricao?: StringNullableFilter<"transacao"> | string | null
+    data?: DateTimeFilter<"transacao"> | Date | string
+  }
+
+  export type carteiraCreateWithoutConta_recorrenteInput = {
+    id_carteira: string
+    saldo?: Decimal | DecimalJsLike | number | string | null
+    usuario: usuarioCreateNestedOneWithoutCarteiraInput
+    transacao?: transacaoCreateNestedManyWithoutCarteiraInput
+  }
+
+  export type carteiraUncheckedCreateWithoutConta_recorrenteInput = {
+    id_carteira: string
+    id_usuario: string
+    saldo?: Decimal | DecimalJsLike | number | string | null
+    transacao?: transacaoUncheckedCreateNestedManyWithoutCarteiraInput
+  }
+
+  export type carteiraCreateOrConnectWithoutConta_recorrenteInput = {
+    where: carteiraWhereUniqueInput
+    create: XOR<carteiraCreateWithoutConta_recorrenteInput, carteiraUncheckedCreateWithoutConta_recorrenteInput>
+  }
+
+  export type carteiraUpsertWithoutConta_recorrenteInput = {
+    update: XOR<carteiraUpdateWithoutConta_recorrenteInput, carteiraUncheckedUpdateWithoutConta_recorrenteInput>
+    create: XOR<carteiraCreateWithoutConta_recorrenteInput, carteiraUncheckedCreateWithoutConta_recorrenteInput>
+    where?: carteiraWhereInput
+  }
+
+  export type carteiraUpdateToOneWithWhereWithoutConta_recorrenteInput = {
+    where?: carteiraWhereInput
+    data: XOR<carteiraUpdateWithoutConta_recorrenteInput, carteiraUncheckedUpdateWithoutConta_recorrenteInput>
+  }
+
+  export type carteiraUpdateWithoutConta_recorrenteInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    usuario?: usuarioUpdateOneRequiredWithoutCarteiraNestedInput
+    transacao?: transacaoUpdateManyWithoutCarteiraNestedInput
+  }
+
+  export type carteiraUncheckedUpdateWithoutConta_recorrenteInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    id_usuario?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    transacao?: transacaoUncheckedUpdateManyWithoutCarteiraNestedInput
+  }
+
+  export type carteiraCreateWithoutTransacaoInput = {
+    id_carteira: string
+    saldo?: Decimal | DecimalJsLike | number | string | null
+    usuario: usuarioCreateNestedOneWithoutCarteiraInput
+    conta_recorrente?: conta_recorrenteCreateNestedManyWithoutCarteiraInput
+  }
+
+  export type carteiraUncheckedCreateWithoutTransacaoInput = {
+    id_carteira: string
+    id_usuario: string
+    saldo?: Decimal | DecimalJsLike | number | string | null
+    conta_recorrente?: conta_recorrenteUncheckedCreateNestedManyWithoutCarteiraInput
+  }
+
+  export type carteiraCreateOrConnectWithoutTransacaoInput = {
+    where: carteiraWhereUniqueInput
+    create: XOR<carteiraCreateWithoutTransacaoInput, carteiraUncheckedCreateWithoutTransacaoInput>
+  }
+
+  export type carteiraUpsertWithoutTransacaoInput = {
+    update: XOR<carteiraUpdateWithoutTransacaoInput, carteiraUncheckedUpdateWithoutTransacaoInput>
+    create: XOR<carteiraCreateWithoutTransacaoInput, carteiraUncheckedCreateWithoutTransacaoInput>
+    where?: carteiraWhereInput
+  }
+
+  export type carteiraUpdateToOneWithWhereWithoutTransacaoInput = {
+    where?: carteiraWhereInput
+    data: XOR<carteiraUpdateWithoutTransacaoInput, carteiraUncheckedUpdateWithoutTransacaoInput>
+  }
+
+  export type carteiraUpdateWithoutTransacaoInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    usuario?: usuarioUpdateOneRequiredWithoutCarteiraNestedInput
+    conta_recorrente?: conta_recorrenteUpdateManyWithoutCarteiraNestedInput
+  }
+
+  export type carteiraUncheckedUpdateWithoutTransacaoInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    id_usuario?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    conta_recorrente?: conta_recorrenteUncheckedUpdateManyWithoutCarteiraNestedInput
+  }
+
+  export type carteiraCreateWithoutUsuarioInput = {
+    id_carteira: string
+    saldo?: Decimal | DecimalJsLike | number | string | null
+    conta_recorrente?: conta_recorrenteCreateNestedManyWithoutCarteiraInput
+    transacao?: transacaoCreateNestedManyWithoutCarteiraInput
+  }
+
+  export type carteiraUncheckedCreateWithoutUsuarioInput = {
+    id_carteira: string
+    saldo?: Decimal | DecimalJsLike | number | string | null
+    conta_recorrente?: conta_recorrenteUncheckedCreateNestedManyWithoutCarteiraInput
+    transacao?: transacaoUncheckedCreateNestedManyWithoutCarteiraInput
+  }
+
+  export type carteiraCreateOrConnectWithoutUsuarioInput = {
+    where: carteiraWhereUniqueInput
+    create: XOR<carteiraCreateWithoutUsuarioInput, carteiraUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type carteiraCreateManyUsuarioInputEnvelope = {
+    data: carteiraCreateManyUsuarioInput | carteiraCreateManyUsuarioInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type carteiraUpsertWithWhereUniqueWithoutUsuarioInput = {
+    where: carteiraWhereUniqueInput
+    update: XOR<carteiraUpdateWithoutUsuarioInput, carteiraUncheckedUpdateWithoutUsuarioInput>
+    create: XOR<carteiraCreateWithoutUsuarioInput, carteiraUncheckedCreateWithoutUsuarioInput>
+  }
+
+  export type carteiraUpdateWithWhereUniqueWithoutUsuarioInput = {
+    where: carteiraWhereUniqueInput
+    data: XOR<carteiraUpdateWithoutUsuarioInput, carteiraUncheckedUpdateWithoutUsuarioInput>
+  }
+
+  export type carteiraUpdateManyWithWhereWithoutUsuarioInput = {
+    where: carteiraScalarWhereInput
+    data: XOR<carteiraUpdateManyMutationInput, carteiraUncheckedUpdateManyWithoutUsuarioInput>
+  }
+
+  export type carteiraScalarWhereInput = {
+    AND?: carteiraScalarWhereInput | carteiraScalarWhereInput[]
+    OR?: carteiraScalarWhereInput[]
+    NOT?: carteiraScalarWhereInput | carteiraScalarWhereInput[]
+    id_carteira?: StringFilter<"carteira"> | string
+    id_usuario?: StringFilter<"carteira"> | string
+    saldo?: DecimalNullableFilter<"carteira"> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type conta_recorrenteCreateManyCarteiraInput = {
+    id_conta_recorrente?: number
+    valor: Decimal | DecimalJsLike | number | string
     descricao?: string | null
-    data_cadastro?: Date | string | null
-    valor?: Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: string | null
+    intervalo_dias: number
+    data_inicio: Date | string
   }
 
-  export type lancamentoUpdateWithoutCarteirasInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    tipo_lancamento?: StringFieldUpdateOperationsInput | string
-    data_lancamento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type transacaoCreateManyCarteiraInput = {
+    id_transacao?: number
+    valor: Decimal | DecimalJsLike | number | string
+    tipo: string
+    descricao?: string | null
+    data?: Date | string
+  }
+
+  export type conta_recorrenteUpdateWithoutCarteiraInput = {
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    data_cadastro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    valor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: NullableStringFieldUpdateOperationsInput | string | null
+    intervalo_dias?: IntFieldUpdateOperationsInput | number
+    data_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type lancamentoUncheckedUpdateWithoutCarteirasInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    tipo_lancamento?: StringFieldUpdateOperationsInput | string
-    data_lancamento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type conta_recorrenteUncheckedUpdateWithoutCarteiraInput = {
+    id_conta_recorrente?: IntFieldUpdateOperationsInput | number
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    data_cadastro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    valor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: NullableStringFieldUpdateOperationsInput | string | null
+    intervalo_dias?: IntFieldUpdateOperationsInput | number
+    data_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type lancamentoUncheckedUpdateManyWithoutCarteirasInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    tipo_lancamento?: StringFieldUpdateOperationsInput | string
-    data_lancamento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type conta_recorrenteUncheckedUpdateManyWithoutCarteiraInput = {
+    id_conta_recorrente?: IntFieldUpdateOperationsInput | number
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
-    data_cadastro?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    valor?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    forma_pagamento?: NullableStringFieldUpdateOperationsInput | string | null
+    intervalo_dias?: IntFieldUpdateOperationsInput | number
+    data_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type carteirasCreateManyUsuarioInput = {
-    id?: string
-    nome: string
-    saldo_atual?: Decimal | DecimalJsLike | number | string | null
+  export type transacaoUpdateWithoutCarteiraInput = {
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type carteirasUpdateWithoutUsuarioInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    saldo_atual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    lancamento?: lancamentoUpdateManyWithoutCarteirasNestedInput
+  export type transacaoUncheckedUpdateWithoutCarteiraInput = {
+    id_transacao?: IntFieldUpdateOperationsInput | number
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type carteirasUncheckedUpdateWithoutUsuarioInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    saldo_atual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    lancamento?: lancamentoUncheckedUpdateManyWithoutCarteirasNestedInput
+  export type transacaoUncheckedUpdateManyWithoutCarteiraInput = {
+    id_transacao?: IntFieldUpdateOperationsInput | number
+    valor?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type carteirasUncheckedUpdateManyWithoutUsuarioInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nome?: StringFieldUpdateOperationsInput | string
-    saldo_atual?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+  export type carteiraCreateManyUsuarioInput = {
+    id_carteira: string
+    saldo?: Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type carteiraUpdateWithoutUsuarioInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    conta_recorrente?: conta_recorrenteUpdateManyWithoutCarteiraNestedInput
+    transacao?: transacaoUpdateManyWithoutCarteiraNestedInput
+  }
+
+  export type carteiraUncheckedUpdateWithoutUsuarioInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    conta_recorrente?: conta_recorrenteUncheckedUpdateManyWithoutCarteiraNestedInput
+    transacao?: transacaoUncheckedUpdateManyWithoutCarteiraNestedInput
+  }
+
+  export type carteiraUncheckedUpdateManyWithoutUsuarioInput = {
+    id_carteira?: StringFieldUpdateOperationsInput | string
+    saldo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
 

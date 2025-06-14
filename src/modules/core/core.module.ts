@@ -2,8 +2,10 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from 'src/modules/core/infrastructure/database/Prisma/prisma.module';
 import { UsuarioControle } from './controllers/usuario.controller';
-import { UsuarioRepositories } from './infrastructure/repositories';
-import { UsuarioUseCases } from './application/usecases/usuario';
+import { CoreRepositories} from './infrastructure/repositories';
+import { CoreUseCases } from './application/usecases';
+import { CoreMappers } from './infrastructure/mapper';
+import { CoreControllers } from './controllers';
 
 
 
@@ -15,8 +17,8 @@ import { UsuarioUseCases } from './application/usecases/usuario';
 
     PrismaModule,
   ],
-  controllers: [UsuarioControle],
-  providers: [...UsuarioRepositories, ...UsuarioUseCases],
+  controllers: [...CoreControllers],
+  providers: [...CoreRepositories, ...CoreUseCases, ...CoreMappers],
 
 })
 export class CoreModule implements NestModule {

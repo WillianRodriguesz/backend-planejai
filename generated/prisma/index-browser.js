@@ -120,29 +120,35 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.CarteirasScalarFieldEnum = {
-  id: 'id',
-  nome: 'nome',
-  saldo_atual: 'saldo_atual',
-  usuario_id: 'usuario_id'
+exports.Prisma.CarteiraScalarFieldEnum = {
+  id_carteira: 'id_carteira',
+  id_usuario: 'id_usuario',
+  saldo: 'saldo'
 };
 
-exports.Prisma.LancamentoScalarFieldEnum = {
-  id: 'id',
-  tipo_lancamento: 'tipo_lancamento',
-  data_lancamento: 'data_lancamento',
-  descricao: 'descricao',
-  data_cadastro: 'data_cadastro',
+exports.Prisma.Conta_recorrenteScalarFieldEnum = {
+  id_conta_recorrente: 'id_conta_recorrente',
+  id_carteira: 'id_carteira',
   valor: 'valor',
-  forma_pagamento: 'forma_pagamento',
-  carteira_id: 'carteira_id'
+  descricao: 'descricao',
+  intervalo_dias: 'intervalo_dias',
+  data_inicio: 'data_inicio'
+};
+
+exports.Prisma.TransacaoScalarFieldEnum = {
+  id_transacao: 'id_transacao',
+  id_carteira: 'id_carteira',
+  valor: 'valor',
+  tipo: 'tipo',
+  descricao: 'descricao',
+  data: 'data'
 };
 
 exports.Prisma.UsuarioScalarFieldEnum = {
-  id: 'id',
+  id_usuario: 'id_usuario',
   nome: 'nome',
-  senha: 'senha',
-  email: 'email'
+  email: 'email',
+  senha: 'senha'
 };
 
 exports.Prisma.SortOrder = {
@@ -162,8 +168,9 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  carteiras: 'carteiras',
-  lancamento: 'lancamento',
+  carteira: 'carteira',
+  conta_recorrente: 'conta_recorrente',
+  transacao: 'transacao',
   usuario: 'usuario'
 };
 
