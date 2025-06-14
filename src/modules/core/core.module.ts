@@ -1,4 +1,4 @@
-import { forwardRef, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from 'src/modules/core/infrastructure/database/Prisma/prisma.module';
 import { UsuarioControle } from './controllers/usuario.controller';
