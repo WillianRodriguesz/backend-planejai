@@ -16,7 +16,7 @@ model carteira {
   conta_recorrente conta_recorrente[]
   transacao        transacao[]
 
-  @@map("Carteira")
+  @@map("carteira")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.

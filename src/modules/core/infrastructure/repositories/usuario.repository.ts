@@ -1,37 +1,36 @@
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/modules/core/infrastructure/database/Prisma/prisma.service';
 import { Usuario } from '../../domain/entities/usuario/usuario.entity';
-import { Injectable } from '@nestjs/common';
 import { UsuarioRepository } from '../../domain/entities/repositories/usuario.repository.interface';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class UsuarioRepositoryImpl implements UsuarioRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   private toDomain(usuarioPrisma: any): Usuario {
-    //criei toDomain para converter um objeto cru vindo do Prisma (que é só um JSON, um objeto comum do banco) em uma instância da sua entidade Usuario,
     return new Usuario(
       usuarioPrisma.nome,
       usuarioPrisma.email,
       usuarioPrisma.senha,
-      usuarioPrisma.id, // usando o id que veio do banco
+      usuarioPrisma.id_usuario, // Corrige id para id_usuario
     );
   }
 
   async criarUsuario(usuario: Usuario): Promise<Usuario> {
     const novoUsuario = await this.prisma.usuario.create({
       data: {
+        id_usuario: uuidv4(), // Gera um UUID para id_usuario
         email: usuario.getEmail(),
         senha: usuario.getSenha(),
         nome: usuario.getNome(),
       },
     });
 
-    // converte para entidade antes de retornar
     return this.toDomain(novoUsuario);
   }
 
   async buscarPorEmail(email: string): Promise<Usuario | null> {
-    // vai retornar um usuario ou null
     const usuario = await this.prisma.usuario.findUnique({
       where: {
         email,
@@ -39,7 +38,7 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     });
 
     if (!usuario) {
-      return null; // não lança erro aqui, deixa o caso de uso decidir o que fazer
+      return null;
     }
 
     return this.toDomain(usuario);
@@ -52,29 +51,29 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
 
   async atualizarNome(usuario: Usuario): Promise<void> {
     await this.prisma.usuario.update({
-      where: { id: usuario.getId() },
+      where: { id_usuario: usuario.getId() }, // Corrige id para id_usuario
       data: { nome: usuario.getNome() },
     });
   }
 
   async atualizarSenha(usuario: Usuario): Promise<void> {
     await this.prisma.usuario.update({
-      where: { id: usuario.getId() },
+      where: { id_usuario: usuario.getId() }, // Corrige id para id_usuario
       data: { senha: usuario.getSenha() },
     });
   }
 
   async deletar(id: string): Promise<void> {
     await this.prisma.usuario.delete({
-      where: { id },
+      where: { id_usuario: id }, // Corrige id para id_usuario
     });
   }
 
   async existeId(id: string): Promise<boolean> {
     const usuario = await this.prisma.usuario.findUnique({
-      where: { id },
-      select: { id: true },
+      where: { id_usuario: id }, // Corrige id para id_usuario
+      select: { id_usuario: true }, // Corrige id para id_usuario
     });
-    return !!usuario; // retorna true
+    return !!usuario;
   }
 }

@@ -1,6 +1,3 @@
-import { BuscarCarteiraUseCase } from "./busca-carteira-id.usecases";
+import { BuscarCarteiraUseCase } from './busca-carteira-id.usecase';
 
-
-export const CarteiraUseCases = [
-  BuscarCarteiraUseCase,
-];
+export const CarteiraUseCases = [BuscarCarteiraUseCase];

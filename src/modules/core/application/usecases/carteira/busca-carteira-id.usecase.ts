@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Carteira } from '../../../domain/entities/carteira/carteira.entity';
 import { CarteiraRepository } from '../../../domain/entities/repositories/carteira.repository.interface';
 import { CarteiraMapper } from '../../mappers/carteira.mapper';
 import { CarteiraDto } from '../../dtos/carteira/carteira.dto';
