@@ -3,21 +3,22 @@ import { CarteiraRepository } from '../../../domain/entities/repositories/cartei
 import { CarteiraMapper } from '../../mappers/carteira.mapper';
 import { CarteiraDto } from '../../dtos/carteira/carteira.dto';
 
+type CarteirasResult = CarteiraDto[];
 @Injectable()
-export class BuscarCarteiraUseCase {
+export class ListarCarteirasUseCase {
   constructor(
     @Inject('CarteiraRepository') 
     private readonly carteiraRepository: CarteiraRepository) {}
 
-  async execute(id: string): Promise<CarteiraDto> {
-    if (!id) {
-      throw new Error('ID da carteira não pode ser vazio');
+  async execute(): Promise<CarteirasResult> {
+    const carteirasResult = await this.carteiraRepository.buscarTodas();
+
+    const carteirasDto: CarteiraDto[] = carteirasResult.map(CarteiraMapper.domainToDto);
+
+    if (!carteirasDto || carteirasDto.length === 0) {
+      throw new Error('Nenhuma carteira encontrada');
     }
 
-    const carteiraResult = await this.carteiraRepository.buscarPorId(id);
-
-    const carteiraDto = CarteiraMapper.domainToDto(carteiraResult);
-
-    return carteiraDto;
+    return carteirasDto;
   }
 }

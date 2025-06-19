@@ -1,3 +1,7 @@
-import { BuscarCarteiraUseCase } from './busca-carteira-id.usecase';
+import { BuscarCarteiraPorIdUseCase } from './buscar-carteira-id.usecase';
+import { ListarCarteirasUseCase } from './listar-carteiras.usecase';
 
-export const CarteiraUseCases = [BuscarCarteiraUseCase];
+export const CarteiraUseCases = [
+  BuscarCarteiraPorIdUseCase,
+  ListarCarteirasUseCase,
+];

@@ -1,20 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { Carteira } from '../../domain/entities/carteira/carteira.entity';
-import { CarteiraModel } from '../models/carteira.model';
+import { Prisma } from 'generated/prisma';
+type CarteiraModel = Prisma.carteiraGetPayload<{}>;
+type CarteiraModelProps = Prisma.carteiraCreateInput;
 
 @Injectable()
 export class CarteiraMapper {
-  modelToDomain(model: CarteiraModel): Carteira {
-    const domain = new Carteira({
-      id: model.id,
+ modelToDomain(model: CarteiraModel): Carteira {
+    return new Carteira({
+      id: model.id_carteira,
       idUsuario: model.id_usuario,
       saldoInicial: Number(model.saldo.toString()),
     });
+  }
 
-    if (!domain) {
-      throw new Error('Erro ao transformar model da carteira para o dominio');
-    }
-    return domain;
+  domainToModel(domain: Carteira): CarteiraModelProps {
+    return {
+      id_carteira: domain.getId(),
+      saldo: domain.getSaldo().getValor(),
+      usuario: {
+        connect: { id_usuario: domain.getIdUsuario() },
+      },
+    };
   }
 
 }

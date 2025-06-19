@@ -7,15 +7,23 @@ import {
   Post,
   ValidationPipe,
 } from '@nestjs/common';
-import { BuscarCarteiraUseCase } from '../application/usecases/carteira/busca-carteira-id.usecase';
+import { BuscarCarteiraPorIdUseCase } from '../application/usecases/carteira/buscar-carteira-id.usecase';
+import { ListarCarteirasUseCase } from '../application/usecases/carteira/listar-carteiras.usecase';
 
 @Controller('carteira')
 export class CarteiraController {
-  constructor(private readonly buscarCarteiraUseCase: BuscarCarteiraUseCase) {}
+  constructor(
+    private readonly buscarCarteiraPorIdUseCase: BuscarCarteiraPorIdUseCase,
+    private readonly listarCarteirasUseCase: ListarCarteirasUseCase,
+  ) {}
 
   @Get(':id')
   async listarPorId(@Param('id') id: string) {
-    return this.buscarCarteiraUseCase.execute(id);
+    return this.buscarCarteiraPorIdUseCase.execute(id);
   }
 
+  @Get('listar')
+  async listarTodas() {
+    return this.listarCarteirasUseCase.execute();
+  }
 }

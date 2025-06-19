@@ -1,6 +1,5 @@
 import { Dinheiro } from '../../value-objects/dinheiro/dinheiro.value-object';
 import { v4 as uuidv4 } from 'uuid';
-import { Usuario } from '../usuario/usuario.entity';
 
 interface CarteiraProps {
   id?: string;
@@ -9,7 +8,7 @@ interface CarteiraProps {
 }
 
 export class Carteira {
-  private readonly id: string;
+  private id: string;
   private idUsuario: string;
   private saldo: Dinheiro;
 
@@ -17,6 +16,10 @@ export class Carteira {
     this.id = props.id || uuidv4();
     this.setIdUsuario(props.idUsuario);
     this.setSaldoInicial(props.saldoInicial);
+  }
+
+  public static criar(props: CarteiraProps): Carteira {
+    return new Carteira(props);
   }
 
   private setIdUsuario(idUsuario: string): void {
@@ -27,7 +30,10 @@ export class Carteira {
   }
 
   private setSaldoInicial(saldo: number): void {
-    this.saldo = new Dinheiro(saldo); 
+    if (saldo == null) {
+      saldo = 0;
+    }
+    this.saldo = new Dinheiro(saldo);
   }
 
   public getId(): string {
