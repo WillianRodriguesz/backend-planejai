@@ -1,8 +1,7 @@
-
-export class UsuarioDto {
-  constructor(
-    public id: string,
-    public nome: string,
-    public email: string,
-  ) {}
+export interface UsuarioDto{
+  id: string;
+  nome: string;
+  email: string;
+  senha?: string; 
+  id_carteira?: string;
 }

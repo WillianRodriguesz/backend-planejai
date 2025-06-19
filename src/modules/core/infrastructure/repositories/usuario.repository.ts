@@ -1,80 +1,58 @@
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/modules/core/infrastructure/database/Prisma/prisma.service';
-import { Usuario } from '../../domain/entities/usuario/usuario.entity';
-import { Injectable } from '@nestjs/common';
-import { UsuarioRepository } from '../../domain/entities/repositories/usuario.repository.interface';
+import { Usuario } from '../../domain/entities/usuario.entity';
+import { UsuarioRepository } from '../../domain/repositories/usuario.repository.interface';
+import { UsuarioMapper } from '../mapper/usuario.mapper';
+import { Prisma } from 'generated/prisma';
 
 @Injectable()
 export class UsuarioRepositoryImpl implements UsuarioRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  private readonly logger = new Logger(UsuarioRepositoryImpl.name);
 
-  private toDomain(usuarioPrisma: any): Usuario {
-    //criei toDomain para converter um objeto cru vindo do Prisma (que é só um JSON, um objeto comum do banco) em uma instância da sua entidade Usuario,
-    return new Usuario(
-      usuarioPrisma.nome,
-      usuarioPrisma.email,
-      usuarioPrisma.senha,
-      usuarioPrisma.id, // usando o id que veio do banco
-    );
-  }
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly usuarioMapper: UsuarioMapper,
+  ) {}
 
-  async criarUsuario(usuario: Usuario): Promise<Usuario> {
-    const novoUsuario = await this.prisma.usuario.create({
-      data: {
-        email: usuario.getEmail(),
-        senha: usuario.getSenha(),
-        nome: usuario.getNome(),
-      },
-    });
+  async criar(usuario: Usuario): Promise<Usuario> {
+    try {
+      const usuarioModel = this.usuarioMapper.domainToModel(usuario);
 
-    // converte para entidade antes de retornar
-    return this.toDomain(novoUsuario);
-  }
+      const usuarioData = await this.prisma.usuario.create({
+        data: usuarioModel,
+      });
 
-  async buscarPorEmail(email: string): Promise<Usuario | null> {
-    // vai retornar um usuario ou null
-    const usuario = await this.prisma.usuario.findUnique({
-      where: {
-        email,
-      },
-    });
+      const usuarioDomain = this.usuarioMapper.modelToDomain(usuarioData);
+      if (!usuarioDomain) {
+        throw new InternalServerErrorException(
+          'Erro ao transformar model do usuário para o domínio',
+        );
+      }
 
-    if (!usuario) {
-      return null; // não lança erro aqui, deixa o caso de uso decidir o que fazer
+      return usuarioDomain;
+    } catch (error) {
+      this.logger.error(`Erro ao criar usuário: ${error.message}`, {
+        stack: error.stack,
+      });
+
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2003'
+      ) {
+        throw new NotFoundException(
+          `Usuário não encontrado (chave estrangeira inválida): ${usuario.getId()}`,
+        );
+      }
+      throw new InternalServerErrorException('Erro ao criar carteira');
     }
-
-    return this.toDomain(usuario);
-  }
-
-  async listarTodos(): Promise<Usuario[]> {
-    const usuariosPrisma = await this.prisma.usuario.findMany();
-    return usuariosPrisma.map((usuarioPrisma) => this.toDomain(usuarioPrisma));
-  }
-
-  async atualizarNome(usuario: Usuario): Promise<void> {
-    await this.prisma.usuario.update({
-      where: { id: usuario.getId() },
-      data: { nome: usuario.getNome() },
-    });
-  }
-
-  async atualizarSenha(usuario: Usuario): Promise<void> {
-    await this.prisma.usuario.update({
-      where: { id: usuario.getId() },
-      data: { senha: usuario.getSenha() },
-    });
-  }
-
-  async deletar(id: string): Promise<void> {
-    await this.prisma.usuario.delete({
-      where: { id },
-    });
-  }
-
-  async existeId(id: string): Promise<boolean> {
-    const usuario = await this.prisma.usuario.findUnique({
-      where: { id },
-      select: { id: true },
-    });
-    return !!usuario; // retorna true
   }
 }
