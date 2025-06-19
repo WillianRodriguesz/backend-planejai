@@ -1,10 +1,10 @@
-import { Dinheiro } from '../../value-objects/dinheiro/dinheiro.value-object';
+import { Dinheiro } from './dinheiro.value-object';
 import { v4 as uuidv4 } from 'uuid';
 
 interface CarteiraProps {
   id?: string;
   idUsuario: string;
-  saldoInicial: number;
+  saldoInicial?: number;
 }
 
 export class Carteira {
@@ -13,7 +13,7 @@ export class Carteira {
   private saldo: Dinheiro;
 
   constructor(props: CarteiraProps) {
-    this.id = props.id || uuidv4();
+    this.setId(props.id);
     this.setIdUsuario(props.idUsuario);
     this.setSaldoInicial(props.saldoInicial);
   }
@@ -22,9 +22,23 @@ export class Carteira {
     return new Carteira(props);
   }
 
+  private setId(id: string): string {
+    if (!id) {
+      id = uuidv4();
+    }
+    this.id = id;
+    return this.id;
+  }
+
   private setIdUsuario(idUsuario: string): void {
-    if (!idUsuario || typeof idUsuario !== 'string' || idUsuario.trim() === '') {
-      throw new Error('O id do usuário é obrigatório e deve ser uma string válida');
+    if (
+      !idUsuario ||
+      typeof idUsuario !== 'string' ||
+      idUsuario.trim() === ''
+    ) {
+      throw new Error(
+        'O id do usuário é obrigatório e deve ser uma string válida',
+      );
     }
     this.idUsuario = idUsuario;
   }

@@ -1,7 +1,7 @@
 import { CarteiraController } from "./carteira.controller";
-import { UsuarioControle } from "./usuario.controller";
+import { UsuarioController } from "./usuario.controller";
 
 export const CoreControllers = [
   CarteiraController,
-  UsuarioControle,
+  UsuarioController,
 ];

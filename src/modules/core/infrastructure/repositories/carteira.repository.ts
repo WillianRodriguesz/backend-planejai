@@ -6,8 +6,8 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from '../database/Prisma/prisma.service';
-import { Carteira } from '../../domain/entities/carteira/carteira.entity';
-import { CarteiraRepository } from '../../domain/entities/repositories/carteira.repository.interface';
+import { Carteira } from '../../domain/entities/carteira.entity';
+import { CarteiraRepository } from '../../domain/repositories/carteira.repository.interface';
 import { CarteiraMapper } from '../mapper/carteira.mapper';
 import { Prisma } from 'generated/prisma';
 

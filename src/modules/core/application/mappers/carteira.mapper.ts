@@ -1,4 +1,4 @@
-import { Carteira } from '../../domain/entities/carteira/carteira.entity';
+import { Carteira } from '../../domain/entities/carteira.entity';
 import { CarteiraDto } from '../dtos/carteira/carteira.dto';
 
 export class CarteiraMapper {

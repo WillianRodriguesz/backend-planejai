@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Carteira } from '../../domain/entities/carteira/carteira.entity';
+import { Carteira } from '../../domain/entities/carteira.entity';
 import { Prisma } from 'generated/prisma';
 type CarteiraModel = Prisma.carteiraGetPayload<{}>;
 type CarteiraModelProps = Prisma.carteiraCreateInput;
 
 @Injectable()
 export class CarteiraMapper {
- modelToDomain(model: CarteiraModel): Carteira {
+  modelToDomain(model: CarteiraModel): Carteira {
     return new Carteira({
       id: model.id_carteira,
       idUsuario: model.id_usuario,
@@ -23,5 +23,4 @@ export class CarteiraMapper {
       },
     };
   }
-
 }

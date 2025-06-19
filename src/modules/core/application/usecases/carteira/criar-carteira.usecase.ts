@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CarteiraRepository } from '../../../domain/entities/repositories/carteira.repository.interface';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository.interface';
 import { CarteiraMapper } from '../../mappers/carteira.mapper';
 import { CarteiraDto } from '../../dtos/carteira/carteira.dto';
-import { Carteira } from '../../../domain/entities/carteira/carteira.entity';
+import { Carteira } from '../../../domain/entities/carteira.entity';
+type CarteiraResult = CarteiraDto;
 
 export interface CarteiraUsecaseProps {
   idUsuario: string;
@@ -12,18 +13,18 @@ export interface CarteiraUsecaseProps {
 @Injectable()
 export class CriarCarteiraUseCase {
   constructor(
-    @Inject('CriarCarteiraRepository')
+    @Inject('CarteiraRepository')
     private readonly carteiraRepository: CarteiraRepository,
   ) {}
 
-  async execute(props: CarteiraUsecaseProps): Promise<CarteiraDto> {
+  async execute(props: CarteiraUsecaseProps): Promise<CarteiraResult> {
     if (!props.idUsuario) {
       throw new Error('ID do usuário não pode ser vazio');
     }
 
     const carteiraDomain = Carteira.criar({
-        idUsuario: props.idUsuario,
-        saldoInicial: props.saldo,
+      idUsuario: props.idUsuario,
+      saldoInicial: props.saldo,
     });
 
     const carteiraResult = await this.carteiraRepository.criar(carteiraDomain);

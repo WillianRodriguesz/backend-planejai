@@ -1,4 +1,4 @@
-import { Carteira } from "../carteira/carteira.entity";
+import { Carteira } from '../entities/carteira.entity';
 
 export interface CarteiraRepository {
   buscarPorId(id: string): Promise<Carteira>;

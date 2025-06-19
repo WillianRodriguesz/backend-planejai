@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from 'generated/prisma';
-import { Usuario } from '../../domain/entities/usuario/usuario.entity';
+import { Usuario } from '../../domain/entities/usuario.entity';
 
-type usuarioModel = Prisma.usuarioCreateInput;
+type usuarioModel = Prisma.usuarioGetPayload<{}>;
+type usuarioModelProps = Prisma.usuarioCreateInput;
 
 @Injectable()
 export class UsuarioMapper {
@@ -20,7 +21,7 @@ export class UsuarioMapper {
     return usuario;
   }
 
-  domainToModel(domain: Usuario): usuarioModel {
+  domainToModel(domain: Usuario): usuarioModelProps {
     return {
       id_usuario: domain.getId(),
       email: domain.getEmail(),
