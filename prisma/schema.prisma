@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model carteira {
+  id_carteira      String             @id @db.VarChar(36)
+  id_usuario       String             @db.VarChar(36)
+  saldo            Decimal?           @default(0.00) @db.Decimal(10, 2)
+  usuario          usuario            @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade, onUpdate: NoAction, map: "fk_usuario")
+  conta_recorrente conta_recorrente[]
+  transacao        transacao[]
+  @@map("carteira")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model conta_recorrente {
+  id_conta_recorrente Int      @id @default(autoincrement())
+  id_carteira         String   @db.VarChar(36)
+  valor               Decimal  @db.Decimal(10, 2)
+  descricao           String?  @db.VarChar(255)
+  intervalo_dias      Int
+  data_inicio         DateTime @db.Date
+  carteira            carteira @relation(fields: [id_carteira], references: [id_carteira], onDelete: Cascade, onUpdate: NoAction, map: "fk_carteira_recorrente")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model transacao {
+  id_transacao Int      @id @default(autoincrement())
+  id_carteira  String   @db.VarChar(36)
+  valor        Decimal  @db.Decimal(10, 2)
+  tipo         String   @db.VarChar(10)
+  descricao    String?  @db.VarChar(255)
+  data         DateTime @default(now()) @db.Timestamp(6)
+  carteira     carteira @relation(fields: [id_carteira], references: [id_carteira], onDelete: Cascade, onUpdate: NoAction, map: "fk_carteira")
+
+  @@index([data], map: "idx_transacao_data")
+}
+
+model usuario {
+  id_usuario String     @id @db.VarChar(36)
+  nome       String     @db.VarChar(100)
+  email      String     @unique @db.VarChar(100)
+  senha      String     @db.VarChar(255)
+  carteira   carteira[]
+}
