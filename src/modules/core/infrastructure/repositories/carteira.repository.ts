@@ -17,6 +17,9 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
   ) {}
 
   async buscarPorId(id: string): Promise<Carteira> {
+    if (!id) {
+      throw new NotFoundException('ID da carteira não informado');
+    }
     try {
       const carteiraData = await this.prisma.carteira.findUnique({
         where: { id_carteira: id },
@@ -28,7 +31,7 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
 
       const carteiraModel = new CarteiraModel().criar({
         id: carteiraData.id_carteira,
-        idUsuario: carteiraData.id_usuario,
+        id_usuario: carteiraData.id_usuario,
         saldo: carteiraData.saldo,
       });
       if (!carteiraModel) {
@@ -48,6 +51,35 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
     } catch (error) {
       console.error('Erro ao buscar carteira:', error);
       throw error;
+    }
+  }
+
+  async criar(carteira: Carteira): Promise<Carteira> {
+    try {
+      const createdCarteira = await this.prisma.carteira.create({
+        data: {
+          id_carteira: carteira.getId(),
+          id_usuario: carteira.getIdUsuario(),
+          saldo: carteira.getSaldo().getValor(),
+        },
+      });
+      const carteiraModel = new CarteiraModel().criar({
+        id: createdCarteira.id_carteira,
+        id_usuario: createdCarteira.id_usuario,
+        saldo: createdCarteira.saldo,
+      });
+      if (!carteiraModel) {
+        throw new InternalServerErrorException(
+          'Erro ao criar model da carteira',
+        );
+      }
+
+      const carteiraDomain = this.carteiraMapper.modelToDomain(carteiraModel);
+
+      return carteiraDomain;
+    } catch (error) {
+      console.error('Erro ao criar carteira:', error);
+      throw new InternalServerErrorException('Erro ao criar carteira');
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Dinheiro } from '../../value-objects/dinheiro/dinheiro.value-object';
 import { v4 as uuidv4 } from 'uuid';
+import { Usuario } from '../usuario/usuario.entity';
 
 interface CarteiraProps {
   id?: string;
@@ -33,12 +34,12 @@ export class Carteira {
     return this.id;
   }
 
-  public getIdUsuario(): string {
-    return this.idUsuario;
-  }
-
   public getSaldo(): Dinheiro {
     return this.saldo;
+  }
+
+  public getIdUsuario(): string {
+    return this.idUsuario;
   }
 
   public adicionarSaldo(valor: number): void {

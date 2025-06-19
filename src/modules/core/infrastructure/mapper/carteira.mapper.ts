@@ -7,7 +7,7 @@ export class CarteiraMapper {
   modelToDomain(model: CarteiraModel): Carteira {
     const domain = new Carteira({
       id: model.id,
-      idUsuario: model.idUsuario,
+      idUsuario: model.id_usuario,
       saldoInicial: Number(model.saldo.toString()),
     });
 
@@ -16,17 +16,5 @@ export class CarteiraMapper {
     }
     return domain;
   }
-
-  domainToModel(domain: Carteira): CarteiraModel {
-      const model = new CarteiraModel().criar({
-        id: domain.getId(),
-        idUsuario: domain.getIdUsuario(),
-        saldo: domain.getSaldo().getValor(),
-      });
-      if (!model) {
-        throw new Error('Erro ao transformar dominio da carteira para o model');
-      }
-      return model;
-    }
 
 }

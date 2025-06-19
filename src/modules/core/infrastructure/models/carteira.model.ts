@@ -2,13 +2,14 @@ import { Decimal } from "generated/prisma/runtime/library";
 
  interface CarteiraModelProps {
   id: string;
-  idUsuario: string;
+  id_usuario: string;
   saldo: string | number | Decimal;
 }
 
+
 export class CarteiraModel implements CarteiraModelProps {
   id: string;
-  idUsuario: string;
+  id_usuario: string;
   saldo: string | number | Decimal;
 
   criar(props: CarteiraModelProps): CarteiraModel {
