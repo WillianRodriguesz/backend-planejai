@@ -55,4 +55,32 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
       throw new InternalServerErrorException('Erro ao criar carteira');
     }
   }
+
+   async buscarPorEmail(email: string): Promise<Usuario> {
+    try{
+      const usuarioPrisma = await this.prisma.usuario.findUnique({
+        where: { email },
+      });
+
+      if (!usuarioPrisma) {
+        return null;
+      }
+
+      const usuarioDomain = this.usuarioMapper.modelToDomain(usuarioPrisma);
+      
+      if (!usuarioDomain) {
+        throw new InternalServerErrorException(
+          'Erro ao transformar model do usuário para o domínio',
+        );
+      }
+
+      return usuarioDomain;
+
+    } catch (error) {
+      this.logger.error(`Erro ao buscar usuário por email: ${error.message}`, {
+        stack: error.stack,
+      });
+      throw new InternalServerErrorException('Erro ao buscar usuário por email');
+    }
+  }
 }

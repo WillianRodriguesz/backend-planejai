@@ -157,7 +157,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\980251\\Documents\\Planejai\\back-end\\generated\\prisma",
+      "value": "C:\\Projetos NESTJS\\backend-planejai\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -171,7 +171,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\980251\\Documents\\Planejai\\back-end\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Projetos NESTJS\\backend-planejai\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
