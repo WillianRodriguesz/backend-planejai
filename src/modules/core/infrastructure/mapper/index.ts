@@ -1,7 +1,3 @@
-import { CarteiraMapper } from "./carteira.mapper";
-import { UsuarioMapper } from "./usuario.mapper";
-
 export const CoreMappers = [
-    CarteiraMapper,
-    UsuarioMapper
-]
+  // Mappers serão adicionados quando forem recriados para TypeORM
+];

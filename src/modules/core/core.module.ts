@@ -5,8 +5,7 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { PrismaModule } from 'src/modules/core/infrastructure/database/Prisma/prisma.module';
-import { CoreRepositories } from './infrastructure/repositories';
+import { DatabaseModule } from '../../shared/database';
 import { CoreUseCases } from './application/usecases';
 import { CoreMappers } from './infrastructure/mapper';
 import { CoreControllers } from './controllers';
@@ -17,12 +16,10 @@ import { BcryptHashService } from './infrastructure/services/hash-bcrypt.service
     JwtModule.register({
       secret: process.env.JWT_SECRET,
     }),
-
-    PrismaModule,
+    DatabaseModule,
   ],
   controllers: [...CoreControllers],
   providers: [
-    ...CoreRepositories,
     ...CoreUseCases,
     ...CoreMappers,
     {
