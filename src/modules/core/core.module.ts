@@ -5,7 +5,7 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { DatabaseModule } from '../../shared/database';
+import { DatabaseModule } from '../../shared/infrastructure/database';
 import { CoreUseCases } from './application/usecases';
 import { CoreMappers } from './infrastructure/mapper';
 import { CoreControllers } from './controllers';

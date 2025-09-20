@@ -7,7 +7,7 @@ import {
   CategoriaModel,
   LancamentoModel,
   OrcamentoModel,
-} from '../../modules/core/infrastructure/models';
+} from '../../../modules/core/infrastructure/models';
 
 @Module({
   imports: [

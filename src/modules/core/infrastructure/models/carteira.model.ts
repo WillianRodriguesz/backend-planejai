@@ -11,7 +11,6 @@ import { UsuarioModel } from './usuario.model';
 import { LancamentoModel } from './lancamento.model';
 import { OrcamentoModel } from './orcamento.model';
 
-
 @Entity('carteiras')
 export class CarteiraModel {
   @PrimaryGeneratedColumn('uuid')
