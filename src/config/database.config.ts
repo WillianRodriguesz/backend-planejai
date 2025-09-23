@@ -1,7 +1,12 @@
-import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { CarteiraModel, CategoriaModel, LancamentoModel, OrcamentoModel, UsuarioModel } from '../modules/core/infrastructure/models';
-
+import { DataSource } from 'typeorm';
+import {
+  CarteiraModel,
+  CategoriaModel,
+  LancamentoModel,
+  UsuarioModel,
+  SaldoMensalModel
+} from '../modules/core/infrastructure/models';
 
 dotenv.config();
 
@@ -15,7 +20,13 @@ export const AppDataSource = new DataSource({
   schema: process.env.DB_SCHEMA,
   synchronize: false, // Não usar em produção
   logging: false,
-  entities: [UsuarioModel, CarteiraModel, CategoriaModel, LancamentoModel, OrcamentoModel],
+  entities: [
+    UsuarioModel,
+    CarteiraModel,
+    CategoriaModel,
+    LancamentoModel,
+    SaldoMensalModel,
+  ],
   migrations: ['src/migrations/*.ts'],
   subscribers: ['src/subscriber/*.ts'],
 });

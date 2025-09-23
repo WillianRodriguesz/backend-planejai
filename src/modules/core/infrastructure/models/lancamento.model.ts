@@ -6,8 +6,8 @@ import {
   JoinColumn,
   CreateDateColumn,
 } from 'typeorm';
-import { CarteiraModel } from './carteira.model';
-import { CategoriaModel } from './categoria.model';
+import { CarteiraModel } from './Carteira.model';
+import { CategoriaModel } from './Categoria.model';
 
 @Entity('lancamentos')
 export class LancamentoModel {
@@ -22,6 +22,9 @@ export class LancamentoModel {
 
   @Column({ length: 150 })
   titulo: string;
+
+  @Column({ length: 150 })
+  descricao: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   valor: number;

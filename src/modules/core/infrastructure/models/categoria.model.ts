@@ -1,7 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { LancamentoModel } from './lancamento.model';
-import { OrcamentoModel } from './orcamento.model';
-
+import { LancamentoModel } from './Lancamento.model';
 
 @Entity('categorias')
 export class CategoriaModel {
@@ -20,7 +18,4 @@ export class CategoriaModel {
 
   @OneToMany(() => LancamentoModel, (lancamento) => lancamento.categoria)
   lancamentos: LancamentoModel[];
-
-  @OneToMany(() => OrcamentoModel, (orcamento) => orcamento.categoria)
-  orcamentos: OrcamentoModel[];
 }

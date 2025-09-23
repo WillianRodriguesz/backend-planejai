@@ -7,9 +7,9 @@ import {
   OneToMany,
   CreateDateColumn,
 } from 'typeorm';
-import { UsuarioModel } from './usuario.model';
-import { LancamentoModel } from './lancamento.model';
-import { OrcamentoModel } from './orcamento.model';
+import { UsuarioModel } from './Usuario.model';
+import { LancamentoModel } from './Lancamento.model';
+import { SaldoMensalModel } from './SaldoMensal.model';
 
 @Entity('carteiras')
 export class CarteiraModel {
@@ -18,15 +18,6 @@ export class CarteiraModel {
 
   @Column({ name: 'usuario_id' })
   usuarioId: string;
-
-  @Column({
-    name: 'saldo_inicial',
-    type: 'decimal',
-    precision: 10,
-    scale: 2,
-    default: 0,
-  })
-  saldoInicial: number;
 
   @CreateDateColumn({ name: 'criado_em' })
   criadoEm: Date;
@@ -40,6 +31,6 @@ export class CarteiraModel {
   @OneToMany(() => LancamentoModel, (lancamento) => lancamento.carteira)
   lancamentos: LancamentoModel[];
 
-  @OneToMany(() => OrcamentoModel, (orcamento) => orcamento.carteira)
-  orcamentos: OrcamentoModel[];
+  @OneToMany(() => SaldoMensalModel, (saldoMensal) => saldoMensal.carteira)
+  saldosMensais: SaldoMensalModel[];
 }
