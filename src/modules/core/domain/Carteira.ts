@@ -1,4 +1,5 @@
-import { Lancamento, SaldosMensais } from '../entities';
+import { Lancamento } from './Lancamento';
+import { SaldoMes } from './SaldoMes';
 
 export interface CriarCarteiraProps {
   usuarioId: string;
@@ -8,7 +9,7 @@ export class Carteira {
   private id: string;
   private usuarioId: string;
   private lancamentos: Lancamento[];
-  private saldosMensais: SaldosMensais[];
+  private saldosMensais: SaldoMes[];
   private criadoEm: Date;
 
   private constructor(id?: string) {
@@ -30,7 +31,7 @@ export class Carteira {
     usuarioId: string;
     criadoEm: Date;
     lancamentos?: Lancamento[];
-    saldosMensais?: SaldosMensais[];
+    saldosMensais?: SaldoMes[];
   }): Carteira {
     const carteira = new Carteira(props.id);
     carteira.setUsuarioId(props.usuarioId);
@@ -56,7 +57,7 @@ export class Carteira {
     return this.lancamentos;
   }
 
-  public getSaldosMensais(): SaldosMensais[] {
+  public getSaldosMensais(): SaldoMes[] {
     return this.saldosMensais;
   }
 
@@ -72,7 +73,7 @@ export class Carteira {
     this.lancamentos = lancamentos;
   }
 
-  private setSaldosMensais(saldosMensais: SaldosMensais[]): void {
+  private setSaldosMensais(saldosMensais: SaldoMes[]): void {
     this.saldosMensais = saldosMensais;
   }
 

@@ -1,4 +1,4 @@
-export class SaldosMensais {
+export class SaldoMes {
   constructor(
     public readonly id: string,
     public readonly carteiraId: string,

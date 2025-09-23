@@ -6,7 +6,7 @@ import {
   CarteiraModel,
   CategoriaModel,
   LancamentoModel,
-  OrcamentoModel,
+  SaldoMensalModel,
 } from '../../../modules/core/infrastructure/models';
 
 @Module({
@@ -26,7 +26,7 @@ import {
           CarteiraModel,
           CategoriaModel,
           LancamentoModel,
-          OrcamentoModel,
+          SaldoMensalModel,
         ],
         synchronize: false, // Sempre false em produção
         logging: true,
@@ -39,7 +39,7 @@ import {
       CarteiraModel,
       CategoriaModel,
       LancamentoModel,
-      OrcamentoModel,
+      SaldoMensalModel,
     ]),
   ],
   exports: [TypeOrmModule],
