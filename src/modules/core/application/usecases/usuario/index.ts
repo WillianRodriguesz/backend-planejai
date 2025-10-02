@@ -1,3 +1,3 @@
-import { CriarUsuarioUseCase } from './criar-usuario.usecase';
+// import { CriarUsuarioUseCase } from './criar-usuario.usecase';
 
-export const UsuarioUseCases = [CriarUsuarioUseCase];
+// export const UsuarioUseCases = [CriarUsuarioUseCase];
