@@ -3,13 +3,12 @@ import { SaldoMensalModel } from '../models/SaldoMensal.model';
 
 export class SaldoMensalMapper {
   static ModelToDomain(model: SaldoMensalModel): SaldoMes {
-    return new SaldoMes(
-      model.id.toString(),
-      model.carteiraId,
-      model.mes,
-      model.ano,
-      model.saldoMes,
-    );
+    return SaldoMes.carregar({
+      id: model.id.toString(),
+      mes: model.mes,
+      ano: model.ano,
+      saldoMes: model.saldoMes,
+    });
   }
 
   static ModelToDomainList(models: SaldoMensalModel[]): SaldoMes[] {
@@ -18,11 +17,10 @@ export class SaldoMensalMapper {
 
   static DomainToModel(domain: SaldoMes): Partial<SaldoMensalModel> {
     return {
-      id: parseInt(domain.id),
-      carteiraId: domain.carteiraId,
-      mes: domain.mes,
-      ano: domain.ano,
-      saldoMes: domain.saldoMes,
+      id: parseInt(domain.getId()),
+      mes: domain.getMes(),
+      ano: domain.getAno(),
+      saldoMes: domain.getSaldoMes(),
     };
   }
 

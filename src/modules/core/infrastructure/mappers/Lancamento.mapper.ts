@@ -1,15 +1,20 @@
 import { Lancamento } from '../../domain/Lancamento';
+import { Categoria } from '../../domain/Categoria';
 import { LancamentoModel } from '../models/Lancamento.model';
+import { CategoriaMapper } from './categoria.mapper';
 
 export class LancamentoMapper {
   static ModelToDomain(model: LancamentoModel): Lancamento {
-    return new Lancamento(
-      model.id.toString(),
-      model.carteiraId,
-      model.valor,
-      model.descricao,
-      model.data,
-    );
+    const categoria = model.categoria
+      ? CategoriaMapper.ModelToDomain(model.categoria)
+      : undefined;
+    return Lancamento.carregar({
+      id: model.id.toString(),
+      valor: model.valor,
+      descricao: model.descricao,
+      data: model.data,
+      categoria,
+    });
   }
 
   static ModelToDomainList(models: LancamentoModel[]): Lancamento[] {
@@ -18,11 +23,10 @@ export class LancamentoMapper {
 
   static DomainToModel(domain: Lancamento): Partial<LancamentoModel> {
     return {
-      id: parseInt(domain.id),
-      carteiraId: domain.carteiraId,
-      valor: domain.valor,
-      descricao: domain.descricao,
-      data: domain.data,
+      id: parseInt(domain.getId()),
+      valor: domain.getValor(),
+      descricao: domain.getDescricao(),
+      data: domain.getData(),
     };
   }
 

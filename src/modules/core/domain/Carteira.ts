@@ -85,9 +85,6 @@ export class Carteira {
   }
 
   public adicionarLancamento(lancamento: Lancamento): void {
-    if (lancamento.carteiraId !== this.id) {
-      throw new Error('Lançamento não pertence a esta Carteira');
-    }
     this.lancamentos.push(lancamento);
   }
 
@@ -96,17 +93,18 @@ export class Carteira {
     const anoAtual = new Date().getFullYear();
     const lancamentosDoMes = this.lancamentos.filter(
       (l) =>
-        l.data.getMonth() === mesAtual && l.data.getFullYear() === anoAtual,
+        l.getData().getMonth() === mesAtual &&
+        l.getData().getFullYear() === anoAtual,
     );
     const totalLancamentos = lancamentosDoMes.reduce(
-      (sum, l) => sum + l.valor,
+      (sum, l) => sum + l.getValor(),
       0,
     );
     const saldoMensal = this.saldosMensais.find(
-      (s) => s.mes === mesAtual + 1 && s.ano === anoAtual,
+      (s) => s.getMes() === mesAtual + 1 && s.getAno() === anoAtual,
     );
     return saldoMensal
-      ? saldoMensal.saldoMes + totalLancamentos
+      ? saldoMensal.getSaldoMes() + totalLancamentos
       : totalLancamentos;
   }
 }

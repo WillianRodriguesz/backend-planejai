@@ -1,7 +1,7 @@
 import { Carteira } from '../../domain/Carteira';
 import { CarteiraModel } from '../models/Carteira.model';
 import { LancamentoMapper } from './lancamento.mapper';
-import { SaldoMensalMapper } from './saldomensal.mapper';
+import { SaldoMensalMapper } from './Saldomensal.mapper';
 
 export class CarteiraMapper {
   static ModelToDomain(model: CarteiraModel): Carteira {

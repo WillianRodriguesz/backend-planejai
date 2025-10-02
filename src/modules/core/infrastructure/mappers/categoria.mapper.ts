@@ -3,7 +3,11 @@ import { CategoriaModel } from '../models/Categoria.model';
 
 export class CategoriaMapper {
   static ModelToDomain(model: CategoriaModel): Categoria {
-    return new Categoria(model.id, model.nome, model.tipo);
+    return Categoria.carregar({
+      id: model.id,
+      nome: model.nome,
+      tipo: model.tipo,
+    });
   }
 
   static ModelToDomainList(models: CategoriaModel[]): Categoria[] {
@@ -12,9 +16,9 @@ export class CategoriaMapper {
 
   static DomainToModel(domain: Categoria): Partial<CategoriaModel> {
     return {
-      id: domain.id,
-      nome: domain.nome,
-      tipo: domain.tipo,
+      id: domain.getId(),
+      nome: domain.getNome(),
+      tipo: domain.getTipo(),
     };
   }
 

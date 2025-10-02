@@ -3,13 +3,13 @@ import { UsuarioModel } from '../models/Usuario.model';
 
 export class UsuarioMapper {
   static ModelToDomain(model: UsuarioModel): Usuario {
-    return new Usuario(
-      model.id,
-      model.nome,
-      model.email,
-      model.criadoEm,
-      model.telefone,
-    );
+    return Usuario.carregar({
+      id: model.id,
+      nome: model.nome,
+      email: model.email,
+      criadoEm: model.criadoEm,
+      telefone: model.telefone,
+    });
   }
 
   static ModelToDomainList(models: UsuarioModel[]): Usuario[] {
@@ -18,11 +18,11 @@ export class UsuarioMapper {
 
   static DomainToModel(domain: Usuario): Partial<UsuarioModel> {
     return {
-      id: domain.id,
-      nome: domain.nome,
-      email: domain.email,
-      criadoEm: domain.criadoEm,
-      telefone: domain.telefone,
+      id: domain.getId(),
+      nome: domain.getNome(),
+      email: domain.getEmail(),
+      criadoEm: domain.getCriadoEm(),
+      telefone: domain.getTelefone(),
     };
   }
 
