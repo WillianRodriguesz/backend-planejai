@@ -26,7 +26,7 @@ export class Carteira {
     return carteira;
   }
 
-  public static reconstruir(props: {
+  public static carregar(props: {
     id: string;
     usuarioId: string;
     criadoEm: Date;
