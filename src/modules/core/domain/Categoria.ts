@@ -1,12 +1,13 @@
+type Tipo = 'entrada' | 'saida' | 'ambos';
 export interface CriarCategoriaProps {
   nome: string;
-  tipo: 'entrada' | 'saida' | 'ambos';
+  tipo: Tipo;
 }
 
 export class Categoria {
   private id: number;
   private nome: string;
-  private tipo: 'entrada' | 'saida' | 'ambos';
+  private tipo: Tipo;
 
   private constructor(id?: number) {
     this.id = id;
@@ -23,7 +24,7 @@ export class Categoria {
   public static carregar(props: {
     id: number;
     nome: string;
-    tipo: 'entrada' | 'saida' | 'ambos';
+    tipo: Tipo;
   }): Categoria {
     const categoria = new Categoria(props.id);
     categoria.setNome(props.nome);
@@ -39,7 +40,7 @@ export class Categoria {
     return this.nome;
   }
 
-  public getTipo(): 'entrada' | 'saida' | 'ambos' {
+  public getTipo(): Tipo {
     return this.tipo;
   }
 
@@ -47,7 +48,7 @@ export class Categoria {
     this.nome = nome;
   }
 
-  private setTipo(tipo: 'entrada' | 'saida' | 'ambos'): void {
+  private setTipo(tipo: Tipo): void {
     this.tipo = tipo;
   }
 

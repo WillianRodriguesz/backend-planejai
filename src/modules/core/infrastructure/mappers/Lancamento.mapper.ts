@@ -1,5 +1,4 @@
 import { Lancamento } from '../../domain/Lancamento';
-import { Categoria } from '../../domain/Categoria';
 import { LancamentoModel } from '../models/Lancamento.model';
 import { CategoriaMapper } from './categoria.mapper';
 

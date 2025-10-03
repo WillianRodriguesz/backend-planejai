@@ -1,30 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Carteira } from '../../domain/Carteira';
 import { CarteiraModel } from '../models/Carteira.model';
 import { CarteiraMapper } from '../mappers/Carteira.mapper';
+import { CarteiraRepository } from '../../domain/repositories/Carteira.repository';
 
 @Injectable()
-export class CarteiraRepositoryImpl {
+export class CarteiraRepositoryImpl implements CarteiraRepository {
+  private readonly logger = new Logger(CarteiraRepositoryImpl.name);
+
   constructor(
     @InjectRepository(CarteiraModel)
-    private readonly carteiraRepo: Repository<CarteiraModel>,
+    private readonly carteiraRepository: Repository<CarteiraModel>,
   ) {}
 
-  async findById(id: string): Promise<Carteira | null> {
-    const model = await this.carteiraRepo.findOne({
-      where: { id },
-      relations: ['lancamentos', 'saldosMensais'],
-    });
-    if (!model) return null;
+  async buscarPorId(id: string): Promise<Carteira | null> {
+    try {
+      const model = await this.carteiraRepository.findOne({
+        where: { id },
+        relations: ['lancamentos', 'lancamentos.categoria', 'saldosMensais'],
+      });
 
-    return CarteiraMapper.ModelToDomain(model);
+      if (!model) {
+        this.logger.warn(`Carteira com ID ${id} não encontrada`);
+        return null;
+      }
+
+      return CarteiraMapper.ModelToDomain(model);
+    } catch (error) {
+      this.logger.error(
+        `Erro ao buscar carteira com ID ${id}: ${error.message}`,
+        error.stack,
+      );
+      throw new Error('Erro interno ao buscar carteira');
+    }
   }
 
-  async save(carteira: Carteira): Promise<void> {
-    const modelData = CarteiraMapper.DomainToModel(carteira);
-    const model = this.carteiraRepo.create(modelData);
-    await this.carteiraRepo.save(model);
+  async salvar(carteira: Carteira): Promise<void> {
+    try {
+      const modelData = CarteiraMapper.DomainToModel(carteira);
+      const model = this.carteiraRepository.create(modelData);
+      await this.carteiraRepository.save(model);
+    } catch (error) {
+      this.logger.error(
+        `Erro ao salvar carteira: ${error.message}`,
+        error.stack,
+      );
+      throw new Error('Erro interno ao salvar carteira');
+    }
   }
 }
