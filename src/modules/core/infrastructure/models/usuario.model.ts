@@ -5,7 +5,7 @@ import {
   OneToMany,
   CreateDateColumn,
 } from 'typeorm';
-import { CarteiraModel } from './Carteira.model';
+import { CarteiraModel } from './carteira.model';
 
 @Entity('usuarios')
 export class UsuarioModel {

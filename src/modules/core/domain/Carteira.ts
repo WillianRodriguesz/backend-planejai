@@ -1,8 +1,16 @@
 import { Lancamento } from './Lancamento';
 import { SaldoMes } from './SaldoMes';
+import { Categoria } from './Categoria';
 
 export interface CriarCarteiraProps {
   usuarioId: string;
+}
+
+export interface AdicionarLancamentoProps {
+  categoria: Categoria;
+  valor: number;
+  descricao: string;
+  data: Date;
 }
 
 export class Carteira {
@@ -15,6 +23,8 @@ export class Carteira {
   private constructor(id?: string) {
     this.id = id;
   }
+
+  private static readonly MES_OFFSET = 1;
 
   public static criar(props: CriarCarteiraProps): Carteira {
     const { usuarioId } = props;
@@ -41,26 +51,6 @@ export class Carteira {
     return carteira;
   }
 
-  public getId(): string {
-    return this.id;
-  }
-
-  public getUsuarioId(): string {
-    return this.usuarioId;
-  }
-
-  public getCriadoEm(): Date {
-    return this.criadoEm;
-  }
-
-  public getLancamentos(): Lancamento[] {
-    return this.lancamentos;
-  }
-
-  public getSaldosMensais(): SaldoMes[] {
-    return this.saldosMensais;
-  }
-
   private setUsuarioId(usuarioId: string): void {
     this.usuarioId = usuarioId;
   }
@@ -84,27 +74,56 @@ export class Carteira {
     this.id = id;
   }
 
-  public adicionarLancamento(lancamento: Lancamento): void {
-    this.lancamentos.push(lancamento);
+  public getId(): string {
+    return this.id;
   }
 
-  public calcularSaldoAtual(): number {
-    const mesAtual = new Date().getMonth();
-    const anoAtual = new Date().getFullYear();
-    const lancamentosDoMes = this.lancamentos.filter(
-      (l) =>
-        l.getData().getMonth() === mesAtual &&
-        l.getData().getFullYear() === anoAtual,
+  public getUsuarioId(): string {
+    return this.usuarioId;
+  }
+
+  public getCriadoEm(): Date {
+    return this.criadoEm;
+  }
+
+  public getLancamentos(): Lancamento[] {
+    return this.lancamentos;
+  }
+
+  public getSaldosMensais(): SaldoMes[] {
+    return this.saldosMensais;
+  }
+
+  public adicionarLancamento(props: AdicionarLancamentoProps): void {
+    const lancamento = Lancamento.criar(props);
+    this.lancamentos.push(lancamento);
+    this.atualizarSaldoMensal(lancamento);
+  }
+
+  private atualizarSaldoMensal(lancamento: Lancamento): void {
+    const mes = lancamento.getData().getMonth() + Carteira.MES_OFFSET; // Mês de 1 a 12
+    const ano = lancamento.getData().getFullYear();
+
+    let saldoMes = this.saldosMensais.find(
+      (s) => s.getMes() === mes && s.getAno() === ano,
     );
-    const totalLancamentos = lancamentosDoMes.reduce(
-      (sum, l) => sum + l.getValor(),
-      0,
-    );
-    const saldoMensal = this.saldosMensais.find(
-      (s) => s.getMes() === mesAtual + 1 && s.getAno() === anoAtual,
-    );
-    return saldoMensal
-      ? saldoMensal.getSaldoMes() + totalLancamentos
-      : totalLancamentos;
+
+    if (!saldoMes) {
+      saldoMes = SaldoMes.criar({
+        mes,
+        ano,
+        saldoMes: 0,
+      });
+      this.saldosMensais.push(saldoMes);
+    }
+
+    const tipo = lancamento.getCategoria().getTipo();
+    const valor = lancamento.getValor();
+
+    if (tipo === 'entrada') {
+      saldoMes.adicionarSaldoMes(valor);
+    } else if (tipo === 'saida') {
+      saldoMes.subtrairSaldoMes(valor);
+    }
   }
 }

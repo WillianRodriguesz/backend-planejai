@@ -2,8 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Carteira } from '../../domain/Carteira';
-import { CarteiraModel } from '../models/Carteira.model';
-import { CarteiraMapper } from '../mappers/Carteira.mapper';
+import { CarteiraModel } from '../models/carteira.model';
+import { CarteiraMapper } from '../mappers/carteira.mapper';
 import { CarteiraRepository } from '../../domain/repositories/Carteira.repository';
 
 @Injectable()

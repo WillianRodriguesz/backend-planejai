@@ -1,5 +1,5 @@
 import { Categoria } from '../../domain/Categoria';
-import { CategoriaModel } from '../models/Categoria.model';
+import { CategoriaModel } from '../models/categoria.model';
 
 export class CategoriaMapper {
   static ModelToDomain(model: CategoriaModel): Categoria {

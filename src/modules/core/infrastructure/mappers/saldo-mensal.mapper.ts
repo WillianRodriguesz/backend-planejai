@@ -1,5 +1,5 @@
 import { SaldoMes } from '../../domain/SaldoMes';
-import { SaldoMensalModel } from '../models/SaldoMensal.model';
+import { SaldoMensalModel } from '../models/saldo-mensal.model';
 
 export class SaldoMensalMapper {
   static ModelToDomain(model: SaldoMensalModel): SaldoMes {

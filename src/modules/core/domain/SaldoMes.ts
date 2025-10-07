@@ -36,6 +36,18 @@ export class SaldoMes {
     return saldoMesEntity;
   }
 
+  private setMes(mes: number): void {
+    this.mes = mes;
+  }
+
+  private setAno(ano: number): void {
+    this.ano = ano;
+  }
+
+  private setSaldoMes(saldoMes: number): void {
+    this.saldoMes = saldoMes;
+  }
+
   public getId(): string {
     return this.id;
   }
@@ -52,22 +64,32 @@ export class SaldoMes {
     return this.saldoMes;
   }
 
-  private setMes(mes: number): void {
-    this.mes = mes;
-  }
-
-  private setAno(ano: number): void {
-    this.ano = ano;
-  }
-
-  private setSaldoMes(saldoMes: number): void {
-    this.saldoMes = saldoMes;
-  }
-
   public setId(id: string): void {
     if (this.id) {
       throw new Error('ID já foi definido');
     }
     this.id = id;
+  }
+
+  public adicionarSaldoMes(valor: number): void {
+    if (valor < 0) {
+      throw new Error('Valor deve ser positivo');
+    }
+
+    if (!this.saldoMes) {
+      throw new Error('Saldo do mês não definido');
+    }
+    this.saldoMes += valor;
+  }
+
+  public subtrairSaldoMes(valor: number): void {
+    if (valor < 0) {
+      throw new Error('Valor deve ser positivo');
+    }
+
+    if (!this.saldoMes) {
+      throw new Error('Saldo do mês não definido');
+    }
+    this.saldoMes -= valor;
   }
 }

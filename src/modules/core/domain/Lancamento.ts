@@ -33,7 +33,7 @@ export class Lancamento {
     valor: number;
     descricao: string;
     data: Date;
-    categoria?: Categoria;
+    categoria: Categoria;
   }): Lancamento {
     const lancamento = new Lancamento(props.id);
     lancamento.setValor(props.valor);

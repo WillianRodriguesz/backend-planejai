@@ -12,8 +12,8 @@ export class UsuarioController {
     private readonly criarUsuarioUseCase: CriarUsuarioUseCase,
   ) {}
 
-  @Post('/criar')
-  async criar(@Body() body: UsuarioUsecaseProps): Promise<UsuarioDto> {
-    return this.criarUsuarioUseCase.execute(body);
-  }
+  // @Post('/criar')
+  // async criar(@Body() body: UsuarioUsecaseProps): Promise<UsuarioDto> {
+  //   return this.criarUsuarioUseCase.execute(body);
+  // }
 }

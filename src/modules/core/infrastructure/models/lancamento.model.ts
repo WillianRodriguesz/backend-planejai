@@ -6,8 +6,8 @@ import {
   JoinColumn,
   CreateDateColumn,
 } from 'typeorm';
-import { CarteiraModel } from './Carteira.model';
-import { CategoriaModel } from './Categoria.model';
+import { CarteiraModel } from './carteira.model';
+import { CategoriaModel } from './categoria.model';
 
 @Entity('lancamentos')
 export class LancamentoModel {

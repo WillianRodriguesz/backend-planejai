@@ -1,5 +1,5 @@
 import { Usuario } from '../../domain/Usuario';
-import { UsuarioModel } from '../models/Usuario.model';
+import { UsuarioModel } from '../models/usuario.model';
 
 export class UsuarioMapper {
   static ModelToDomain(model: UsuarioModel): Usuario {
