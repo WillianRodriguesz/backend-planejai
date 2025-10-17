@@ -1,6 +1,6 @@
-import { Lancamento } from './Lancamento';
-import { SaldoMes } from './SaldoMes';
-import { Categoria } from './Categoria';
+import { Lancamento } from './lancamento';
+import { SaldoMes } from './saldoMes';
+import { Categoria } from './categoria';
 
 export interface CriarCarteiraProps {
   usuarioId: string;
@@ -94,36 +94,115 @@ export class Carteira {
     return this.saldosMensais;
   }
 
+  // Operações de Lançamentos
   public adicionarLancamento(props: AdicionarLancamentoProps): void {
     const lancamento = Lancamento.criar(props);
     this.lancamentos.push(lancamento);
-    this.atualizarSaldoMensal(lancamento);
+    const mes = lancamento.getData().getMonth() + Carteira.MES_OFFSET;
+    const ano = lancamento.getData().getFullYear();
+    this.recalcularSaldoMes(mes, ano);
   }
 
-  private atualizarSaldoMensal(lancamento: Lancamento): void {
-    const mes = lancamento.getData().getMonth() + Carteira.MES_OFFSET; // Mês de 1 a 12
+  public excluirLancamento(idLancamento: string): void {
+    const lancamento = this.buscarLancamentoPorId(idLancamento);
+    if (!lancamento) {
+      throw new Error(`Lançamento com ID ${idLancamento} não encontrado`);
+    }
+    const indice = this.lancamentos.findIndex(
+      (l) => l.getId() === idLancamento,
+    );
+    this.lancamentos.splice(indice, 1);
+    const mes = lancamento.getData().getMonth() + Carteira.MES_OFFSET;
     const ano = lancamento.getData().getFullYear();
+    this.recalcularSaldoMes(mes, ano);
+  }
 
-    let saldoMes = this.saldosMensais.find(
+  // Consultas de Saldo
+  public buscarSaldoMensal(mes: number, ano: number): number | undefined {
+    const saldoMes = this.buscarSaldoMes(mes, ano);
+    if (!saldoMes) {
+      console.error(`Saldo não encontrado para mês ${mes} e ano ${ano}`);
+      return undefined;
+    }
+    return saldoMes.getSaldoMes();
+  }
+
+  public calcularTotalEntradasMensal(mes: number, ano: number): number {
+    const lancamentosMes = this.buscarLancamentosPorMes(mes, ano);
+    let valorTotalEntradas = 0;
+    for (const lancamento of lancamentosMes) {
+      if (lancamento.getCategoria()?.getTipo() === 'entrada') {
+        valorTotalEntradas += lancamento.getValor();
+      }
+    }
+    return valorTotalEntradas;
+  }
+
+  public calcularTotalSaidasMensal(mes: number, ano: number): number {
+    const lancamentosMes = this.buscarLancamentosPorMes(mes, ano);
+    let valorTotalSaidas = 0;
+    for (const lancamento of lancamentosMes) {
+      if (lancamento.getCategoria()?.getTipo() === 'saida') {
+        valorTotalSaidas += lancamento.getValor();
+      }
+    }
+    return valorTotalSaidas;
+  }
+
+  // Métodos Privados Auxiliares
+  private buscarLancamentoPorId(id: string): Lancamento | undefined {
+    return this.lancamentos.find((l) => l.getId() === id);
+  }
+
+  private buscarSaldoMes(mes: number, ano: number): SaldoMes | undefined {
+    return this.saldosMensais.find(
       (s) => s.getMes() === mes && s.getAno() === ano,
     );
+  }
 
+  private buscarLancamentosPorMes(mes: number, ano: number): Lancamento[] {
+    const lancamentosFiltrados: Lancamento[] = [];
+    for (const lancamento of this.lancamentos) {
+      const lancamentoMes =
+        lancamento.getData().getMonth() + Carteira.MES_OFFSET;
+      const lancamentoAno = lancamento.getData().getFullYear();
+      if (lancamentoMes === mes && lancamentoAno === ano) {
+        lancamentosFiltrados.push(lancamento);
+      }
+    }
+    return lancamentosFiltrados;
+  }
+
+  private recalcularSaldoMes(mes: number, ano: number): void {
+    const lancamentosMes = this.buscarLancamentosPorMes(mes, ano);
+    let saldoCalculado = 0;
+    for (const lancamento of lancamentosMes) {
+      const tipo = lancamento.getCategoria()?.getTipo();
+      const valor = lancamento.getValor();
+      if (tipo === 'entrada') {
+        saldoCalculado += valor;
+      } else if (tipo === 'saida') {
+        saldoCalculado -= valor;
+      }
+    }
+
+    let saldoMes = this.buscarSaldoMes(mes, ano);
     if (!saldoMes) {
       saldoMes = SaldoMes.criar({
         mes,
         ano,
-        saldoMes: 0,
+        saldoMes: saldoCalculado,
       });
       this.saldosMensais.push(saldoMes);
-    }
-
-    const tipo = lancamento.getCategoria().getTipo();
-    const valor = lancamento.getValor();
-
-    if (tipo === 'entrada') {
-      saldoMes.adicionarSaldoMes(valor);
-    } else if (tipo === 'saida') {
-      saldoMes.subtrairSaldoMes(valor);
+    } else {
+      const indice = this.saldosMensais.findIndex(
+        (s) => s.getMes() === mes && s.getAno() === ano,
+      );
+      this.saldosMensais[indice] = SaldoMes.criar({
+        mes,
+        ano,
+        saldoMes: saldoCalculado,
+      });
     }
   }
 }

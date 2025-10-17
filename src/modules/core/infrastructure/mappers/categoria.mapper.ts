@@ -1,4 +1,4 @@
-import { Categoria } from '../../domain/Categoria';
+import { Categoria } from '../../domain/categoria';
 import { CategoriaModel } from '../models/categoria.model';
 
 export class CategoriaMapper {

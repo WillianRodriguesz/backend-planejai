@@ -1,6 +1,6 @@
-import { Carteira } from '../Carteira';
+import { Carteira } from '../carteira';
 
-export interface CarteiraRepository { 
+export interface CarteiraRepository {
   buscarPorId(id: string): Promise<Carteira | null>;
   salvar(carteira: Carteira): Promise<void>;
 }

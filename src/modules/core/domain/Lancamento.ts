@@ -1,4 +1,4 @@
-import { Categoria } from './Categoria';
+import { Categoria } from './categoria';
 
 export interface CriarLancamentoProps {
   categoria: Categoria;

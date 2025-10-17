@@ -1,4 +1,4 @@
-import { Carteira } from '../../domain/Carteira';
+import { Carteira } from '../../domain/carteira';
 import { CarteiraModel } from '../models/carteira.model';
 import { LancamentoMapper } from './lancamento.mapper';
 import { SaldoMensalMapper } from './saldo-mensal.mapper';

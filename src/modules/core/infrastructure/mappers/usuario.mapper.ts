@@ -1,4 +1,4 @@
-import { Usuario } from '../../domain/Usuario';
+import { Usuario } from '../../domain/usuario';
 import { UsuarioModel } from '../models/usuario.model';
 
 export class UsuarioMapper {
