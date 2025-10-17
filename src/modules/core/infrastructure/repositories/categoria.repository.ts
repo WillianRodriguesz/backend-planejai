@@ -4,7 +4,8 @@ import { Repository } from 'typeorm';
 import { Categoria } from '../../domain/categoria';
 import { CategoriaModel } from '../models/categoria.model';
 import { CategoriaMapper } from '../mappers/categoria.mapper';
-import { CategoriaRepository } from '../../domain/repositories/Categoria.repository';
+import { CategoriaRepository } from '../../domain/repositories/categoria.repository';
+import { RepositoryException } from '../exceptions/repository.exception';
 
 @Injectable()
 export class CategoriaRepositoryImpl implements CategoriaRepository {
@@ -32,7 +33,7 @@ export class CategoriaRepositoryImpl implements CategoriaRepository {
         `Erro ao buscar categoria com ID ${id}: ${error.message}`,
         error.stack,
       );
-      throw new Error('Erro interno ao buscar categoria');
+      throw new RepositoryException('Erro interno ao buscar categoria', error);
     }
   }
 }

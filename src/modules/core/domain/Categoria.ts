@@ -1,4 +1,6 @@
 type Tipo = 'entrada' | 'saida' | 'ambos';
+import { DomainException } from './exceptions/domain.exception';
+
 export interface CriarCategoriaProps {
   nome: string;
   tipo: Tipo;
@@ -45,16 +47,22 @@ export class Categoria {
   }
 
   private setNome(nome: string): void {
+    if (!nome || nome.trim() === '') {
+      throw new DomainException('Nome é obrigatório');
+    }
     this.nome = nome;
   }
 
   private setTipo(tipo: Tipo): void {
+    if (!['entrada', 'saida', 'ambos'].includes(tipo)) {
+      throw new DomainException('Tipo deve ser entrada, saida ou ambos');
+    }
     this.tipo = tipo;
   }
 
   public setId(id: number): void {
     if (this.id !== undefined) {
-      throw new Error('ID já foi definido');
+      throw new DomainException('ID já foi definido');
     }
     this.id = id;
   }

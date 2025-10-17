@@ -11,7 +11,10 @@ import {
 
 import { CarteiraDto } from '../application/dtos/carteira/carteira.dto';
 import { AdicionarLancamentoDto } from '../application/dtos/lancamento/adicionar-lancamento.dto';
-import { AdicionarLancamentoUseCase, AdicionarLancamentoUseCaseProps } from '../application/usecases/carteira/adicionar-lancamento.usecase';
+import {
+  AdicionarLancamentoUseCase,
+  AdicionarLancamentoUseCaseProps,
+} from '../application/usecases/carteira/adicionar-lancamento.usecase';
 import { Categoria } from 'src/modules/core/domain/categoria';
 
 @Controller('carteira')
@@ -29,18 +32,18 @@ export class CarteiraController {
     return this.buscarSaldoMensalQuery.execute(id, data);
   }
 
-  @Post('carteira/:idCarteira/novo-lancamento')
+  @Post('/:idCarteira/novo-lancamento')
   async adicionarLancamento(
     @Param('idCarteira') idCarteira: string,
-    @Body(ValidationPipe) props: AdicionarLancamentoUseCaseProps,
+    @Body(ValidationPipe)
+    body: { idCategoria: string; valor: number; descricao: string; data: Date },
   ): Promise<{ message: string }> {
-  
     await this.adicionarLancamentoUseCase.execute({
       idCarteira,
-      idCategoria: props.idCategoria,
-      valor: props.valor,
-      descricao: props.descricao,
-      data: props.data,
+      idCategoria: body.idCategoria,
+      valor: body.valor,
+      descricao: body.descricao,
+      data: body.data,
     });
 
     return { message: 'Lançamento adicionado com sucesso' };

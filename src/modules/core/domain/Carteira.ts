@@ -1,6 +1,7 @@
 import { Lancamento } from './lancamento';
 import { SaldoMes } from './saldoMes';
 import { Categoria } from './categoria';
+import { DomainException } from './exceptions/domain.exception';
 
 export interface CriarCarteiraProps {
   usuarioId: string;
@@ -52,6 +53,9 @@ export class Carteira {
   }
 
   private setUsuarioId(usuarioId: string): void {
+    if (!usuarioId || usuarioId.trim() === '') {
+      throw new DomainException('UsuarioId é obrigatório');
+    }
     this.usuarioId = usuarioId;
   }
 
@@ -69,7 +73,7 @@ export class Carteira {
 
   public setId(id: string): void {
     if (this.id) {
-      throw new Error('ID já foi definido');
+      throw new DomainException('ID já foi definido');
     }
     this.id = id;
   }
@@ -106,7 +110,9 @@ export class Carteira {
   public excluirLancamento(idLancamento: string): void {
     const lancamento = this.buscarLancamentoPorId(idLancamento);
     if (!lancamento) {
-      throw new Error(`Lançamento com ID ${idLancamento} não encontrado`);
+      throw new DomainException(
+        `Lançamento com ID ${idLancamento} não encontrado`,
+      );
     }
     const indice = this.lancamentos.findIndex(
       (l) => l.getId() === idLancamento,

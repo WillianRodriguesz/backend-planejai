@@ -4,6 +4,8 @@ export interface CriarSaldoMesProps {
   saldoMes: number;
 }
 
+import { DomainException } from './exceptions/domain.exception';
+
 export class SaldoMes {
   private id: string;
   private mes: number;
@@ -37,10 +39,16 @@ export class SaldoMes {
   }
 
   private setMes(mes: number): void {
+    if (mes < 1 || mes > 12) {
+      throw new DomainException('Mês deve estar entre 1 e 12');
+    }
     this.mes = mes;
   }
 
   private setAno(ano: number): void {
+    if (ano < 1900 || ano > new Date().getFullYear() + 10) {
+      throw new DomainException('Ano deve ser válido');
+    }
     this.ano = ano;
   }
 
@@ -66,29 +74,29 @@ export class SaldoMes {
 
   public setId(id: string): void {
     if (this.id) {
-      throw new Error('ID já foi definido');
+      throw new DomainException('ID já foi definido');
     }
     this.id = id;
   }
 
   public adicionarSaldoMes(valor: number): void {
     if (valor < 0) {
-      throw new Error('Valor deve ser positivo');
+      throw new DomainException('Valor deve ser positivo');
     }
 
     if (!this.saldoMes) {
-      throw new Error('Saldo do mês não definido');
+      throw new DomainException('Saldo do mês não definido');
     }
     this.saldoMes += valor;
   }
 
   public subtrairSaldoMes(valor: number): void {
     if (valor < 0) {
-      throw new Error('Valor deve ser positivo');
+      throw new DomainException('Valor deve ser positivo');
     }
 
     if (!this.saldoMes) {
-      throw new Error('Saldo do mês não definido');
+      throw new DomainException('Saldo do mês não definido');
     }
     this.saldoMes -= valor;
   }

@@ -4,7 +4,8 @@ import { Repository } from 'typeorm';
 import { Carteira } from '../../domain/carteira';
 import { CarteiraModel } from '../models/carteira.model';
 import { CarteiraMapper } from '../mappers/carteira.mapper';
-import { CarteiraRepository } from '../../domain/repositories/Carteira.repository';
+import { CarteiraRepository } from '../../domain/repositories/carteira.repository';
+import { RepositoryException } from '../exceptions/repository.exception';
 
 @Injectable()
 export class CarteiraRepositoryImpl implements CarteiraRepository {
@@ -33,7 +34,7 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
         `Erro ao buscar carteira com ID ${id}: ${error.message}`,
         error.stack,
       );
-      throw new Error('Erro interno ao buscar carteira');
+      throw new RepositoryException('Erro interno ao buscar carteira', error);
     }
   }
 
@@ -47,7 +48,7 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
         `Erro ao salvar carteira: ${error.message}`,
         error.stack,
       );
-      throw new Error('Erro interno ao salvar carteira');
+      throw new RepositoryException('Erro interno ao salvar carteira', error);
     }
   }
 }

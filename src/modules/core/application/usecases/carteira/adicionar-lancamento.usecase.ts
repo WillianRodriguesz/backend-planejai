@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 import { CategoriaRepositoryImpl } from '../../../infrastructure/repositories/categoria.repository';
 
@@ -22,14 +22,14 @@ export class AdicionarLancamentoUseCase {
       props.idCarteira,
     );
     if (!carteira) {
-      throw new Error('Carteira não encontrada');
+      throw new NotFoundException('Carteira não encontrada');
     }
 
     const categoria = await this.categoriaRepository.buscarPorId(
       props.idCategoria,
     );
     if (!categoria) {
-      throw new Error('Categoria não encontrada');
+      throw new NotFoundException('Categoria não encontrada');
     }
 
     carteira.adicionarLancamento({

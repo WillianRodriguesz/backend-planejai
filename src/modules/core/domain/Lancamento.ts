@@ -1,4 +1,5 @@
 import { Categoria } from './categoria';
+import { DomainException } from './exceptions/domain.exception';
 
 export interface CriarLancamentoProps {
   categoria: Categoria;
@@ -60,14 +61,23 @@ export class Lancamento {
   }
 
   private setValor(valor: number): void {
+    if (valor <= 0) {
+      throw new DomainException('Valor deve ser positivo');
+    }
     this.valor = valor;
   }
 
   private setDescricao(descricao: string): void {
+    if (!descricao || descricao.trim() === '') {
+      throw new DomainException('Descrição é obrigatória');
+    }
     this.descricao = descricao;
   }
 
   private setData(data: Date): void {
+    if (!data || data > new Date()) {
+      throw new DomainException('Data deve ser válida e não futura');
+    }
     this.data = data;
   }
 
@@ -76,6 +86,9 @@ export class Lancamento {
   }
 
   private setCategoria(categoria?: Categoria): void {
+    if (!categoria) {
+      throw new DomainException('Categoria é obrigatória');
+    }
     this.categoria = categoria;
   }
 }
