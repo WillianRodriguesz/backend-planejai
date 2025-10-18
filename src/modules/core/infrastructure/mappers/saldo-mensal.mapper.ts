@@ -7,7 +7,7 @@ export class SaldoMensalMapper {
       id: model.id.toString(),
       mes: model.mes,
       ano: model.ano,
-      saldoMes: model.saldoMes,
+      saldoMes: parseFloat(model.saldoMes.toString()),
     });
 
     return domain;

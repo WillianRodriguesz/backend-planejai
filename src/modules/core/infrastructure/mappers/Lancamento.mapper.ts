@@ -12,7 +12,7 @@ export class LancamentoMapper {
       id: model.id.toString(),
       titulo: model.titulo,
       descricao: model.descricao,
-      valor: model.valor,
+      valor: parseFloat(model.valor.toString()),
       tipoTransacao: model.tipo,
       data: new Date(model.data),
       categoria: categoriaDomain,
@@ -28,18 +28,18 @@ export class LancamentoMapper {
 
   static DomainToModel(domain: Lancamento): LancamentoModel {
     const model = new LancamentoModel();
-    
+
     if (domain.getId()) {
       model.id = parseInt(domain.getId());
     }
-    
+
     model.categoriaId = domain.getCategoriaId();
     model.titulo = domain.getTitulo();
     model.descricao = domain.getDescricao();
     model.valor = domain.getValor();
     model.data = domain.getData();
     model.tipo = domain.getTipoTransacao();
-    
+
     return model;
   }
 

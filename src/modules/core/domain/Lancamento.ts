@@ -110,7 +110,9 @@ export class Lancamento {
       throw new DomainException('Descrição é obrigatória');
     }
     if (descricao.length > 150) {
-      throw new DomainException('Descrição não pode ter mais de 150 caracteres');
+      throw new DomainException(
+        'Descrição não pode ter mais de 150 caracteres',
+      );
     }
     this.descricao = descricao;
   }
@@ -127,7 +129,9 @@ export class Lancamento {
       throw new DomainException('Tipo de transação é obrigatório');
     }
     if (tipoTransacao !== 'entrada' && tipoTransacao !== 'saida') {
-      throw new DomainException('Tipo de transação deve ser "entrada" ou "saida"');
+      throw new DomainException(
+        'Tipo de transação deve ser "entrada" ou "saida"',
+      );
     }
     this.tipoTransacao = tipoTransacao;
   }
