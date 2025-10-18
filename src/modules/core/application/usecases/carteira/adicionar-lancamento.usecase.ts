@@ -28,12 +28,18 @@ export class AdicionarLancamentoUseCase {
       throw new NotFoundException('Carteira não encontrada');
     }
 
+    console.log('carteira:', resultCarteiraDomain);
+    
+
     const resultCategoriaDomain = await this.categoriaRepository.buscarPorId(
       props.idCategoria,
     );
     if (!resultCategoriaDomain) {
       throw new NotFoundException('Categoria não encontrada');
     }
+
+
+    console.log('resultCategoriaDomain:', resultCategoriaDomain);
 
     resultCarteiraDomain.adicionarLancamento({
       categoria: resultCategoriaDomain,
@@ -43,6 +49,8 @@ export class AdicionarLancamentoUseCase {
       descricao: props.descricao,
       data: props.data,
     });
+
+    console.log('carteira depois de adicionar lancamento:', resultCarteiraDomain);
 
     await this.carteiraRepository.salvar(resultCarteiraDomain);
   }

@@ -56,6 +56,13 @@ export class Lancamento {
     return lancamento;
   }
 
+  private setId(id: string): void {
+    if (this.id) {
+      throw new DomainException('ID já foi definido');
+    }
+    this.id = id;
+  }
+
   public getId(): string {
     return this.id;
   }

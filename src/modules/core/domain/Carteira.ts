@@ -61,6 +61,13 @@ export class Carteira {
     this.usuarioId = usuarioId;
   }
 
+  private setId(id: string): void {
+    if (this.id) {
+      throw new DomainException('ID já foi definido');
+    }
+    this.id = id;
+  }
+
   private setCriadoEm(criadoEm: Date): void {
     this.criadoEm = criadoEm;
   }
@@ -71,13 +78,6 @@ export class Carteira {
 
   private setSaldosMensais(saldosMensais: SaldoMes[]): void {
     this.saldosMensais = saldosMensais;
-  }
-
-  public setId(id: string): void {
-    if (this.id) {
-      throw new DomainException('ID já foi definido');
-    }
-    this.id = id;
   }
 
   public getId(): string {
@@ -100,7 +100,6 @@ export class Carteira {
     return this.saldosMensais;
   }
 
-  // Operações de Lançamentos
   public adicionarLancamento(props: AdicionarLancamentoProps): void {
     const lancamento = Lancamento.criar(props);
     this.lancamentos.push(lancamento);
@@ -125,7 +124,6 @@ export class Carteira {
     this.recalcularSaldoMes(mes, ano);
   }
 
-  // Consultas de Saldo
   public buscarSaldoMensal(mes: number, ano: number): number | undefined {
     const saldoMes = this.buscarSaldoMes(mes, ano);
     if (!saldoMes) {
@@ -140,7 +138,7 @@ export class Carteira {
     let valorTotalEntradas = 0;
     for (const lancamento of lancamentosMes) {
       if (lancamento.getTipoTransacao() === 'entrada') {
-        valorTotalEntradas += lancamento.getValor();
+        valorTotalEntradas += Number(lancamento.getValor());
       }
     }
     return valorTotalEntradas;
@@ -151,13 +149,12 @@ export class Carteira {
     let valorTotalSaidas = 0;
     for (const lancamento of lancamentosMes) {
       if (lancamento.getTipoTransacao() === 'saida') {
-        valorTotalSaidas += lancamento.getValor();
+        valorTotalSaidas += Number(lancamento.getValor());
       }
     }
     return valorTotalSaidas;
   }
 
-  // Métodos Privados Auxiliares
   private buscarLancamentoPorId(id: string): Lancamento | undefined {
     return this.lancamentos.find((l) => l.getId() === id);
   }
@@ -184,11 +181,11 @@ export class Carteira {
   private recalcularSaldoMes(mes: number, ano: number): void {
     const lancamentosMes = this.buscarLancamentosPorMes(mes, ano);
     let saldoCalculado = 0;
-    
+
     for (const lancamento of lancamentosMes) {
       const tipo = lancamento.getTipoTransacao();
-      const valor = lancamento.getValor();
-      
+      const valor = Number(lancamento.getValor());
+
       if (tipo === 'entrada') {
         saldoCalculado += valor;
       } else if (tipo === 'saida') {
@@ -196,23 +193,17 @@ export class Carteira {
       }
     }
 
-    let saldoMes = this.buscarSaldoMes(mes, ano);
-    if (!saldoMes) {
-      saldoMes = SaldoMes.criar({
+    const saldoMesExistente = this.buscarSaldoMes(mes, ano);
+
+    if (!saldoMesExistente) {
+      const novoSaldoMes = SaldoMes.criar({
         mes,
         ano,
         saldoMes: saldoCalculado,
       });
-      this.saldosMensais.push(saldoMes);
+      this.saldosMensais.push(novoSaldoMes);
     } else {
-      const indice = this.saldosMensais.findIndex(
-        (s) => s.getMes() === mes && s.getAno() === ano,
-      );
-      this.saldosMensais[indice] = SaldoMes.criar({
-        mes,
-        ano,
-        saldoMes: saldoCalculado,
-      });
+      saldoMesExistente.atualizarSaldoMes(saldoCalculado);
     }
   }
 }
