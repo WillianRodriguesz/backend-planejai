@@ -28,7 +28,7 @@ export class AdicionarLancamentoUseCase {
       throw new NotFoundException('Carteira não encontrada');
     }
 
-    console.log('carteira:', resultCarteiraDomain);
+    console.log('carteira:', resultCarteiraDomain); // REMOVER LOG 
     
 
     const resultCategoriaDomain = await this.categoriaRepository.buscarPorId(
@@ -39,7 +39,7 @@ export class AdicionarLancamentoUseCase {
     }
 
 
-    console.log('resultCategoriaDomain:', resultCategoriaDomain);
+    console.log('resultCategoriaDomain:', resultCategoriaDomain); // REMOVER LOG 
 
     resultCarteiraDomain.adicionarLancamento({
       categoria: resultCategoriaDomain,

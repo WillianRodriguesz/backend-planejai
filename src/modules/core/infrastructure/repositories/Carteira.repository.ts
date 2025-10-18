@@ -1,13 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { Carteira } from '../../domain/carteira';
 import { CarteiraModel } from '../models/carteira.model';
 import { LancamentoModel } from '../models/lancamento.model';
 import { SaldoMensalModel } from '../models/saldo-mensal.model';
 import { CarteiraMapper } from '../mappers/carteira.mapper';
-import { LancamentoMapper } from '../mappers/lancamento.mapper';
-import { SaldoMensalMapper } from '../mappers/saldo-mensal.mapper';
 import { CarteiraRepository } from '../../domain/repositories/carteira.repository';
 import { RepositoryException } from '../exceptions/repository.exception';
 
@@ -18,10 +16,7 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
   constructor(
     @InjectRepository(CarteiraModel)
     private readonly carteiraRepository: Repository<CarteiraModel>,
-    @InjectRepository(LancamentoModel)
-    private readonly lancamentoRepository: Repository<LancamentoModel>,
-    @InjectRepository(SaldoMensalModel)
-    private readonly saldoMensalRepository: Repository<SaldoMensalModel>,
+    private readonly dataSource: DataSource,
   ) {}
 
   async buscarPorId(id: string): Promise<Carteira | null> {
@@ -38,69 +33,52 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
 
       return CarteiraMapper.ModelToDomain(model);
     } catch (error) {
-      this.logger.error(`Erro ao buscar carteira com ID ${id}: ${error.message}`, error.stack);
+      this.logger.error(`Erro ao buscar carteira: ${error.message}`, error.stack);
       throw new RepositoryException('Erro interno ao buscar carteira', error);
     }
   }
 
   async salvar(carteira: Carteira): Promise<void> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
     try {
       this.logger.log(`Salvando agregado Carteira ${carteira.getId()}`);
 
-      let carteiraId = carteira.getId();
-      
-      if (!carteiraId) {
-        const savedCarteira = await this.carteiraRepository.save({
-          usuarioId: carteira.getUsuarioId(),
-          criadoEm: carteira.getCriadoEm(),
+      const carteiraModel = CarteiraMapper.DomainToModel(carteira);
+
+      await queryRunner.manager.save(CarteiraModel, {
+        id: carteiraModel.id,
+        usuarioId: carteiraModel.usuarioId,
+        criadoEm: carteiraModel.criadoEm,
+      });
+
+      if (carteiraModel.lancamentos?.length > 0) {
+        await queryRunner.manager.save(LancamentoModel, carteiraModel.lancamentos);
+      }
+
+      const saldosNovos = carteiraModel.saldosMensais?.filter(s => !s.id) || [];
+      const saldosExistentes = carteiraModel.saldosMensais?.filter(s => s.id) || [];
+
+      if (saldosNovos.length > 0) {
+        await queryRunner.manager.save(SaldoMensalModel, saldosNovos);
+      }
+
+      for (const saldo of saldosExistentes) {
+        await queryRunner.manager.update(SaldoMensalModel, saldo.id, {
+          saldoMes: saldo.saldoMes,
         });
-        carteiraId = savedCarteira.id;
-        carteira['setId'](carteiraId);
-      } else {
-        await this.carteiraRepository.save({
-          id: carteiraId,
-          usuarioId: carteira.getUsuarioId(),
-          criadoEm: carteira.getCriadoEm(),
-        });
       }
 
-      const lancamentosNovos = carteira.getLancamentos().filter(l => !l.getId());
-      
-      for (const lancamentoDomain of lancamentosNovos) {
-        const lancamentoModel = LancamentoMapper.DomainToModel(lancamentoDomain);
-        lancamentoModel.carteiraId = carteiraId;
-        
-        await this.lancamentoRepository.save(lancamentoModel);
-        
-        this.logger.debug(`Lançamento salvo`);
-      }
-
-      const saldosNovos = carteira.getSaldosMensais().filter(s => !s.getId());
-      
-      for (const saldoDomain of saldosNovos) {
-        const saldoModel = SaldoMensalMapper.DomainToModel(saldoDomain);
-        saldoModel.carteiraId = carteiraId;
-        
-        await this.saldoMensalRepository.save(saldoModel);
-        
-        this.logger.debug(`Saldo salvo`);
-      }
-
-      const saldosExistentes = carteira.getSaldosMensais().filter(s => s.getId());
-      
-      for (const saldoDomain of saldosExistentes) {
-        await this.saldoMensalRepository.update(
-          { id: parseInt(saldoDomain.getId()) },
-          { saldoMes: saldoDomain.getSaldoMes() }
-        );
-        
-        this.logger.debug(`Saldo atualizado: ID=${saldoDomain.getId()}`);
-      }
-
+      await queryRunner.commitTransaction();
       this.logger.log('Agregado Carteira salvo com sucesso');
     } catch (error) {
+      await queryRunner.rollbackTransaction();
       this.logger.error(`Erro ao salvar carteira: ${error.message}`, error.stack);
       throw new RepositoryException('Erro interno ao salvar carteira', error);
+    } finally {
+      await queryRunner.release();
     }
   }
 
@@ -118,7 +96,7 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
 
       return CarteiraMapper.ModelToDomain(model);
     } catch (error) {
-      this.logger.error(`Erro ao buscar carteira do usuário ${usuarioId}: ${error.message}`, error.stack);
+      this.logger.error(`Erro ao buscar carteira: ${error.message}`, error.stack);
       throw new RepositoryException('Erro interno ao buscar carteira por usuário', error);
     }
   }
