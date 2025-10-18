@@ -17,7 +17,7 @@ export class SaldoMensalMapper {
 
   static DomainToModel(domain: SaldoMes): Partial<SaldoMensalModel> {
     return {
-      id: parseInt(domain.getId()),
+      id: domain.getId() ? parseInt(domain.getId()) : undefined,
       mes: domain.getMes(),
       ano: domain.getAno(),
       saldoMes: domain.getSaldoMes(),

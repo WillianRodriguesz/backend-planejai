@@ -11,7 +11,7 @@ export class LancamentoMapper {
       id: model.id.toString(),
       valor: model.valor,
       descricao: model.descricao,
-      data: model.data,
+      data: new Date(model.data),
       categoria,
     });
   }
@@ -21,11 +21,24 @@ export class LancamentoMapper {
   }
 
   static DomainToModel(domain: Lancamento): Partial<LancamentoModel> {
+    const descricao = domain.getDescricao();
+    const categoria = domain.getCategoria();
+    const tipoCategoria = categoria?.getTipo();
+
+    // Se a categoria for 'ambos', usa 'saida' como padrão
+    const tipo =
+      tipoCategoria === 'ambos'
+        ? 'saida'
+        : (tipoCategoria as 'entrada' | 'saida');
+
     return {
-      id: parseInt(domain.getId()),
+      id: domain.getId() ? parseInt(domain.getId()) : undefined,
+      titulo: descricao.substring(0, 50), // Usa os primeiros 50 caracteres da descrição como título
+      descricao: descricao,
       valor: domain.getValor(),
-      descricao: domain.getDescricao(),
       data: domain.getData(),
+      tipo: tipo || 'saida', // Padrão para 'saida' se não houver categoria
+      categoriaId: categoria?.getId(),
     };
   }
 

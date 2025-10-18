@@ -16,10 +16,10 @@ export class CategoriaRepositoryImpl implements CategoriaRepository {
     private readonly categoriaRepository: Repository<CategoriaModel>,
   ) {}
 
-  async buscarPorId(id: string): Promise<Categoria | null> {
+  async buscarPorId(id: number): Promise<Categoria | null> {
     try {
       const model = await this.categoriaRepository.findOne({
-        where: { id: parseInt(id) },
+        where: { id },
       });
 
       if (!model) {

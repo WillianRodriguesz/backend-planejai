@@ -1,3 +1,5 @@
+export { AdicionarLancamentoUseCase } from './adicionar-lancamento.usecase';
+
 // import { BuscarCarteiraPorIdUseCase } from './buscar-carteira-id.usecase';
 // import { CriarCarteiraUseCase } from './criar-carteira.usecase';
 // import { ListarCarteirasUseCase } from './listar-carteiras.usecase';

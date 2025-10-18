@@ -4,7 +4,7 @@ import { CategoriaRepositoryImpl } from '../../../infrastructure/repositories/ca
 
 export interface AdicionarLancamentoUseCaseProps {
   idCarteira: string;
-  idCategoria: string;
+  idCategoria: number;
   valor: number;
   descricao: string;
   data: Date;

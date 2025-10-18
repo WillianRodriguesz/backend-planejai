@@ -20,30 +20,34 @@ import { Categoria } from 'src/modules/core/domain/categoria';
 @Controller('carteira')
 export class CarteiraController {
   constructor(
-    private readonly buscarSaldoMensalQuery: any, // Temporário
     private readonly adicionarLancamentoUseCase: AdicionarLancamentoUseCase,
   ) {}
 
-  @Get('/:idCarteira/saldo-mensal')
-  async listarPorId(
-    @Param('idCarteira') id: string,
-    @Query('data') data: string,
-  ): Promise<CarteiraDto> {
-    return this.buscarSaldoMensalQuery.execute(id, data);
-  }
+  // @Get('/:idCarteira/saldo-mensal')
+  // async listarPorId(
+  //   @Param('idCarteira') id: string,
+  //   @Query('data') data: string,
+  // ): Promise<CarteiraDto> {
+  //   return this.buscarSaldoMensalQuery.execute(id, data);
+  // }
 
   @Post('/:idCarteira/novo-lancamento')
   async adicionarLancamento(
     @Param('idCarteira') idCarteira: string,
     @Body(ValidationPipe)
-    body: { idCategoria: string; valor: number; descricao: string; data: Date },
+    body: {
+      idCategoria: number;
+      valor: number;
+      descricao: string;
+      data: string;
+    },
   ): Promise<{ message: string }> {
     await this.adicionarLancamentoUseCase.execute({
       idCarteira,
       idCategoria: body.idCategoria,
       valor: body.valor,
       descricao: body.descricao,
-      data: body.data,
+      data: new Date(body.data),
     });
 
     return { message: 'Lançamento adicionado com sucesso' };

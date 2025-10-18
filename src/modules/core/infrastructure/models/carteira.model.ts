@@ -28,9 +28,13 @@ export class CarteiraModel {
   @JoinColumn({ name: 'usuario_id' })
   usuario: UsuarioModel;
 
-  @OneToMany(() => LancamentoModel, (lancamento) => lancamento.carteira)
+  @OneToMany(() => LancamentoModel, (lancamento) => lancamento.carteira, {
+    cascade: ['insert', 'update'],
+  })
   lancamentos: LancamentoModel[];
 
-  @OneToMany(() => SaldoMensalModel, (saldoMensal) => saldoMensal.carteira)
+  @OneToMany(() => SaldoMensalModel, (saldoMensal) => saldoMensal.carteira, {
+    cascade: ['insert', 'update'],
+  })
   saldosMensais: SaldoMensalModel[];
 }
