@@ -3,26 +3,28 @@ import { CategoriaModel } from '../models/categoria.model';
 
 export class CategoriaMapper {
   static ModelToDomain(model: CategoriaModel): Categoria {
-    return Categoria.carregar({
+    const domain = Categoria.carregar({
       id: model.id,
       nome: model.nome,
-      tipo: model.tipo,
     });
+    
+    return domain;
   }
 
   static ModelToDomainList(models: CategoriaModel[]): Categoria[] {
-    return models.map((model) => this.ModelToDomain(model));
+    const listDomains = models.map((model) => this.ModelToDomain(model));
+    return listDomains;
   }
 
-  static DomainToModel(domain: Categoria): Partial<CategoriaModel> {
-    return {
-      id: domain.getId(),
-      nome: domain.getNome(),
-      tipo: domain.getTipo(),
-    };
+  static DomainToModel(domain: Categoria): CategoriaModel {
+    const model = new CategoriaModel();
+    model.id = domain.getId();
+    model.nome = domain.getNome();
+    return model;
   }
 
-  static DomainToModelList(domains: Categoria[]): Partial<CategoriaModel>[] {
-    return domains.map((domain) => this.DomainToModel(domain));
+  static DomainToModelList(domains: Categoria[]): CategoriaModel[] {
+    const listModels = domains.map((domain) => this.DomainToModel(domain));
+    return listModels;
   }
 }

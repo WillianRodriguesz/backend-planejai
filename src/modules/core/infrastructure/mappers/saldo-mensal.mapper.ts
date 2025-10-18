@@ -1,30 +1,39 @@
-import { SaldoMes } from '../../domain/saldoMes';
+import { SaldoMes } from '../../domain/saldo-mensal';
 import { SaldoMensalModel } from '../models/saldo-mensal.model';
 
 export class SaldoMensalMapper {
   static ModelToDomain(model: SaldoMensalModel): SaldoMes {
-    return SaldoMes.carregar({
+    const domain = SaldoMes.carregar({
       id: model.id.toString(),
       mes: model.mes,
       ano: model.ano,
       saldoMes: model.saldoMes,
     });
+
+    return domain;
   }
 
   static ModelToDomainList(models: SaldoMensalModel[]): SaldoMes[] {
-    return models.map((model) => this.ModelToDomain(model));
+    const listDomains = models.map((model) => this.ModelToDomain(model));
+    return listDomains;
   }
 
-  static DomainToModel(domain: SaldoMes): Partial<SaldoMensalModel> {
-    return {
-      id: domain.getId() ? parseInt(domain.getId()) : undefined,
-      mes: domain.getMes(),
-      ano: domain.getAno(),
-      saldoMes: domain.getSaldoMes(),
-    };
+  static DomainToModel(domain: SaldoMes): SaldoMensalModel {
+    const model = new SaldoMensalModel();
+    
+    if (domain.getId()) {
+      model.id = parseInt(domain.getId());
+    }
+    
+    model.mes = domain.getMes();
+    model.ano = domain.getAno();
+    model.saldoMes = domain.getSaldoMes();
+    
+    return model;
   }
 
-  static DomainToModelList(domains: SaldoMes[]): Partial<SaldoMensalModel>[] {
-    return domains.map((domain) => this.DomainToModel(domain));
+  static DomainToModelList(domains: SaldoMes[]): SaldoMensalModel[] {
+    const listModels = domains.map((domain) => this.DomainToModel(domain));
+    return listModels;
   }
 }

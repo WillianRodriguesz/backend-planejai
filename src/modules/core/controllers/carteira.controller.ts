@@ -14,6 +14,7 @@ import { AdicionarLancamentoDto } from '../application/dtos/lancamento/adicionar
 import {
   AdicionarLancamentoUseCase,
   AdicionarLancamentoUseCaseProps,
+  tipoTransacao,
 } from '../application/usecases/carteira/adicionar-lancamento.usecase';
 import { Categoria } from 'src/modules/core/domain/categoria';
 
@@ -37,7 +38,9 @@ export class CarteiraController {
     @Body(ValidationPipe)
     body: {
       idCategoria: number;
+      tipoTransacao: tipoTransacao;
       valor: number;
+      titulo: string;
       descricao: string;
       data: string;
     },
@@ -45,7 +48,9 @@ export class CarteiraController {
     await this.adicionarLancamentoUseCase.execute({
       idCarteira,
       idCategoria: body.idCategoria,
+      tipoTransacao: body.tipoTransacao,
       valor: body.valor,
+      titulo: body.titulo,
       descricao: body.descricao,
       data: new Date(body.data),
     });

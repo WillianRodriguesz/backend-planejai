@@ -1,5 +1,5 @@
-import { Lancamento } from './lancamento';
-import { SaldoMes } from './saldoMes';
+import { Lancamento, TipoTransacao } from './lancamento';
+import { SaldoMes } from './saldo-mensal';
 import { Categoria } from './categoria';
 import { DomainException } from './exceptions/domain.exception';
 
@@ -9,6 +9,8 @@ export interface CriarCarteiraProps {
 
 export interface AdicionarLancamentoProps {
   categoria: Categoria;
+  tipoTransacao: TipoTransacao;
+  titulo: string;
   valor: number;
   descricao: string;
   data: Date;
@@ -137,7 +139,7 @@ export class Carteira {
     const lancamentosMes = this.buscarLancamentosPorMes(mes, ano);
     let valorTotalEntradas = 0;
     for (const lancamento of lancamentosMes) {
-      if (lancamento.getCategoria()?.getTipo() === 'entrada') {
+      if (lancamento.getTipoTransacao() === 'entrada') {
         valorTotalEntradas += lancamento.getValor();
       }
     }
@@ -148,7 +150,7 @@ export class Carteira {
     const lancamentosMes = this.buscarLancamentosPorMes(mes, ano);
     let valorTotalSaidas = 0;
     for (const lancamento of lancamentosMes) {
-      if (lancamento.getCategoria()?.getTipo() === 'saida') {
+      if (lancamento.getTipoTransacao() === 'saida') {
         valorTotalSaidas += lancamento.getValor();
       }
     }
@@ -182,9 +184,11 @@ export class Carteira {
   private recalcularSaldoMes(mes: number, ano: number): void {
     const lancamentosMes = this.buscarLancamentosPorMes(mes, ano);
     let saldoCalculado = 0;
+    
     for (const lancamento of lancamentosMes) {
-      const tipo = lancamento.getCategoria()?.getTipo();
+      const tipo = lancamento.getTipoTransacao();
       const valor = lancamento.getValor();
+      
       if (tipo === 'entrada') {
         saldoCalculado += valor;
       } else if (tipo === 'saida') {

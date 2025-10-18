@@ -1,10 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 import { CategoriaRepositoryImpl } from '../../../infrastructure/repositories/categoria.repository';
 
+export type tipoTransacao = 'entrada' | 'saida';
 export interface AdicionarLancamentoUseCaseProps {
   idCarteira: string;
   idCategoria: number;
+  tipoTransacao: tipoTransacao;
+  titulo: string;
   valor: number;
   descricao: string;
   data: Date;
@@ -18,27 +21,29 @@ export class AdicionarLancamentoUseCase {
   ) {}
 
   async execute(props: AdicionarLancamentoUseCaseProps): Promise<void> {
-    const carteira = await this.carteiraRepository.buscarPorId(
+    const resultCarteiraDomain = await this.carteiraRepository.buscarPorId(
       props.idCarteira,
     );
-    if (!carteira) {
+    if (!resultCarteiraDomain) {
       throw new NotFoundException('Carteira não encontrada');
     }
 
-    const categoria = await this.categoriaRepository.buscarPorId(
+    const resultCategoriaDomain = await this.categoriaRepository.buscarPorId(
       props.idCategoria,
     );
-    if (!categoria) {
+    if (!resultCategoriaDomain) {
       throw new NotFoundException('Categoria não encontrada');
     }
 
-    carteira.adicionarLancamento({
-      categoria,
+    resultCarteiraDomain.adicionarLancamento({
+      categoria: resultCategoriaDomain,
+      tipoTransacao: props.tipoTransacao,
+      titulo: props.titulo,
       valor: props.valor,
       descricao: props.descricao,
       data: props.data,
     });
 
-    await this.carteiraRepository.salvar(carteira);
+    await this.carteiraRepository.salvar(resultCarteiraDomain);
   }
 }
