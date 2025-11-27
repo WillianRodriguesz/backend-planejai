@@ -5,7 +5,7 @@ import {
   CategoriaModel,
   LancamentoModel,
   UsuarioModel,
-  SaldoMensalModel
+  SaldoMensalModel,
 } from '../modules/core/infrastructure/models';
 
 dotenv.config();
