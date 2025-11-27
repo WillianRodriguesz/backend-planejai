@@ -4,28 +4,32 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from '../../shared/infrastructure/database';
 import { CoreUseCases } from './application/usecases';
-import { CoreRepositories } from './infrastructure/repositories'; 
+import { CoreRepositories } from './infrastructure/repositories';
 import { CoreControllers } from './controllers';
 import { BcryptHashService } from './infrastructure/services/hash-bcrypt.service';
+import { AuthService } from './infrastructure/services/auth.service';
+import { UsuarioCredenciaisRepositoryImpl } from './infrastructure/repositories/usuario.repository';
+import { UsuarioWriteRepositoryImpl } from './infrastructure/services/criar-usuario.service';
+import { CriarUsuarioUseCase } from './application/usecases/usuario/criar-usuario.usecase';
+import { UsuarioModel } from './infrastructure/models/usuario.model';
 
 @Module({
-  imports: [
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-    }),
-    DatabaseModule,
-  ],
+  imports: [DatabaseModule, TypeOrmModule.forFeature([UsuarioModel])],
   controllers: [...CoreControllers],
   providers: [
     ...CoreUseCases,
-    ...CoreRepositories, 
+    ...CoreRepositories,
+    { provide: 'HashService', useClass: BcryptHashService },
+    AuthService,
     {
-      provide: 'HashService',
-      useClass: BcryptHashService,
+      provide: 'UsuariosCredenciaisRepository',
+      useClass: UsuarioCredenciaisRepositoryImpl,
     },
+    { provide: 'UsuarioWriteRepository', useClass: UsuarioWriteRepositoryImpl },
+    CriarUsuarioUseCase,
   ],
 })
 export class CoreModule implements NestModule {
