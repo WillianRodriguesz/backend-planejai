@@ -1,22 +1,18 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Post,
   Query,
-  ValidationPipe,
+  ValidationPipe
 } from '@nestjs/common';
 
 import { CarteiraDto } from '../application/dtos/carteira/carteira.dto';
-import { AdicionarLancamentoDto } from '../application/dtos/lancamento/adicionar-lancamento.dto';
 import {
   AdicionarLancamentoUseCase,
-  AdicionarLancamentoUseCaseProps,
-  tipoTransacao,
+  tipoTransacao
 } from '../application/usecases/carteira/adicionar-lancamento.usecase';
-import { Categoria } from 'src/modules/core/domain/categoria';
 
 @Controller('carteira')
 export class CarteiraController {
@@ -24,13 +20,13 @@ export class CarteiraController {
     private readonly adicionarLancamentoUseCase: AdicionarLancamentoUseCase,
   ) {}
 
-  // @Get('/:idCarteira/saldo-mensal')
-  // async listarPorId(
-  //   @Param('idCarteira') id: string,
-  //   @Query('data') data: string,
-  // ): Promise<CarteiraDto> {
-  //   return this.buscarSaldoMensalQuery.execute(id, data);
-  // }
+  @Get('/:idCarteira/saldo-mensal')
+  async listarPorId(
+    @Param('idCarteira') id: string,
+    @Query('data') data: string,
+  ): Promise<CarteiraDto> {
+    return this.buscarSaldoMensalQuery.execute(id, data);
+  }
 
   @Post('/:idCarteira/novo-lancamento')
   async adicionarLancamento(
