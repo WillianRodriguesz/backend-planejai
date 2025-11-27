@@ -1,4 +1,4 @@
-import { IsEmail, IsOptional, IsString, IsStrongPassword } from "class-validator";
+import { IsEmail, IsOptional, IsString, IsStrongPassword, Matches } from "class-validator";
 
 export class CriarUsuarioDto{
     @IsString()
@@ -6,6 +6,9 @@ export class CriarUsuarioDto{
 
     @IsEmail()
     email: string;
+
+    @Matches(/^55\d{11}$/, { message: 'telefone deve seguir o padrão 55 + DDD(2) + número(9), ex: 5599999999999' })
+    telefone: string;
 
     @IsStrongPassword({
         minLength: 6,
