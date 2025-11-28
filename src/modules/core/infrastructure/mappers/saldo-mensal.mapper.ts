@@ -19,7 +19,11 @@ export class SaldoMensalMapper {
 
       return domain;
     } catch (error) {
-      console.error('Erro ao converter SaldoMensalModel para Domain:', error.message, model);
+      console.error(
+        'Erro ao converter SaldoMensalModel para Domain:',
+        error.message,
+        model,
+      );
       return null;
     }
   }
@@ -37,15 +41,15 @@ export class SaldoMensalMapper {
 
   static DomainToModel(domain: SaldoMes): SaldoMensalModel {
     const model = new SaldoMensalModel();
-    
+
     if (domain.getId()) {
       model.id = parseInt(domain.getId());
     }
-    
+
     model.mes = domain.getMes();
     model.ano = domain.getAno();
     model.saldoMes = domain.getSaldoMes();
-    
+
     return model;
   }
 

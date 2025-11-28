@@ -22,7 +22,12 @@ export class LancamentoMapper {
   }
 
   static ModelToDomainList(models: LancamentoModel[]): Lancamento[] {
-    const listDomains = models.map((model) => this.ModelToDomain(model));
+    if (!models || models.length === 0) {
+      return [];
+    }
+    const listDomains = models
+      .filter((model) => model && model.id)
+      .map((model) => this.ModelToDomain(model));
     return listDomains;
   }
 

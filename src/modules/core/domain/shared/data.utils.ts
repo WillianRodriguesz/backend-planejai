@@ -5,7 +5,16 @@ export class DateUtils {
     mes: number;
     ano: number;
   } {
-    const dataObj = typeof data === 'string' ? new Date(data) : data;
+    let dataObj: Date;
+
+    if (typeof data === 'string') {
+      // Criar data no timezone local para evitar problemas de UTC
+      const [ano, mes, dia] = data.split('T')[0].split('-').map(Number);
+      dataObj = new Date(ano, mes - 1, dia);
+    } else {
+      dataObj = data;
+    }
+
     const mes = dataObj.getMonth() + DateUtils.MES_OFFSET;
     const ano = dataObj.getFullYear();
     return { mes, ano };

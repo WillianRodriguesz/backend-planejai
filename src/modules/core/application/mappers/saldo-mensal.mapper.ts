@@ -8,15 +8,15 @@ export class CarteiraSaldoMensalMapper {
     ano: number,
   ): SaldoMensalDto {
     const saldoMes = carteira.buscarSaldoMensal(mes, ano);
-    const totalEntradas = carteira.calcularTotalEntradasMensal(mes, ano);
-    const totalSaidas = carteira.calcularTotalSaidasMensal(mes, ano);
+    const entradas = carteira.calcularTotalEntradasMensal(mes, ano);
+    const saidas = carteira.calcularTotalSaidasMensal(mes, ano);
 
     return {
       mes,
       ano,
       saldoMes: saldoMes ?? 0,
-      totalEntradas,
-      totalSaidas,
+      entradas,
+      saidas,
     };
   }
 }
