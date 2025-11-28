@@ -7,7 +7,8 @@ import {
 import { JwtModule } from '@nestjs/jwt';
 import { DatabaseModule } from '../../shared/infrastructure/database';
 import { CoreUseCases } from './application/usecases';
-import { CoreRepositories } from './infrastructure/repositories'; 
+import { CoreQueries } from './application/queries';
+import { CoreRepositories } from './infrastructure/repositories';
 import { CoreControllers } from './controllers';
 import { BcryptHashService } from './infrastructure/services/hash-bcrypt.service';
 
@@ -21,7 +22,8 @@ import { BcryptHashService } from './infrastructure/services/hash-bcrypt.service
   controllers: [...CoreControllers],
   providers: [
     ...CoreUseCases,
-    ...CoreRepositories, 
+    ...CoreQueries,
+    ...CoreRepositories,
     {
       provide: 'HashService',
       useClass: BcryptHashService,

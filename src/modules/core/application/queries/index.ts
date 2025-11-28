@@ -1,4 +1,3 @@
-// import { AdicionarLancamentoUseCase } from './carteira/adicionar-lancamento.usecase';
-// import { CriarUsuarioUseCase } from './usuario/criar-usuario.usecase';
+import { BuscarSaldoMensalQuery } from './carteira/buscar-saldo-mensal.query';
 
-// export const CoreQueries = [AdicionarLancamentoUseCase, CriarUsuarioUseCase];
+export const CoreQueries = [BuscarSaldoMensalQuery];

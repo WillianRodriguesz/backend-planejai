@@ -1,30 +1,32 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
+import { DateUtils } from '../../../domain/shared/data.utils';
+import { SaldoMensalDto } from '../../dtos/carteira/saldo-mensal.dto';
+import { CarteiraSaldoMensalMapper } from '../../mappers/saldo-mensal.mapper';
 
-export interface BuscarSaldoMesQueryProps {
+export interface BuscarSaldoMensalQueryProps {
   idCarteira: string;
-  data: Date;
+  data: string;
 }
 
 @Injectable()
-export class AdicionarLancamentoUseCase {
-  constructor(
-    private readonly carteiraRepository: CarteiraRepositoryImpl,
-  ) {}
+export class BuscarSaldoMensalQuery {
+  constructor(private readonly carteiraRepository: CarteiraRepositoryImpl) {}
 
-  async execute(props: BuscarSaldoMesQueryProps): Promise<void> {
-    const resultCarteiraDomain = await this.carteiraRepository.buscarPorId(
-      props.idCarteira,
-    );
+  async execute(idCarteira: string, data: string): Promise<SaldoMensalDto> {
+    const resultCarteiraDomain =
+      await this.carteiraRepository.buscarPorId(idCarteira);
 
     if (!resultCarteiraDomain) {
       throw new NotFoundException('Carteira não encontrada');
     }
 
-    const mesAno = extrairMesAno(props.data);
+    const { mes, ano } = DateUtils.extrairMesAno(data);
 
-    const saldoMes = resultCarteiraDomain.buscarSaldoMensal(props.data);
-
-    await this.carteiraRepository.salvar(resultCarteiraDomain);
+    return CarteiraSaldoMensalMapper.DomainToDto(
+      resultCarteiraDomain,
+      mes,
+      ano,
+    );
   }
 }

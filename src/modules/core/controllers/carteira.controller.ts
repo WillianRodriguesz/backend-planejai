@@ -5,26 +5,28 @@ import {
   Param,
   Post,
   Query,
-  ValidationPipe
+  ValidationPipe,
 } from '@nestjs/common';
 
-import { CarteiraDto } from '../application/dtos/carteira/carteira.dto';
+import { SaldoMensalDto } from '../application/dtos/carteira/saldo-mensal.dto';
+import { BuscarSaldoMensalQuery } from '../application/queries/carteira/buscar-saldo-mensal.query';
 import {
   AdicionarLancamentoUseCase,
-  tipoTransacao
+  tipoTransacao,
 } from '../application/usecases/carteira/adicionar-lancamento.usecase';
 
 @Controller('carteira')
 export class CarteiraController {
   constructor(
     private readonly adicionarLancamentoUseCase: AdicionarLancamentoUseCase,
+    private readonly buscarSaldoMensalQuery: BuscarSaldoMensalQuery,
   ) {}
 
   @Get('/:idCarteira/saldo-mensal')
-  async listarPorId(
+  async buscarSaldoMensal(
     @Param('idCarteira') id: string,
     @Query('data') data: string,
-  ): Promise<CarteiraDto> {
+  ): Promise<SaldoMensalDto> {
     return this.buscarSaldoMensalQuery.execute(id, data);
   }
 

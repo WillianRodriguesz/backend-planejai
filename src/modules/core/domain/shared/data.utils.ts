@@ -1,9 +1,13 @@
 export class DateUtils {
   private static readonly MES_OFFSET = 1;
 
-  public static extrairMesAno(data: Date): { mes: number; ano: number } {
-    const mes = data.getMonth() + DateUtils.MES_OFFSET;
-    const ano = data.getFullYear();
+  public static extrairMesAno(data: Date | string): {
+    mes: number;
+    ano: number;
+  } {
+    const dataObj = typeof data === 'string' ? new Date(data) : data;
+    const mes = dataObj.getMonth() + DateUtils.MES_OFFSET;
+    const ano = dataObj.getFullYear();
     return { mes, ano };
   }
 
