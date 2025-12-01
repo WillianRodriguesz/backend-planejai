@@ -144,8 +144,8 @@ export class Lancamento {
   }
 
   private setData(data: Date): void {
-    if (!data || data > new Date()) {
-      throw new DomainException('Data deve ser válida e não futura');
+    if (!data || !(data instanceof Date) || isNaN(data.getTime())) {
+      throw new DomainException('Data deve ser válida');
     }
     this.data = data;
   }

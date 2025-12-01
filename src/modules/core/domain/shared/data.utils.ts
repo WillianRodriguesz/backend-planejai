@@ -20,6 +20,16 @@ export class DateUtils {
     return { mes, ano };
   }
 
+  public static converterParaDate(data: string | Date): Date {
+    if (data instanceof Date) {
+      return data;
+    }
+
+    // Parse da string no formato YYYY-MM-DD ou YYYY-MM-DDTHH:mm:ss
+    const [ano, mes, dia] = data.split('T')[0].split('-').map(Number);
+    return new Date(ano, mes - 1, dia);
+  }
+
   public static isMesmaData(data1: Date, data2: Date): boolean {
     const { mes: mes1, ano: ano1 } = DateUtils.extrairMesAno(data1);
     const { mes: mes2, ano: ano2 } = DateUtils.extrairMesAno(data2);

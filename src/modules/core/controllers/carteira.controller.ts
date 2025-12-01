@@ -16,6 +16,7 @@ import {
   AdicionarLancamentoUseCase,
   tipoTransacao,
 } from '../application/usecases/carteira/adicionar-lancamento.usecase';
+import { DateUtils } from '../domain/shared/data.utils';
 
 @Controller('carteira')
 export class CarteiraController {
@@ -66,7 +67,7 @@ export class CarteiraController {
       valor: body.valor,
       titulo: body.titulo,
       descricao: body.descricao,
-      data: new Date(body.data),
+      data: DateUtils.converterParaDate(body.data),
     });
 
     return { message: 'Lançamento adicionado com sucesso' };
