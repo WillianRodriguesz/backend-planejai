@@ -24,6 +24,11 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
       const model = await this.carteiraRepository.findOne({
         where: { id },
         relations: ['lancamentos', 'lancamentos.categoria', 'saldosMensais'],
+        order: {
+          lancamentos: {
+            data: 'DESC', // Ordenar lançamentos por data decrescente
+          },
+        },
       });
 
       if (!model) {
@@ -33,7 +38,10 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
 
       return CarteiraMapper.ModelToDomain(model);
     } catch (error) {
-      this.logger.error(`Erro ao buscar carteira: ${error.message}`, error.stack);
+      this.logger.error(
+        `Erro ao buscar carteira: ${error.message}`,
+        error.stack,
+      );
       throw new RepositoryException('Erro interno ao buscar carteira', error);
     }
   }
@@ -55,11 +63,16 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
       });
 
       if (carteiraModel.lancamentos?.length > 0) {
-        await queryRunner.manager.save(LancamentoModel, carteiraModel.lancamentos);
+        await queryRunner.manager.save(
+          LancamentoModel,
+          carteiraModel.lancamentos,
+        );
       }
 
-      const saldosNovos = carteiraModel.saldosMensais?.filter(s => !s.id) || [];
-      const saldosExistentes = carteiraModel.saldosMensais?.filter(s => s.id) || [];
+      const saldosNovos =
+        carteiraModel.saldosMensais?.filter((s) => !s.id) || [];
+      const saldosExistentes =
+        carteiraModel.saldosMensais?.filter((s) => s.id) || [];
 
       if (saldosNovos.length > 0) {
         await queryRunner.manager.save(SaldoMensalModel, saldosNovos);
@@ -75,7 +88,10 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
       this.logger.log('Agregado Carteira salvo com sucesso');
     } catch (error) {
       await queryRunner.rollbackTransaction();
-      this.logger.error(`Erro ao salvar carteira: ${error.message}`, error.stack);
+      this.logger.error(
+        `Erro ao salvar carteira: ${error.message}`,
+        error.stack,
+      );
       throw new RepositoryException('Erro interno ao salvar carteira', error);
     } finally {
       await queryRunner.release();
@@ -87,6 +103,11 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
       const model = await this.carteiraRepository.findOne({
         where: { usuarioId },
         relations: ['lancamentos', 'lancamentos.categoria', 'saldosMensais'],
+        order: {
+          lancamentos: {
+            data: 'DESC', // Ordenar lançamentos por data decrescente
+          },
+        },
       });
 
       if (!model) {
@@ -96,8 +117,14 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
 
       return CarteiraMapper.ModelToDomain(model);
     } catch (error) {
-      this.logger.error(`Erro ao buscar carteira: ${error.message}`, error.stack);
-      throw new RepositoryException('Erro interno ao buscar carteira por usuário', error);
+      this.logger.error(
+        `Erro ao buscar carteira: ${error.message}`,
+        error.stack,
+      );
+      throw new RepositoryException(
+        'Erro interno ao buscar carteira por usuário',
+        error,
+      );
     }
   }
 }

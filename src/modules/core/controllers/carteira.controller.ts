@@ -9,7 +9,9 @@ import {
 } from '@nestjs/common';
 
 import { SaldoMensalDto } from '../application/dtos/carteira/saldo-mensal.dto';
+import { LancamentosPaginadosDto } from '../application/dtos/lancamento/lancamentos-paginados.dto';
 import { BuscarSaldoMensalQuery } from '../application/queries/carteira/buscar-saldo-mensal.query';
+import { BuscarTodosLancamentosQuery } from '../application/queries/carteira/buscar-todos-lancamentos.query';
 import {
   AdicionarLancamentoUseCase,
   tipoTransacao,
@@ -20,6 +22,7 @@ export class CarteiraController {
   constructor(
     private readonly adicionarLancamentoUseCase: AdicionarLancamentoUseCase,
     private readonly buscarSaldoMensalQuery: BuscarSaldoMensalQuery,
+    private readonly buscarTodosLancamentosQuery: BuscarTodosLancamentosQuery,
   ) {}
 
   @Get('/:idCarteira/saldo-mensal')
@@ -28,6 +31,19 @@ export class CarteiraController {
     @Query('data') data: string,
   ): Promise<SaldoMensalDto> {
     return this.buscarSaldoMensalQuery.execute(id, data);
+  }
+
+  @Get('/:idCarteira/lancamentos')
+  async buscarTodosLancamentos(
+    @Param('idCarteira') idCarteira: string,
+    @Query('pagina') pagina: string = '1',
+    @Query('itensPorPagina') itensPorPagina: string = '10',
+  ): Promise<LancamentosPaginadosDto> {
+    return this.buscarTodosLancamentosQuery.execute(
+      idCarteira,
+      parseInt(pagina, 10),
+      parseInt(itensPorPagina, 10),
+    );
   }
 
   @Post('/:idCarteira/novo-lancamento')
