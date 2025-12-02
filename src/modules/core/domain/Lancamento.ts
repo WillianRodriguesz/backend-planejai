@@ -95,6 +95,30 @@ export class Lancamento {
     return this.data;
   }
 
+  public atualizarTitulo(titulo: string): void {
+    this.setTitulo(titulo);
+  }
+
+  public atualizarDescricao(descricao: string): void {
+    this.setDescricao(descricao);
+  }
+
+  public atualizarValor(valor: number): void {
+    this.setValor(valor);
+  }
+
+  public atualizarTipoTransacao(tipoTransacao: TipoTransacao): void {
+    this.setTipoTransacao(tipoTransacao);
+  }
+
+  public atualizarCategoria(categoria: Categoria): void {
+    this.setCategoria(categoria);
+  }
+
+  public atualizarData(data: Date): void {
+    this.setData(data);
+  }
+
   private setTitulo(titulo: string): void {
     if (!titulo || titulo.trim() === '') {
       throw new DomainException('Título é obrigatório');

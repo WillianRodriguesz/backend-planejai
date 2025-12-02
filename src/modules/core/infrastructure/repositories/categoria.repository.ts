@@ -36,4 +36,20 @@ export class CategoriaRepositoryImpl implements CategoriaRepository {
       throw new RepositoryException('Erro interno ao buscar categoria', error);
     }
   }
+
+  async buscarTodas(): Promise<Categoria[]> {
+    try {
+      const models = await this.categoriaRepository.find({
+        order: { nome: 'ASC' },
+      });
+
+      return models.map((model) => CategoriaMapper.ModelToDomain(model));
+    } catch (error) {
+      this.logger.error(
+        `Erro ao buscar todas as categorias: ${error.message}`,
+        error.stack,
+      );
+      throw new RepositoryException('Erro interno ao buscar categorias', error);
+    }
+  }
 }

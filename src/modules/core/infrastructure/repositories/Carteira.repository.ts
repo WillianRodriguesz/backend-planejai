@@ -62,6 +62,15 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
         criadoEm: carteiraModel.criadoEm,
       });
 
+      const idsLancamentosRemovidos = carteira.getLancamentosRemovidos();
+      if (idsLancamentosRemovidos.length > 0) {
+        await queryRunner.manager.delete(
+          LancamentoModel,
+          idsLancamentosRemovidos,
+        );
+        carteira.limparLancamentosRemovidos();
+      }
+
       if (carteiraModel.lancamentos?.length > 0) {
         await queryRunner.manager.save(
           LancamentoModel,
