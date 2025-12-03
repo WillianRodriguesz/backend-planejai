@@ -14,9 +14,11 @@ import { SaldoMensalDto } from '../application/dtos/carteira/saldo-mensal.dto';
 import { LancamentoDto } from '../application/dtos/lancamento/lancamento.dto';
 import { LancamentosPaginadosDto } from '../application/dtos/lancamento/lancamentos-paginados.dto';
 import { AtualizarLancamentoDto } from '../application/dtos/lancamento/atualizar-lancamento.dto';
+import { FiltrarLancamentosDto } from '../application/dtos/lancamento/filtrar-lancamentos.dto';
 import { BuscarSaldoMensalQuery } from '../application/queries/carteira/buscar-saldo-mensal.query';
 import { BuscarTodosLancamentosQuery } from '../application/queries/carteira/buscar-todos-lancamentos.query';
 import { BuscarLancamentoPorIdQuery } from '../application/queries/carteira/buscar-lancamento-por-id.query';
+import { FiltrarLancamentosQuery } from '../application/queries/carteira/filtrar-lancamentos.query';
 import {
   AdicionarLancamentoUseCase,
   tipoTransacao,
@@ -34,6 +36,7 @@ export class CarteiraController {
     private readonly buscarSaldoMensalQuery: BuscarSaldoMensalQuery,
     private readonly buscarTodosLancamentosQuery: BuscarTodosLancamentosQuery,
     private readonly buscarLancamentoPorIdQuery: BuscarLancamentoPorIdQuery,
+    private readonly filtrarLancamentosQuery: FiltrarLancamentosQuery,
   ) {}
 
   @Get('/:idCarteira/saldo-mensal')
@@ -57,7 +60,31 @@ export class CarteiraController {
     );
   }
 
-  @Post('/:idCarteira/novo-lancamento')
+  @Get('/:idCarteira/lancamentos/filtrar')
+  async filtrarLancamentos(
+    @Param('idCarteira') idCarteira: string,
+    @Query('dataInicial') dataInicial?: string,
+    @Query('dataFinal') dataFinal?: string,
+    @Query('idCategoria') idCategoria?: string,
+    @Query('titulo') titulo?: string,
+    @Query('tipoTransacao') tipoTransacao?: 'entrada' | 'saida' | 'todos',
+    @Query('pagina') pagina: string = '1',
+    @Query('itensPorPagina') itensPorPagina: string = '10',
+  ): Promise<LancamentosPaginadosDto> {
+    const filtros: FiltrarLancamentosDto = {
+      dataInicial,
+      dataFinal,
+      idCategoria: idCategoria ? parseInt(idCategoria, 10) : undefined,
+      titulo,
+      tipoTransacao: tipoTransacao || 'todos',
+      pagina: parseInt(pagina, 10),
+      itensPorPagina: parseInt(itensPorPagina, 10),
+    };
+
+    return this.filtrarLancamentosQuery.execute(idCarteira, filtros);
+  }
+
+  @Post('/:idCarteira/lancamento')
   async adicionarLancamento(
     @Param('idCarteira') idCarteira: string,
     @Body(ValidationPipe)
