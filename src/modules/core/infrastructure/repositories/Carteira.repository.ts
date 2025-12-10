@@ -2,11 +2,16 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { Carteira } from '../../domain/carteira';
+import { Lancamento } from '../../domain/lancamento';
 import { CarteiraModel } from '../models/carteira.model';
 import { LancamentoModel } from '../models/lancamento.model';
 import { SaldoMensalModel } from '../models/saldo-mensal.model';
 import { CarteiraMapper } from '../mappers/carteira.mapper';
-import { CarteiraRepository } from '../../domain/repositories/carteira.repository';
+import { LancamentoMapper } from '../mappers/lancamento.mapper';
+import {
+  CarteiraRepository,
+  FiltrosLancamento,
+} from '../../domain/repositories/carteira.repository';
 import { RepositoryException } from '../exceptions/repository.exception';
 
 @Injectable()
@@ -24,6 +29,11 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
       const model = await this.carteiraRepository.findOne({
         where: { id },
         relations: ['lancamentos', 'lancamentos.categoria', 'saldosMensais'],
+        order: {
+          lancamentos: {
+            data: 'DESC', // Ordenar lançamentos por data decrescente
+          },
+        },
       });
 
       if (!model) {
@@ -33,7 +43,10 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
 
       return CarteiraMapper.ModelToDomain(model);
     } catch (error) {
-      this.logger.error(`Erro ao buscar carteira: ${error.message}`, error.stack);
+      this.logger.error(
+        `Erro ao buscar carteira: ${error.message}`,
+        error.stack,
+      );
       throw new RepositoryException('Erro interno ao buscar carteira', error);
     }
   }
@@ -54,12 +67,26 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
         criadoEm: carteiraModel.criadoEm,
       });
 
-      if (carteiraModel.lancamentos?.length > 0) {
-        await queryRunner.manager.save(LancamentoModel, carteiraModel.lancamentos);
+      const idsLancamentosRemovidos = carteira.getLancamentosRemovidos();
+      if (idsLancamentosRemovidos.length > 0) {
+        await queryRunner.manager.delete(
+          LancamentoModel,
+          idsLancamentosRemovidos,
+        );
+        carteira.limparLancamentosRemovidos();
       }
 
-      const saldosNovos = carteiraModel.saldosMensais?.filter(s => !s.id) || [];
-      const saldosExistentes = carteiraModel.saldosMensais?.filter(s => s.id) || [];
+      if (carteiraModel.lancamentos?.length > 0) {
+        await queryRunner.manager.save(
+          LancamentoModel,
+          carteiraModel.lancamentos,
+        );
+      }
+
+      const saldosNovos =
+        carteiraModel.saldosMensais?.filter((s) => !s.id) || [];
+      const saldosExistentes =
+        carteiraModel.saldosMensais?.filter((s) => s.id) || [];
 
       if (saldosNovos.length > 0) {
         await queryRunner.manager.save(SaldoMensalModel, saldosNovos);
@@ -75,7 +102,10 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
       this.logger.log('Agregado Carteira salvo com sucesso');
     } catch (error) {
       await queryRunner.rollbackTransaction();
-      this.logger.error(`Erro ao salvar carteira: ${error.message}`, error.stack);
+      this.logger.error(
+        `Erro ao salvar carteira: ${error.message}`,
+        error.stack,
+      );
       throw new RepositoryException('Erro interno ao salvar carteira', error);
     } finally {
       await queryRunner.release();
@@ -87,6 +117,11 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
       const model = await this.carteiraRepository.findOne({
         where: { usuarioId },
         relations: ['lancamentos', 'lancamentos.categoria', 'saldosMensais'],
+        order: {
+          lancamentos: {
+            data: 'DESC',
+          },
+        },
       });
 
       if (!model) {
@@ -96,8 +131,73 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
 
       return CarteiraMapper.ModelToDomain(model);
     } catch (error) {
-      this.logger.error(`Erro ao buscar carteira: ${error.message}`, error.stack);
-      throw new RepositoryException('Erro interno ao buscar carteira por usuário', error);
+      this.logger.error(
+        `Erro ao buscar carteira: ${error.message}`,
+        error.stack,
+      );
+      throw new RepositoryException(
+        'Erro interno ao buscar carteira por usuário',
+        error,
+      );
+    }
+  }
+
+  async buscarLancamentosFiltrados(
+    filtros: FiltrosLancamento,
+  ): Promise<Lancamento[]> {
+    try {
+      const queryBuilder = this.dataSource
+        .getRepository(LancamentoModel)
+        .createQueryBuilder('lancamento')
+        .leftJoinAndSelect('lancamento.categoria', 'categoria')
+        .where('lancamento.carteiraId = :carteiraId', {
+          carteiraId: filtros.carteiraId,
+        });
+
+      if (filtros.dataInicial) {
+        queryBuilder.andWhere('lancamento.data >= :dataInicial', {
+          dataInicial: filtros.dataInicial,
+        });
+      }
+
+      if (filtros.dataFinal) {
+        queryBuilder.andWhere('lancamento.data <= :dataFinal', {
+          dataFinal: filtros.dataFinal,
+        });
+      }
+
+      if (filtros.idCategoria) {
+        queryBuilder.andWhere('lancamento.categoriaId = :idCategoria', {
+          idCategoria: filtros.idCategoria,
+        });
+      }
+
+      if (filtros.titulo) {
+        queryBuilder.andWhere('LOWER(lancamento.titulo) LIKE LOWER(:titulo)', {
+          titulo: `%${filtros.titulo}%`,
+        });
+      }
+
+      if (filtros.tipoTransacao) {
+        queryBuilder.andWhere('lancamento.tipo = :tipoTransacao', {
+          tipoTransacao: filtros.tipoTransacao,
+        });
+      }
+
+      queryBuilder.orderBy('lancamento.data', 'DESC');
+
+      const models = await queryBuilder.getMany();
+
+      return models.map((model) => LancamentoMapper.ModelToDomain(model));
+    } catch (error) {
+      this.logger.error(
+        `Erro ao buscar lançamentos filtrados: ${error.message}`,
+        error.stack,
+      );
+      throw new RepositoryException(
+        'Erro interno ao buscar lançamentos filtrados',
+        error,
+      );
     }
   }
 }

@@ -7,6 +7,7 @@ import {
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from '../../shared/infrastructure/database';
 import { CoreUseCases } from './application/usecases';
+import { CoreQueries } from './application/queries';
 import { CoreRepositories } from './infrastructure/repositories';
 import { CoreControllers } from './controllers';
 import { BcryptHashService } from './infrastructure/services/hash-bcrypt.service';
@@ -24,6 +25,8 @@ import { UsuarioModel } from './infrastructure/models/usuario.model';
     ...CoreRepositories,
     { provide: 'HashService', useClass: BcryptHashService },
     AuthService,
+    ...CoreQueries,
+    ...CoreRepositories,
     {
       provide: 'UsuariosCredenciaisRepository',
       useClass: UsuarioCredenciaisRepositoryImpl,
