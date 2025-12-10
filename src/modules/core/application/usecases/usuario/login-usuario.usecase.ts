@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import {
   AuthService,
   LoginResultado,
@@ -11,7 +11,10 @@ export type LoginUsuarioInput = {
 
 @Injectable()
 export class LoginUsuarioUseCase {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    @Inject(forwardRef(() => AuthService))
+    private readonly authService: AuthService,
+  ) {}
 
   async execute(input: LoginUsuarioInput): Promise<LoginResultado> {
     const { telefone, senha } = input;

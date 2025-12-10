@@ -21,18 +21,23 @@ import { UsuarioModel } from './infrastructure/models/usuario.model';
   imports: [DatabaseModule, TypeOrmModule.forFeature([UsuarioModel])],
   controllers: [...CoreControllers],
   providers: [
-    ...CoreUseCases,
-    ...CoreRepositories,
-    { provide: 'HashService', useClass: BcryptHashService },
-    AuthService,
     ...CoreQueries,
     ...CoreRepositories,
+
+    { provide: 'HashService', useClass: BcryptHashService },
+
     {
       provide: 'UsuariosCredenciaisRepository',
       useClass: UsuarioCredenciaisRepositoryImpl,
     },
-    { provide: 'UsuarioWriteRepository', useClass: UsuarioWriteRepositoryImpl },
-    CriarUsuarioUseCase,
+    {
+      provide: 'UsuarioWriteRepository',
+      useClass: UsuarioWriteRepositoryImpl,
+    },
+
+    AuthService,
+
+    ...CoreUseCases,
   ],
 })
 export class CoreModule implements NestModule {
