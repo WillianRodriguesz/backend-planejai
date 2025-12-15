@@ -5,7 +5,6 @@ import { webcrypto } from 'crypto';
 import { DomainExceptionFilter } from './common/filters/domain-exception.filter';
 import { RepositoryExceptionFilter } from './common/filters/repository-exception.filter';
 
-// Polyfill para crypto.randomUUID no Node.js 18
 if (!globalThis.crypto) {
   (globalThis as any).crypto = webcrypto;
 }
@@ -16,7 +15,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('planejai');
 
-  // Registrar filtros de exceções globalmente
+  app.enableCors({
+    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    credentials: true,
+  });
+
   app.useGlobalFilters(
     new DomainExceptionFilter(),
     new RepositoryExceptionFilter(),

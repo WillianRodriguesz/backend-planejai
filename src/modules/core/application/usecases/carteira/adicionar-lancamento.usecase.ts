@@ -9,7 +9,7 @@ export interface AdicionarLancamentoUseCaseProps {
   tipoTransacao: tipoTransacao;
   titulo: string;
   valor: number;
-  descricao: string;
+  descricao?: string;
   data: Date;
 }
 

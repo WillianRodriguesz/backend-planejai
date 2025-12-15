@@ -5,7 +5,7 @@ export type TipoTransacao = 'entrada' | 'saida';
 
 export interface CriarLancamentoProps {
   titulo: string;
-  descricao: string;
+  descricao?: string;
   valor: number;
   tipoTransacao: TipoTransacao;
   categoria: Categoria;
@@ -99,7 +99,7 @@ export class Lancamento {
     this.setTitulo(titulo);
   }
 
-  public atualizarDescricao(descricao: string): void {
+  public atualizarDescricao(descricao?: string): void {
     this.setDescricao(descricao);
   }
 
@@ -129,16 +129,13 @@ export class Lancamento {
     this.titulo = titulo;
   }
 
-  private setDescricao(descricao: string): void {
-    if (!descricao || descricao.trim() === '') {
-      throw new DomainException('Descrição é obrigatória');
-    }
-    if (descricao.length > 150) {
+  private setDescricao(descricao?: string): void {
+    if (descricao && descricao.length > 150) {
       throw new DomainException(
         'Descrição não pode ter mais de 150 caracteres',
       );
     }
-    this.descricao = descricao;
+    this.descricao = descricao || '';
   }
 
   private setValor(valor: number): void {

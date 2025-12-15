@@ -12,7 +12,7 @@ export interface AdicionarLancamentoProps {
   tipoTransacao: TipoTransacao;
   titulo: string;
   valor: number;
-  descricao: string;
+  descricao?: string;
   data: Date;
 }
 

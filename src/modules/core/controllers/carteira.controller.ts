@@ -39,7 +39,7 @@ export class CarteiraController {
     private readonly filtrarLancamentosQuery: FiltrarLancamentosQuery,
   ) {}
 
-  @Get('/:idCarteira/saldo-mensal')
+  @Get('/:idCarteira')
   async buscarSaldoMensal(
     @Param('idCarteira') id: string,
     @Query('data') data: string,
@@ -93,7 +93,7 @@ export class CarteiraController {
       tipoTransacao: tipoTransacao;
       valor: number;
       titulo: string;
-      descricao: string;
+      descricao?: string;
       data: string;
     },
   ): Promise<{ message: string }> {
