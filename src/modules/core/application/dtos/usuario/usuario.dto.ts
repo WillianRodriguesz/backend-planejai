@@ -1,7 +1,7 @@
-export interface UsuarioDto{
+export interface UsuarioDto {
   id: string;
   nome: string;
   email: string;
-  senha?: string; 
-  id_carteira?: string;
+  telefone?: string;
+  criadoEm?: Date;
 }

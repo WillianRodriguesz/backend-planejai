@@ -17,6 +17,5 @@ export class CriarUsuarioDto{
     senha: string;
 
     @IsString()
-    @IsOptional()
-    carteira: string
+    telefone: string;
 } 

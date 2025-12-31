@@ -7,6 +7,7 @@ export class UsuarioMapper {
       id: model.id,
       nome: model.nome,
       email: model.email,
+      senha: model.senha,
       criadoEm: model.criadoEm,
       telefone: model.telefone,
     });
@@ -21,6 +22,7 @@ export class UsuarioMapper {
       id: domain.getId(),
       nome: domain.getNome(),
       email: domain.getEmail(),
+      senha: domain.getSenha(),
       criadoEm: domain.getCriadoEm(),
       telefone: domain.getTelefone(),
     };
