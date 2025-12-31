@@ -14,4 +14,5 @@ export interface CarteiraRepository {
   buscarPorId(id: string): Promise<Carteira | null>;
   salvar(carteira: Carteira): Promise<void>;
   buscarLancamentosFiltrados(filtros: FiltrosLancamento): Promise<Lancamento[]>;
+  buscarPorUsuarioId(usuarioId: string): Promise<Carteira | null>;
 }

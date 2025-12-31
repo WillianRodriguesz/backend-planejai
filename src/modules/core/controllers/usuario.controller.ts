@@ -42,17 +42,13 @@ export class UsuarioController {
     const result = await this.loginUsuarioUseCase.execute(body);
     res.cookie('access_token', result.token, {
       httpOnly: true,
-      secure: false, 
+      secure: false,
       sameSite: 'strict',
       maxAge: 7200000, // 2 horas
     });
-    res.status(HttpStatus.OK).json({ usuario: result.usuario });
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('/:id')
-  async buscarPorId(@Param('id') id: string): Promise<UsuarioDto | null> {
-    return this.buscarUsuarioPorIdUseCase.execute(id);
+    res
+      .status(HttpStatus.OK)
+      .json({statusCode: HttpStatus.OK, message: 'Login realizado com sucesso' });
   }
 
   @UseGuards(JwtAuthGuard)

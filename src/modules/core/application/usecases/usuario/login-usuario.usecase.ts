@@ -1,9 +1,7 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
 import { BcryptHashService } from '../../../infrastructure/services/hash-bcrypt.service';
 import { JwtService } from '@nestjs/jwt';
-import { UsuarioMapper } from '../../mappers/usuario.mapper';
-import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
 
 export interface LoginUsuarioProps {
   email: string;
@@ -12,7 +10,6 @@ export interface LoginUsuarioProps {
 
 export interface LoginResult {
   token: string;
-  usuario: UsuarioDto;
 }
 
 @Injectable()
@@ -27,7 +24,7 @@ export class LoginUsuarioUseCase {
   async execute(props: LoginUsuarioProps): Promise<LoginResult> {
     const usuario = await this.usuarioRepository.buscarPorEmail(props.email);
     if (!usuario) {
-      throw new Error('Credenciais inválidas');
+      throw new HttpException('Credenciais inválidas', HttpStatus.UNAUTHORIZED);
     }
 
     const senhaValida = await this.hashService.compare(
@@ -35,7 +32,7 @@ export class LoginUsuarioUseCase {
       usuario.getSenha(),
     );
     if (!senhaValida) {
-      throw new Error('Credenciais inválidas');
+      throw new HttpException('Credenciais inválidas', HttpStatus.UNAUTHORIZED);
     }
 
     const payload = { sub: usuario.getId(), email: usuario.getEmail() };
@@ -43,7 +40,6 @@ export class LoginUsuarioUseCase {
 
     return {
       token,
-      usuario: UsuarioMapper.DomainToDto(usuario),
     };
   }
 }
