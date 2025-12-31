@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { webcrypto } from 'crypto';
 import { DomainExceptionFilter } from './common/filters/domain-exception.filter';
 import { RepositoryExceptionFilter } from './common/filters/repository-exception.filter';
+import * as cookieParser from 'cookie-parser';
 
 if (!globalThis.crypto) {
   (globalThis as any).crypto = webcrypto;
@@ -19,6 +20,8 @@ async function bootstrap() {
     origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
     credentials: true,
   });
+
+  app.use(cookieParser());
 
   app.useGlobalFilters(
     new DomainExceptionFilter(),
