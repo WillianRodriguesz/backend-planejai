@@ -65,7 +65,7 @@ export class UsuarioController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('')
+  @Put()
   async atualizar(
     @Req() req: AuthenticatedRequest,
     @Body() body: AtualizarUsuarioDto,
@@ -75,7 +75,7 @@ export class UsuarioController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('')
+  @Delete()
   async deletar(@Req() req: AuthenticatedRequest): Promise<void> {
     const userId = req.user.id;
     return this.deletarUsuarioUseCase.execute(userId);
