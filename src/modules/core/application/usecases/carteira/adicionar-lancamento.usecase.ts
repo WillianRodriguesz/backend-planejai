@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 import { CategoriaRepositoryImpl } from '../../../infrastructure/repositories/categoria.repository';
 

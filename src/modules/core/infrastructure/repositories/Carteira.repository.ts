@@ -26,6 +26,9 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
 
   async buscarPorId(id: string): Promise<Carteira | null> {
     try {
+      console.log('\n📦 === REPOSITORY: BuscarPorId ===');
+      console.log('Buscando carteira ID:', id);
+
       const model = await this.carteiraRepository.findOne({
         where: { id },
         relations: ['lancamentos', 'lancamentos.categoria', 'saldosMensais'],
@@ -41,7 +44,39 @@ export class CarteiraRepositoryImpl implements CarteiraRepository {
         return null;
       }
 
-      return CarteiraMapper.ModelToDomain(model);
+      console.log(
+        'Carteira encontrada no DB com',
+        model.lancamentos?.length || 0,
+        'lançamentos',
+      );
+      console.log(
+        'Lançamentos do DB:',
+        model.lancamentos?.map((l) => ({
+          id: l.id,
+          titulo: l.titulo,
+          valor: l.valor,
+          tipo: l.tipo,
+          data: l.data,
+        })),
+      );
+      console.log(
+        'Saldos mensais do DB:',
+        model.saldosMensais?.map((s) => ({
+          mes: s.mes,
+          ano: s.ano,
+          saldo: s.saldoMes,
+        })),
+      );
+
+      const carteiraDomain = CarteiraMapper.ModelToDomain(model);
+      console.log(
+        'Carteira convertida para domain com',
+        carteiraDomain.getLancamentos().length,
+        'lançamentos',
+      );
+      console.log('📦 === FIM REPOSITORY ===\n');
+
+      return carteiraDomain;
     } catch (error) {
       this.logger.error(
         `Erro ao buscar carteira: ${error.message}`,
