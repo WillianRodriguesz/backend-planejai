@@ -7,6 +7,7 @@ import { AtualizarUsuarioUseCase } from './usuario/atualizar-usuario.usecase';
 import { DeletarUsuarioUseCase } from './usuario/deletar-usuario.usecase';
 import { BuscarUsuarioPorIdUseCase } from './usuario/buscar-usuario-por-id.usecase';
 import { BuscarUsuarioUseCase } from './usuario/buscar-usuario.usecase';
+import { TrocarSenhaUseCase } from './usuario/trocar-senha.usecase';
 
 export const CoreUseCases = [
   AdicionarLancamentoUseCase,
@@ -18,4 +19,5 @@ export const CoreUseCases = [
   DeletarUsuarioUseCase,
   BuscarUsuarioPorIdUseCase,
   BuscarUsuarioUseCase,
+  TrocarSenhaUseCase,
 ];

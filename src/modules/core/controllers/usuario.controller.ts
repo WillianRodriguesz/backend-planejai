@@ -4,23 +4,22 @@ import {
   Post,
   Get,
   Put,
+  Patch,
   Delete,
-  Param,
   UseGuards,
-  Res,
   HttpStatus,
   Req,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
+import { Request } from 'express';
 import { CriarUsuarioUseCase } from '../application/usecases/usuario/criar-usuario.usecase';
-import { LoginUsuarioUseCase } from '../application/usecases/usuario/login-usuario.usecase';
 import { AtualizarUsuarioUseCase } from '../application/usecases/usuario/atualizar-usuario.usecase';
 import { DeletarUsuarioUseCase } from '../application/usecases/usuario/deletar-usuario.usecase';
 import { BuscarUsuarioPorIdUseCase } from '../application/usecases/usuario/buscar-usuario-por-id.usecase';
 import { BuscarUsuarioUseCase } from '../application/usecases/usuario/buscar-usuario.usecase';
+import { TrocarSenhaUseCase } from '../application/usecases/usuario/trocar-senha.usecase';
 import { CriarUsuarioDto } from '../application/dtos/usuario/criar-usuario.dto';
-import { LoginUsuarioDto } from '../application/dtos/usuario/login-usuario.dto';
 import { AtualizarUsuarioDto } from '../application/dtos/usuario/atualizar-usuario.dto';
+import { TrocarSenhaDto } from '../application/dtos/usuario/trocar-senha.dto';
 import { UsuarioDto } from '../application/dtos/usuario/usuario.dto';
 import { JwtAuthGuard } from '../../../shared/infrastructure/auth/jwt-auth.guard';
 
@@ -33,35 +32,19 @@ interface AuthenticatedRequest extends Request {
   user: User;
 }
 
-@Controller('usuario')
+@Controller('usuarios')
 export class UsuarioController {
   constructor(
     private readonly criarUsuarioUseCase: CriarUsuarioUseCase,
-    private readonly loginUsuarioUseCase: LoginUsuarioUseCase,
     private readonly atualizarUsuarioUseCase: AtualizarUsuarioUseCase,
     private readonly deletarUsuarioUseCase: DeletarUsuarioUseCase,
-    private readonly buscarUsuarioPorIdUseCase: BuscarUsuarioPorIdUseCase,
     private readonly buscarUsuarioUseCase: BuscarUsuarioUseCase,
+    private readonly trocarSenhaUseCase: TrocarSenhaUseCase,
   ) {}
 
   @Post()
   async criar(@Body() body: CriarUsuarioDto): Promise<UsuarioDto> {
     return this.criarUsuarioUseCase.execute(body);
-  }
-
-  @Post('/login')
-  async login(@Body() body: LoginUsuarioDto, @Res() res: Response) {
-    const result = await this.loginUsuarioUseCase.execute(body);
-    res.cookie('access_token', result.token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'strict',
-      maxAge: 7200000, // 2 horas
-    });
-    res.status(HttpStatus.OK).json({
-      statusCode: HttpStatus.OK,
-      message: 'Login realizado com sucesso',
-    });
   }
 
   @UseGuards(JwtAuthGuard)
@@ -88,5 +71,23 @@ export class UsuarioController {
   ): Promise<{ usuario: UsuarioDto; carteiraId: string }> {
     const userId = req.user.id;
     return this.buscarUsuarioUseCase.execute(userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('senha')
+  async trocarSenha(
+    @Req() req: AuthenticatedRequest,
+    @Body() body: TrocarSenhaDto,
+  ): Promise<{ statusCode: number; message: string }> {
+    const userId = req.user.id;
+    await this.trocarSenhaUseCase.execute({
+      id: userId,
+      senhaAtual: body.senhaAtual,
+      novaSenha: body.novaSenha,
+    });
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Senha alterada com sucesso',
+    };
   }
 }

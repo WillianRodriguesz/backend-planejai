@@ -9,7 +9,6 @@ export interface AtualizarUsuarioProps {
   id: string;
   nome?: string;
   email?: string;
-  senha?: string;
   telefone?: string;
 }
 
@@ -37,18 +36,12 @@ export class AtualizarUsuarioUseCase {
       }
     }
 
-    // Hash da senha se fornecida
-    let senhaHashed = usuario.getSenha();
-    if (props.senha) {
-      senhaHashed = await this.hashService.hash(props.senha);
-    }
-
-    // Atualizar propriedades
+    // Atualizar propriedades (senha não pode ser alterada aqui)
     const usuarioAtualizado = Usuario.carregar({
       id: usuario.getId(),
       nome: props.nome || usuario.getNome(),
       email: props.email || usuario.getEmail(),
-      senha: senhaHashed,
+      senha: usuario.getSenha(),
       criadoEm: usuario.getCriadoEm(),
       telefone:
         props.telefone !== undefined ? props.telefone : usuario.getTelefone(),
