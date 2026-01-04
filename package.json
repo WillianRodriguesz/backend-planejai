@@ -12,7 +12,7 @@
     "services:up": "docker compose --env-file .env -f infra/docker-compose.yml up -d",
     "services:stop": "docker compose --env-file .env -f infra/docker-compose.yml stop",
     "services:down": "docker compose --env-file .env -f infra/docker-compose.yml down",
-    "start:dev": "docker compose --env-file .env -f infra/docker-compose.yml up -d db && nest start --watch",
+    "start:dev": "docker compose --env-file .env -f infra/docker-compose.yml up -d db && npm run wait-for-postgres && npm run migration:run && nest start --watch",
     "start:debug": "docker compose --env-file .env -f infra/docker-compose.yml up -d db && nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -24,7 +24,8 @@
     "typeorm": "typeorm-ts-node-commonjs -d src/config/database.config.ts",
     "migration:generate": "npm run typeorm -- migration:generate",
     "migration:run": "npm run typeorm -- migration:run",
-    "migration:revert": "npm run typeorm -- migration:revert"
+    "migration:revert": "npm run typeorm -- migration:revert",
+    "wait-for-postgres": "node infra/scripts/wait-for-postgres.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

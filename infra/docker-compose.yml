@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:15-alpine
-    container_name: postgres
+    container_name: postgres-planejai
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -18,7 +18,7 @@ services:
     build:
       context: ../
       dockerfile: infra/Dockerfile
-    container_name: planejai_api
+    container_name: api-planejai
     ports:
       - "${PORT}:${PORT}"
     depends_on:
