@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { SaldoMensalDto } from '../application/dtos/carteira/saldo-mensal.dto';
+import { GastosMensaisDto } from '../application/dtos/carteira/gastos-mensais.dto';
 import { LancamentoDto } from '../application/dtos/lancamento/lancamento.dto';
 import { LancamentosPaginadosDto } from '../application/dtos/lancamento/lancamentos-paginados.dto';
 import { AtualizarLancamentoDto } from '../application/dtos/lancamento/atualizar-lancamento.dto';
@@ -19,6 +20,7 @@ import { BuscarSaldoMensalQuery } from '../application/queries/carteira/buscar-s
 import { BuscarTodosLancamentosQuery } from '../application/queries/carteira/buscar-todos-lancamentos.query';
 import { BuscarLancamentoPorIdQuery } from '../application/queries/carteira/buscar-lancamento-por-id.query';
 import { FiltrarLancamentosQuery } from '../application/queries/carteira/filtrar-lancamentos.query';
+import { BuscarGastosMensaisQuery } from '../application/queries/carteira/buscar-gastos-mensais.query';
 import {
   AdicionarLancamentoUseCase,
   tipoTransacao,
@@ -37,6 +39,7 @@ export class CarteiraController {
     private readonly buscarTodosLancamentosQuery: BuscarTodosLancamentosQuery,
     private readonly buscarLancamentoPorIdQuery: BuscarLancamentoPorIdQuery,
     private readonly filtrarLancamentosQuery: FiltrarLancamentosQuery,
+    private readonly buscarGastosMensaisQuery: BuscarGastosMensaisQuery,
   ) {}
 
   @Get('/:idCarteira')
@@ -82,6 +85,14 @@ export class CarteiraController {
     };
 
     return this.filtrarLancamentosQuery.execute(idCarteira, filtros);
+  }
+
+  @Get('/:idCarteira/gastos-mensais')
+  async buscarGastosMensais(
+    @Param('idCarteira') idCarteira: string,
+    @Query('mes') mes: string,
+  ): Promise<GastosMensaisDto> {
+    return this.buscarGastosMensaisQuery.execute(idCarteira, mes);
   }
 
   @Post('/:idCarteira/lancamento')

@@ -2,6 +2,7 @@ import { BuscarSaldoMensalQuery } from './carteira/buscar-saldo-mensal.query';
 import { BuscarTodosLancamentosQuery } from './carteira/buscar-todos-lancamentos.query';
 import { BuscarLancamentoPorIdQuery } from './carteira/buscar-lancamento-por-id.query';
 import { FiltrarLancamentosQuery } from './carteira/filtrar-lancamentos.query';
+import { BuscarGastosMensaisQuery } from './carteira/buscar-gastos-mensais.query';
 import { BuscarTodasCategoriasQuery } from './categoria/buscar-todas-categorias.query';
 import { BuscarCategoriaPorIdQuery } from './categoria/buscar-categoria-por-id.query';
 
@@ -10,6 +11,7 @@ export const CoreQueries = [
   BuscarTodosLancamentosQuery,
   BuscarLancamentoPorIdQuery,
   FiltrarLancamentosQuery,
+  BuscarGastosMensaisQuery,
   BuscarTodasCategoriasQuery,
   BuscarCategoriaPorIdQuery,
 ];
