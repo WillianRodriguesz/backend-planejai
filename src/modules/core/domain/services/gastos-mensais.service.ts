@@ -9,19 +9,28 @@ export interface GastoPorCategoria {
   porcentagem: number;
 }
 
+export interface RelacaoMesAnterior {
+  diferencaGastosMensal: number;
+  mensagemEconomia: string;
+}
+
 export interface GastosMensais {
   totalGastos: number;
+  relacaoMesAnterior: RelacaoMesAnterior;
   gastosPorCategoria: GastoPorCategoria[];
 }
 
 export class GastosMensaisService {
-  public calcular(lancamentos: Lancamento[]): GastosMensais {
+  public calcular(
+    lancamentosMesAtual: Lancamento[],
+    totalGastosMesAnterior: number,
+  ): GastosMensais {
     const gastosPorCategoriaMap = new Map<
       number,
       { categoria: { id: number; nome: string }; valor: number }
     >();
 
-    lancamentos.forEach((lancamento) => {
+    lancamentosMesAtual.forEach((lancamento) => {
       const categoriaId = lancamento.getCategoria().getId();
       const valor = lancamento.getValor();
 
@@ -46,6 +55,11 @@ export class GastosMensaisService {
       0,
     );
 
+    const economiaMensal = totalGastosMesAnterior - totalGastos;
+
+    const mensagemEconomiaMensal =
+      this.determinarMensagemEconomia(economiaMensal);
+
     const gastosComPorcentagem = gastosPorCategoria
       .map((gasto) => ({
         ...gasto,
@@ -56,7 +70,22 @@ export class GastosMensaisService {
 
     return {
       totalGastos,
+      relacaoMesAnterior: {
+        diferencaGastosMensal: economiaMensal,
+        mensagemEconomia: mensagemEconomiaMensal,
+      },
       gastosPorCategoria: gastosComPorcentagem,
     };
+  }
+
+  private determinarMensagemEconomia(economiaMensal: number): string {
+    if (economiaMensal > 0) {
+      return `Economizou R$ ${economiaMensal.toFixed(2)} em relação ao mês anterior!`;
+    }
+
+    if (economiaMensal < 0) {
+      return `Gastou R$ ${Math.abs(economiaMensal).toFixed(2)} a mais que o mês anterior.`;
+    }
+    return 'Seus gastos se mantiveram iguais ao mês anterior.';
   }
 }

@@ -7,7 +7,13 @@ export interface GastoPorCategoriaDto {
   porcentagem: number;
 }
 
+export interface RelacaoMesAnteriorDto {
+  diferencaGastosMensal: number;
+  mensagemEconomia: string;
+}
+
 export interface GastosMensaisDto {
   totalGastos: number;
+  relacaoMesAnterior: RelacaoMesAnteriorDto;
   gastosPorCategoria: GastoPorCategoriaDto[];
 }
