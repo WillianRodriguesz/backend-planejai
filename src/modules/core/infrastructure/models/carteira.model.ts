@@ -7,9 +7,9 @@ import {
   OneToMany,
   CreateDateColumn,
 } from 'typeorm';
-import { UsuarioModel } from './Usuario.model';
-import { LancamentoModel } from './Lancamento.model';
-import { SaldoMensalModel } from './SaldoMensal.model';
+import { UsuarioModel } from './usuario.model';
+import { LancamentoModel } from './lancamento.model';
+import { SaldoMensalModel } from './saldo-mensal.model';
 
 @Entity('carteiras')
 export class CarteiraModel {

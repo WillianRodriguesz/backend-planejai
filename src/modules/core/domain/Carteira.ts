@@ -1,20 +1,35 @@
-import { Lancamento } from './Lancamento';
-import { SaldoMes } from './SaldoMes';
+import { Lancamento, TipoTransacao } from './lancamento';
+import { SaldoMes } from './saldo-mensal';
+import { Categoria } from './categoria';
+import { DomainException } from './exceptions/domain.exception';
 
 export interface CriarCarteiraProps {
   usuarioId: string;
+}
+
+export interface AdicionarLancamentoProps {
+  categoria: Categoria;
+  tipoTransacao: TipoTransacao;
+  titulo: string;
+  valor: number;
+  descricao?: string;
+  data: Date;
 }
 
 export class Carteira {
   private id: string;
   private usuarioId: string;
   private lancamentos: Lancamento[];
+  private lancamentosRemovidos: string[];
   private saldosMensais: SaldoMes[];
   private criadoEm: Date;
 
   private constructor(id?: string) {
     this.id = id;
+    this.lancamentosRemovidos = [];
   }
+
+  private static readonly MES_OFFSET = 1;
 
   public static criar(props: CriarCarteiraProps): Carteira {
     const { usuarioId } = props;
@@ -41,6 +56,32 @@ export class Carteira {
     return carteira;
   }
 
+  private setUsuarioId(usuarioId: string): void {
+    if (!usuarioId || usuarioId.trim() === '') {
+      throw new DomainException('UsuarioId é obrigatório');
+    }
+    this.usuarioId = usuarioId;
+  }
+
+  private setId(id: string): void {
+    if (this.id) {
+      throw new DomainException('ID já foi definido');
+    }
+    this.id = id;
+  }
+
+  private setCriadoEm(criadoEm: Date): void {
+    this.criadoEm = criadoEm;
+  }
+
+  private setLancamentos(lancamentos: Lancamento[]): void {
+    this.lancamentos = lancamentos;
+  }
+
+  private setSaldosMensais(saldosMensais: SaldoMes[]): void {
+    this.saldosMensais = saldosMensais;
+  }
+
   public getId(): string {
     return this.id;
   }
@@ -57,54 +98,185 @@ export class Carteira {
     return this.lancamentos;
   }
 
+  public getLancamentosRemovidos(): string[] {
+    return this.lancamentosRemovidos;
+  }
+
+  public limparLancamentosRemovidos(): void {
+    this.lancamentosRemovidos = [];
+  }
+
   public getSaldosMensais(): SaldoMes[] {
     return this.saldosMensais;
   }
 
-  private setUsuarioId(usuarioId: string): void {
-    this.usuarioId = usuarioId;
-  }
+  public adicionarLancamento(props: AdicionarLancamentoProps): void {
+    const lancamento = Lancamento.criar(props);
 
-  private setCriadoEm(criadoEm: Date): void {
-    this.criadoEm = criadoEm;
-  }
-
-  private setLancamentos(lancamentos: Lancamento[]): void {
-    this.lancamentos = lancamentos;
-  }
-
-  private setSaldosMensais(saldosMensais: SaldoMes[]): void {
-    this.saldosMensais = saldosMensais;
-  }
-
-  public setId(id: string): void {
-    if (this.id) {
-      throw new Error('ID já foi definido');
-    }
-    this.id = id;
-  }
-
-  public adicionarLancamento(lancamento: Lancamento): void {
     this.lancamentos.push(lancamento);
+
+    const mes = lancamento.getData().getMonth() + Carteira.MES_OFFSET;
+    const ano = lancamento.getData().getFullYear();
+
+    this.recalcularSaldoMes(mes, ano);
   }
 
-  public calcularSaldoAtual(): number {
-    const mesAtual = new Date().getMonth();
-    const anoAtual = new Date().getFullYear();
-    const lancamentosDoMes = this.lancamentos.filter(
-      (l) =>
-        l.getData().getMonth() === mesAtual &&
-        l.getData().getFullYear() === anoAtual,
+  public excluirLancamento(idLancamento: string): void {
+    const lancamento = this.buscarLancamentoPorId(idLancamento);
+    if (!lancamento) {
+      throw new DomainException(
+        `Lançamento com ID ${idLancamento} não encontrado`,
+      );
+    }
+    const mesAntigo = lancamento.getData().getMonth() + Carteira.MES_OFFSET;
+    const anoAntigo = lancamento.getData().getFullYear();
+
+    const indice = this.lancamentos.findIndex(
+      (l) => l.getId() === idLancamento,
     );
-    const totalLancamentos = lancamentosDoMes.reduce(
-      (sum, l) => sum + l.getValor(),
-      0,
+    this.lancamentos.splice(indice, 1);
+
+    this.lancamentosRemovidos.push(idLancamento);
+
+    this.recalcularSaldoMes(mesAntigo, anoAntigo);
+  }
+
+  public atualizarLancamento(
+    idLancamento: string,
+    props: {
+      categoria?: Categoria;
+      tipoTransacao?: TipoTransacao;
+      titulo?: string;
+      valor?: number;
+      descricao?: string;
+      data?: Date;
+    },
+  ): void {
+    const lancamento = this.buscarLancamentoPorId(idLancamento);
+    if (!lancamento) {
+      throw new DomainException(
+        `Lançamento com ID ${idLancamento} não encontrado`,
+      );
+    }
+
+    const dataAntiga = lancamento.getData();
+    const mesAntigo = dataAntiga.getMonth() + Carteira.MES_OFFSET;
+    const anoAntigo = dataAntiga.getFullYear();
+
+    if (props.titulo !== undefined) {
+      lancamento.atualizarTitulo(props.titulo);
+    }
+    if (props.descricao !== undefined) {
+      lancamento.atualizarDescricao(props.descricao);
+    }
+    if (props.valor !== undefined) {
+      lancamento.atualizarValor(props.valor);
+    }
+    if (props.tipoTransacao !== undefined) {
+      lancamento.atualizarTipoTransacao(props.tipoTransacao);
+    }
+    if (props.categoria !== undefined) {
+      lancamento.atualizarCategoria(props.categoria);
+    }
+    if (props.data !== undefined) {
+      lancamento.atualizarData(props.data);
+    }
+
+    const dataNova = lancamento.getData();
+    const mesNovo = dataNova.getMonth() + Carteira.MES_OFFSET;
+    const anoNovo = dataNova.getFullYear();
+
+    if (mesAntigo !== mesNovo || anoAntigo !== anoNovo) {
+      this.recalcularSaldoMes(mesAntigo, anoAntigo);
+    }
+
+    this.recalcularSaldoMes(mesNovo, anoNovo);
+  }
+
+  public buscarSaldoMensal(mes: number, ano: number): number | undefined {
+    const saldoMes = this.buscarSaldoMes(mes, ano);
+    if (!saldoMes) {
+      return undefined;
+    }
+    return saldoMes.getSaldoMes();
+  }
+
+  public calcularTotalEntradasMensal(mes: number, ano: number): number {
+    const lancamentosMes = this.buscarLancamentosPorMes(mes, ano);
+    let valorTotalEntradas = 0;
+    for (const lancamento of lancamentosMes) {
+      if (lancamento.getTipoTransacao() === 'entrada') {
+        valorTotalEntradas += Number(lancamento.getValor());
+      }
+    }
+    return valorTotalEntradas;
+  }
+
+  public calcularTotalSaidasMensal(mes: number, ano: number): number {
+    const lancamentosMes = this.buscarLancamentosPorMes(mes, ano);
+    let valorTotalSaidas = 0;
+    for (const lancamento of lancamentosMes) {
+      if (lancamento.getTipoTransacao() === 'saida') {
+        valorTotalSaidas += Number(lancamento.getValor());
+      }
+    }
+    return valorTotalSaidas;
+  }
+
+  private buscarLancamentoPorId(id: string): Lancamento | undefined {
+    return this.lancamentos.find((l) => l.getId() === id);
+  }
+
+  private buscarSaldoMes(mes: number, ano: number): SaldoMes | undefined {
+    return this.saldosMensais.find(
+      (s) => s.getMes() === mes && s.getAno() === ano,
     );
-    const saldoMensal = this.saldosMensais.find(
-      (s) => s.getMes() === mesAtual + 1 && s.getAno() === anoAtual,
-    );
-    return saldoMensal
-      ? saldoMensal.getSaldoMes() + totalLancamentos
-      : totalLancamentos;
+  }
+
+  private buscarLancamentosPorMes(mes: number, ano: number): Lancamento[] {
+    const lancamentosFiltrados: Lancamento[] = [];
+    for (const lancamento of this.lancamentos) {
+      const lancamentoMes =
+        lancamento.getData().getMonth() + Carteira.MES_OFFSET;
+      const lancamentoAno = lancamento.getData().getFullYear();
+      if (lancamentoMes === mes && lancamentoAno === ano) {
+        lancamentosFiltrados.push(lancamento);
+      }
+    }
+    return lancamentosFiltrados;
+  }
+
+  private recalcularSaldoMes(mes: number, ano: number): void {
+    const lancamentosMes = this.buscarLancamentosPorMes(mes, ano);
+
+    let saldoCalculado = 0;
+    let totalEntradas = 0;
+    let totalSaidas = 0;
+
+    for (const lancamento of lancamentosMes) {
+      const tipo = lancamento.getTipoTransacao();
+      const valor = Number(lancamento.getValor());
+
+      if (tipo === 'entrada') {
+        saldoCalculado += valor;
+        totalEntradas += valor;
+      } else if (tipo === 'saida') {
+        saldoCalculado -= valor;
+        totalSaidas += valor;
+      }
+    }
+
+    const saldoMesExistente = this.buscarSaldoMes(mes, ano);
+
+    if (!saldoMesExistente) {
+      const novoSaldoMes = SaldoMes.criar({
+        mes,
+        ano,
+        saldoMes: saldoCalculado,
+      });
+      this.saldosMensais.push(novoSaldoMes);
+    } else {
+      saldoMesExistente.atualizarSaldoMes(saldoCalculado);
+    }
   }
 }

@@ -1,3 +1,10 @@
+import { webcrypto } from 'crypto';
+
+// Polyfill para crypto.randomUUID no Node.js 18
+if (!globalThis.crypto) {
+  (globalThis as any).crypto = webcrypto;
+}
+
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
@@ -7,7 +14,7 @@ import {
   CategoriaModel,
   LancamentoModel,
   SaldoMensalModel,
-} from '../../../modules/core/infrastructure/models';
+} from '../../../modules/core/infrastructure/models/index';
 
 @Module({
   imports: [
