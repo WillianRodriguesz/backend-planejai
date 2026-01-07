@@ -24,6 +24,9 @@ export class UsuarioModel {
   @Column({ length: 255 })
   senha: string;
 
+  @Column({ length: 50, nullable: true })
+  avatar: string;
+
   @CreateDateColumn({ name: 'criado_em' })
   criadoEm: Date;
 

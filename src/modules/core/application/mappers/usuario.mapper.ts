@@ -8,6 +8,7 @@ export class UsuarioMapper {
       nome: domain.getNome(),
       email: domain.getEmail(),
       telefone: domain.getTelefone(),
+      avatar: domain.getAvatar(),
       criadoEm: domain.getCriadoEm(),
     };
   }

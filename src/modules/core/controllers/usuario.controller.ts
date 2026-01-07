@@ -17,9 +17,11 @@ import { DeletarUsuarioUseCase } from '../application/usecases/usuario/deletar-u
 import { BuscarUsuarioPorIdUseCase } from '../application/usecases/usuario/buscar-usuario-por-id.usecase';
 import { BuscarUsuarioUseCase } from '../application/usecases/usuario/buscar-usuario.usecase';
 import { TrocarSenhaUseCase } from '../application/usecases/usuario/trocar-senha.usecase';
+import { AtualizarAvatarUseCase } from '../application/usecases/usuario/atualizar-avatar.usecase';
 import { CriarUsuarioDto } from '../application/dtos/usuario/criar-usuario.dto';
 import { AtualizarUsuarioDto } from '../application/dtos/usuario/atualizar-usuario.dto';
 import { TrocarSenhaDto } from '../application/dtos/usuario/trocar-senha.dto';
+import { AtualizarAvatarDto } from '../application/dtos/usuario/atualizar-avatar.dto';
 import { UsuarioDto } from '../application/dtos/usuario/usuario.dto';
 import { JwtAuthGuard } from '../../../shared/infrastructure/auth/jwt-auth.guard';
 
@@ -40,6 +42,7 @@ export class UsuarioController {
     private readonly deletarUsuarioUseCase: DeletarUsuarioUseCase,
     private readonly buscarUsuarioUseCase: BuscarUsuarioUseCase,
     private readonly trocarSenhaUseCase: TrocarSenhaUseCase,
+    private readonly atualizarAvatarUseCase: AtualizarAvatarUseCase,
   ) {}
 
   @Post()
@@ -89,5 +92,18 @@ export class UsuarioController {
       statusCode: HttpStatus.OK,
       message: 'Senha alterada com sucesso',
     };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('avatar')
+  async atualizarAvatar(
+    @Req() req: AuthenticatedRequest,
+    @Body() body: AtualizarAvatarDto,
+  ): Promise<UsuarioDto> {
+    const userId = req.user.id;
+    return this.atualizarAvatarUseCase.execute({
+      id: userId,
+      avatar: body.avatar,
+    });
   }
 }

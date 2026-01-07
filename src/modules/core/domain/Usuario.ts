@@ -3,6 +3,7 @@ export interface CriarUsuarioProps {
   email: string;
   senha: string;
   telefone?: string;
+  avatar?: string;
 }
 
 export class Usuario {
@@ -11,6 +12,7 @@ export class Usuario {
   private email: string;
   private senha: string;
   private telefone?: string;
+  private avatar?: string;
   private criadoEm: Date;
 
   private constructor(id?: string) {
@@ -18,12 +20,13 @@ export class Usuario {
   }
 
   public static criar(props: CriarUsuarioProps): Usuario {
-    const { nome, email, senha, telefone } = props;
+    const { nome, email, senha, telefone, avatar } = props;
     const usuario = new Usuario();
     usuario.setNome(nome);
     usuario.setEmail(email);
     usuario.setSenha(senha);
     usuario.setTelefone(telefone);
+    usuario.setAvatar(avatar);
     usuario.setCriadoEm(new Date());
     return usuario;
   }
@@ -35,6 +38,7 @@ export class Usuario {
     senha: string;
     criadoEm: Date;
     telefone?: string;
+    avatar?: string;
   }): Usuario {
     const usuario = new Usuario(props.id);
     usuario.setNome(props.nome);
@@ -42,6 +46,7 @@ export class Usuario {
     usuario.setSenha(props.senha);
     usuario.setCriadoEm(props.criadoEm);
     usuario.setTelefone(props.telefone);
+    usuario.setAvatar(props.avatar);
     return usuario;
   }
 
@@ -65,6 +70,10 @@ export class Usuario {
     return this.telefone;
   }
 
+  public getAvatar(): string | undefined {
+    return this.avatar;
+  }
+
   public getCriadoEm(): Date {
     return this.criadoEm;
   }
@@ -83,6 +92,10 @@ export class Usuario {
 
   private setTelefone(telefone?: string): void {
     this.telefone = telefone;
+  }
+
+  private setAvatar(avatar?: string): void {
+    this.avatar = avatar;
   }
 
   private setCriadoEm(criadoEm: Date): void {

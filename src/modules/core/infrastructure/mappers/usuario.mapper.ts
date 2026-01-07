@@ -10,6 +10,7 @@ export class UsuarioMapper {
       senha: model.senha,
       criadoEm: model.criadoEm,
       telefone: model.telefone,
+      avatar: model.avatar,
     });
   }
 
@@ -25,6 +26,7 @@ export class UsuarioMapper {
       senha: domain.getSenha(),
       criadoEm: domain.getCriadoEm(),
       telefone: domain.getTelefone(),
+      avatar: domain.getAvatar(),
     };
   }
 

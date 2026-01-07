@@ -3,5 +3,6 @@ export interface UsuarioDto {
   nome: string;
   email: string;
   telefone?: string;
+  avatar?: string;
   criadoEm?: Date;
 }
