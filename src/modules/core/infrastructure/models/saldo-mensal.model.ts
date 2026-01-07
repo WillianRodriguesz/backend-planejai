@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
   Unique,
 } from 'typeorm';
-import { CarteiraModel } from './Carteira.model';
+import { CarteiraModel } from './carteira.model';
 
 @Entity('saldos_mensais')
 @Unique(['carteiraId', 'mes', 'ano'])

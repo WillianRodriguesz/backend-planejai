@@ -6,8 +6,8 @@ import {
   JoinColumn,
   CreateDateColumn,
 } from 'typeorm';
-import { CarteiraModel } from './Carteira.model';
-import { CategoriaModel } from './Categoria.model';
+import { CarteiraModel } from './carteira.model';
+import { CategoriaModel } from './categoria.model';
 
 @Entity('lancamentos')
 export class LancamentoModel {
@@ -29,7 +29,25 @@ export class LancamentoModel {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   valor: number;
 
-  @Column({ type: 'date' })
+  @Column({
+    type: 'date',
+    transformer: {
+      to: (value: Date) => {
+        if (!value) return value;
+        // Garante que a data seja salva sem conversão de timezone
+        const year = value.getFullYear();
+        const month = String(value.getMonth() + 1).padStart(2, '0');
+        const day = String(value.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      },
+      from: (value: string) => {
+        if (!value) return value;
+        // Garante que a data seja lida como local sem conversão
+        const [year, month, day] = value.split('-').map(Number);
+        return new Date(year, month - 1, day);
+      },
+    },
+  })
   data: Date;
 
   @Column({ length: 10 })

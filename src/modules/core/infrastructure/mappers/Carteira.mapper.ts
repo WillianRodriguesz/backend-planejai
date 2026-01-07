@@ -1,7 +1,7 @@
-import { Carteira } from '../../domain/Carteira';
-import { CarteiraModel } from '../models/Carteira.model';
+import { Carteira } from '../../domain/carteira';
+import { CarteiraModel } from '../models/carteira.model';
 import { LancamentoMapper } from './lancamento.mapper';
-import { SaldoMensalMapper } from './Saldomensal.mapper';
+import { SaldoMensalMapper } from './saldo-mensal.mapper';
 
 export class CarteiraMapper {
   static ModelToDomain(model: CarteiraModel): Carteira {
@@ -25,15 +25,22 @@ export class CarteiraMapper {
     return models.map((model) => this.ModelToDomain(model));
   }
 
-  static DomainToModel(carteira: Carteira): Partial<CarteiraModel> {
-    return {
-      id: carteira.getId(),
-      usuarioId: carteira.getUsuarioId(),
-      criadoEm: carteira.getCriadoEm(),
-    };
-  }
+  static DomainToModel(domain: Carteira): CarteiraModel {
+    const model = new CarteiraModel();
+    model.id = domain.getId();
+    model.usuarioId = domain.getUsuarioId();
+    model.criadoEm = domain.getCriadoEm();
 
-  static DomainToModelList(carteiras: Carteira[]): Partial<CarteiraModel>[] {
-    return carteiras.map((carteira) => this.DomainToModel(carteira));
+    model.lancamentos = LancamentoMapper.DomainToModelList(
+      domain.getLancamentos(),
+    );
+    model.saldosMensais = SaldoMensalMapper.DomainToModelList(
+      domain.getSaldosMensais(),
+    );
+
+    model.lancamentos.forEach((l) => (l.carteiraId = domain.getId()));
+    model.saldosMensais.forEach((s) => (s.carteiraId = domain.getId()));
+
+    return model;
   }
 }

@@ -1,36 +1,55 @@
-import { Lancamento } from '../../domain/Lancamento';
-import { Categoria } from '../../domain/Categoria';
-import { LancamentoModel } from '../models/Lancamento.model';
+import { Lancamento } from '../../domain/lancamento';
+import { LancamentoModel } from '../models/lancamento.model';
 import { CategoriaMapper } from './categoria.mapper';
 
 export class LancamentoMapper {
   static ModelToDomain(model: LancamentoModel): Lancamento {
-    const categoria = model.categoria
+    const categoriaDomain = model.categoria
       ? CategoriaMapper.ModelToDomain(model.categoria)
       : undefined;
-    return Lancamento.carregar({
+
+    const domain = Lancamento.carregar({
       id: model.id.toString(),
-      valor: model.valor,
+      titulo: model.titulo,
       descricao: model.descricao,
-      data: model.data,
-      categoria,
+      valor: parseFloat(model.valor.toString()),
+      tipoTransacao: model.tipo,
+      data: new Date(model.data),
+      categoria: categoriaDomain,
     });
+
+    return domain;
   }
 
   static ModelToDomainList(models: LancamentoModel[]): Lancamento[] {
-    return models.map((model) => this.ModelToDomain(model));
+    if (!models || models.length === 0) {
+      return [];
+    }
+    const listDomains = models
+      .filter((model) => model && model.id)
+      .map((model) => this.ModelToDomain(model));
+    return listDomains;
   }
 
-  static DomainToModel(domain: Lancamento): Partial<LancamentoModel> {
-    return {
-      id: parseInt(domain.getId()),
-      valor: domain.getValor(),
-      descricao: domain.getDescricao(),
-      data: domain.getData(),
-    };
+  static DomainToModel(domain: Lancamento): LancamentoModel {
+    const model = new LancamentoModel();
+
+    if (domain.getId()) {
+      model.id = parseInt(domain.getId());
+    }
+
+    model.categoriaId = domain.getCategoriaId();
+    model.titulo = domain.getTitulo();
+    model.descricao = domain.getDescricao();
+    model.valor = domain.getValor();
+    model.data = domain.getData();
+    model.tipo = domain.getTipoTransacao();
+
+    return model;
   }
 
-  static DomainToModelList(domains: Lancamento[]): Partial<LancamentoModel>[] {
-    return domains.map((domain) => this.DomainToModel(domain));
+  static DomainToModelList(domains: Lancamento[]): LancamentoModel[] {
+    const listModels = domains.map((domain) => this.DomainToModel(domain));
+    return listModels;
   }
 }

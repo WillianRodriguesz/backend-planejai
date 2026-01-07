@@ -6,8 +6,8 @@ import {
   CarteiraModel,
   CategoriaModel,
   LancamentoModel,
-  OrcamentoModel,
-} from './src/modules/core/infrastructure/models';
+  SaldoMensalModel,
+} from './src/modules/core/infrastructure/models/index';
 
 config();
 
@@ -26,7 +26,7 @@ export default new DataSource({
     CarteiraModel,
     CategoriaModel,
     LancamentoModel,
-    OrcamentoModel,
+    SaldoMensalModel,
   ],
   migrations: ['src/migrations/*.ts'],
   synchronize: false,

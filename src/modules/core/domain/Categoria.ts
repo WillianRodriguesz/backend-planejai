@@ -1,33 +1,30 @@
+import { DomainException } from './exceptions/domain.exception';
+
 export interface CriarCategoriaProps {
   nome: string;
-  tipo: 'entrada' | 'saida' | 'ambos';
 }
 
 export class Categoria {
   private id: number;
   private nome: string;
-  private tipo: 'entrada' | 'saida' | 'ambos';
 
   private constructor(id?: number) {
     this.id = id;
   }
 
   public static criar(props: CriarCategoriaProps): Categoria {
-    const { nome, tipo } = props;
+    const { nome} = props;
     const categoria = new Categoria();
     categoria.setNome(nome);
-    categoria.setTipo(tipo);
     return categoria;
   }
 
   public static carregar(props: {
     id: number;
     nome: string;
-    tipo: 'entrada' | 'saida' | 'ambos';
   }): Categoria {
     const categoria = new Categoria(props.id);
     categoria.setNome(props.nome);
-    categoria.setTipo(props.tipo);
     return categoria;
   }
 
@@ -39,21 +36,18 @@ export class Categoria {
     return this.nome;
   }
 
-  public getTipo(): 'entrada' | 'saida' | 'ambos' {
-    return this.tipo;
-  }
 
   private setNome(nome: string): void {
+    if (!nome || nome.trim() === '') {
+      throw new DomainException('Nome é obrigatório');
+    }
     this.nome = nome;
   }
 
-  private setTipo(tipo: 'entrada' | 'saida' | 'ambos'): void {
-    this.tipo = tipo;
-  }
 
-  public setId(id: number): void {
+  private setId(id: number): void {
     if (this.id !== undefined) {
-      throw new Error('ID já foi definido');
+      throw new DomainException('ID já foi definido');
     }
     this.id = id;
   }

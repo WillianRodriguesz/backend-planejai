@@ -1,17 +1,24 @@
-import { Categoria } from './Categoria';
+import { Categoria } from './categoria';
+import { DomainException } from './exceptions/domain.exception';
+
+export type TipoTransacao = 'entrada' | 'saida';
 
 export interface CriarLancamentoProps {
-  categoria: Categoria;
+  titulo: string;
+  descricao?: string;
   valor: number;
-  descricao: string;
+  tipoTransacao: TipoTransacao;
+  categoria: Categoria;
   data: Date;
 }
 
 export class Lancamento {
   private id: string;
-  private categoria: Categoria;
-  private valor: number;
+  private titulo: string;
   private descricao: string;
+  private valor: number;
+  private tipoTransacao: TipoTransacao;
+  private categoria: Categoria;
   private data: Date;
 
   private constructor(id?: string) {
@@ -19,63 +26,148 @@ export class Lancamento {
   }
 
   public static criar(props: CriarLancamentoProps): Lancamento {
-    const { valor, descricao, data, categoria } = props;
+    const { titulo, descricao, valor, tipoTransacao, categoria, data } = props;
     const lancamento = new Lancamento();
-    lancamento.setValor(valor);
+    lancamento.setTitulo(titulo);
     lancamento.setDescricao(descricao);
-    lancamento.setData(data);
+    lancamento.setValor(valor);
+    lancamento.setTipoTransacao(tipoTransacao);
     lancamento.setCategoria(categoria);
+    lancamento.setData(data);
     return lancamento;
   }
 
   public static carregar(props: {
     id: string;
-    valor: number;
+    titulo: string;
     descricao: string;
+    valor: number;
+    tipoTransacao: TipoTransacao;
+    categoria: Categoria;
     data: Date;
-    categoria?: Categoria;
   }): Lancamento {
     const lancamento = new Lancamento(props.id);
-    lancamento.setValor(props.valor);
+    lancamento.setTitulo(props.titulo);
     lancamento.setDescricao(props.descricao);
-    lancamento.setData(props.data);
+    lancamento.setValor(props.valor);
+    lancamento.setTipoTransacao(props.tipoTransacao);
     lancamento.setCategoria(props.categoria);
+    lancamento.setData(props.data);
     return lancamento;
+  }
+
+  private setId(id: string): void {
+    if (this.id) {
+      throw new DomainException('ID já foi definido');
+    }
+    this.id = id;
   }
 
   public getId(): string {
     return this.id;
   }
 
-  public getValor(): number {
-    return this.valor;
+  public getTitulo(): string {
+    return this.titulo;
   }
 
   public getDescricao(): string {
     return this.descricao;
   }
 
+  public getValor(): number {
+    return this.valor;
+  }
+
+  public getTipoTransacao(): TipoTransacao {
+    return this.tipoTransacao;
+  }
+
+  public getCategoria(): Categoria {
+    return this.categoria;
+  }
+
+  public getCategoriaId(): number {
+    return this.categoria.getId();
+  }
+
   public getData(): Date {
     return this.data;
   }
 
+  public atualizarTitulo(titulo: string): void {
+    this.setTitulo(titulo);
+  }
+
+  public atualizarDescricao(descricao?: string): void {
+    this.setDescricao(descricao);
+  }
+
+  public atualizarValor(valor: number): void {
+    this.setValor(valor);
+  }
+
+  public atualizarTipoTransacao(tipoTransacao: TipoTransacao): void {
+    this.setTipoTransacao(tipoTransacao);
+  }
+
+  public atualizarCategoria(categoria: Categoria): void {
+    this.setCategoria(categoria);
+  }
+
+  public atualizarData(data: Date): void {
+    this.setData(data);
+  }
+
+  private setTitulo(titulo: string): void {
+    if (!titulo || titulo.trim() === '') {
+      throw new DomainException('Título é obrigatório');
+    }
+    if (titulo.length > 150) {
+      throw new DomainException('Título não pode ter mais de 150 caracteres');
+    }
+    this.titulo = titulo;
+  }
+
+  private setDescricao(descricao?: string): void {
+    if (descricao && descricao.length > 150) {
+      throw new DomainException(
+        'Descrição não pode ter mais de 150 caracteres',
+      );
+    }
+    this.descricao = descricao || '';
+  }
+
   private setValor(valor: number): void {
+    if (valor <= 0) {
+      throw new DomainException('Valor deve ser positivo');
+    }
     this.valor = valor;
   }
 
-  private setDescricao(descricao: string): void {
-    this.descricao = descricao;
+  private setTipoTransacao(tipoTransacao: TipoTransacao): void {
+    if (!tipoTransacao) {
+      throw new DomainException('Tipo de transação é obrigatório');
+    }
+    if (tipoTransacao !== 'entrada' && tipoTransacao !== 'saida') {
+      throw new DomainException(
+        'Tipo de transação deve ser "entrada" ou "saida"',
+      );
+    }
+    this.tipoTransacao = tipoTransacao;
+  }
+
+  private setCategoria(categoria: Categoria): void {
+    if (!categoria) {
+      throw new DomainException('Categoria é obrigatória');
+    }
+    this.categoria = categoria;
   }
 
   private setData(data: Date): void {
+    if (!data || !(data instanceof Date) || isNaN(data.getTime())) {
+      throw new DomainException('Data deve ser válida');
+    }
     this.data = data;
-  }
-
-  public getCategoria(): Categoria | undefined {
-    return this.categoria;
-  }
-
-  private setCategoria(categoria?: Categoria): void {
-    this.categoria = categoria;
   }
 }

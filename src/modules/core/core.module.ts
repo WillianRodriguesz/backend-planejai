@@ -4,28 +4,33 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
 import { DatabaseModule } from '../../shared/infrastructure/database';
+import { AuthModule } from '../../shared/infrastructure/auth/auth.module';
 import { CoreUseCases } from './application/usecases';
-import { CoreMappers } from './infrastructure/mapper';
+import { CoreQueries } from './application/queries';
 import { CoreControllers } from './controllers';
 import { BcryptHashService } from './infrastructure/services/hash-bcrypt.service';
+import { UsuarioRepositoryImpl } from './infrastructure/repositories/usuario.repository';
+import { CarteiraRepositoryImpl } from './infrastructure/repositories/carteira.repository';
+import { CategoriaRepositoryImpl } from './infrastructure/repositories/categoria.repository';
 
 @Module({
-  imports: [
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-    }),
-    DatabaseModule,
-  ],
+  imports: [AuthModule, DatabaseModule],
   controllers: [...CoreControllers],
   providers: [
     ...CoreUseCases,
-    ...CoreMappers,
+    ...CoreQueries,
     {
-      provide: 'HashService',
-      useClass: BcryptHashService,
+      provide: 'UsuarioRepository',
+      useClass: UsuarioRepositoryImpl,
     },
+    {
+      provide: 'CarteiraRepository',
+      useClass: CarteiraRepositoryImpl,
+    },
+    CarteiraRepositoryImpl, 
+    CategoriaRepositoryImpl,
+    BcryptHashService,
   ],
 })
 export class CoreModule implements NestModule {

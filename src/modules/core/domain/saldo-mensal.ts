@@ -1,3 +1,5 @@
+import { DomainException } from './exceptions/domain.exception';
+
 export interface CriarSaldoMesProps {
   mes: number;
   ano: number;
@@ -36,6 +38,13 @@ export class SaldoMes {
     return saldoMesEntity;
   }
 
+  private setId(id: string): void {
+    if (this.id) {
+      throw new DomainException('ID já foi definido');
+    }
+    this.id = id;
+  }
+
   public getId(): string {
     return this.id;
   }
@@ -52,22 +61,45 @@ export class SaldoMes {
     return this.saldoMes;
   }
 
+  public atualizarSaldoMes(novoSaldo: number): void {
+    this.saldoMes = novoSaldo;
+  }
+
+  public adicionarSaldoMes(valor: number): void {
+    if (valor < 0) {
+      throw new DomainException('Valor deve ser positivo');
+    }
+    if (!this.saldoMes) {
+      throw new DomainException('Saldo do mês não definido');
+    }
+    this.saldoMes += valor;
+  }
+
+  public subtrairSaldoMes(valor: number): void {
+    if (valor < 0) {
+      throw new DomainException('Valor deve ser positivo');
+    }
+    if (!this.saldoMes) {
+      throw new DomainException('Saldo do mês não definido');
+    }
+    this.saldoMes -= valor;
+  }
+
   private setMes(mes: number): void {
+    if (mes < 1 || mes > 12) {
+      throw new DomainException('Mês deve estar entre 1 e 12');
+    }
     this.mes = mes;
   }
 
   private setAno(ano: number): void {
+    if (ano < 1900 || ano > new Date().getFullYear() + 10) {
+      throw new DomainException('Ano deve ser válido');
+    }
     this.ano = ano;
   }
 
   private setSaldoMes(saldoMes: number): void {
     this.saldoMes = saldoMes;
-  }
-
-  public setId(id: string): void {
-    if (this.id) {
-      throw new Error('ID já foi definido');
-    }
-    this.id = id;
   }
 }

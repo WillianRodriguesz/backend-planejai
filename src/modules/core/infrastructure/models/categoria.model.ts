@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { LancamentoModel } from './Lancamento.model';
+import { LancamentoModel } from './lancamento.model';
 
 @Entity('categorias')
 export class CategoriaModel {
