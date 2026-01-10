@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 import { LancamentosPaginadosDto } from '../../dtos/lancamento/lancamentos-paginados.dto';
 import { LancamentoMapper } from '../../mappers/lancamento.mapper';
 import { PaginacaoUtils } from '../../../domain/shared/paginacao.utils';
+import { CarteiraRepositoryImpl } from 'src/modules/core/infrastructure/repositories/Carteira.repository';
 
 export interface BuscarTodosLancamentosQueryProps {
   idCarteira: string;

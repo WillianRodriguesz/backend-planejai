@@ -11,8 +11,8 @@ import { CoreQueries } from './application/queries';
 import { CoreControllers } from './controllers';
 import { BcryptHashService } from './infrastructure/services/hash-bcrypt.service';
 import { UsuarioRepositoryImpl } from './infrastructure/repositories/usuario.repository';
-import { CarteiraRepositoryImpl } from './infrastructure/repositories/carteira.repository';
 import { CategoriaRepositoryImpl } from './infrastructure/repositories/categoria.repository';
+import { CarteiraRepositoryImpl } from './infrastructure/repositories/Carteira.repository';
 
 @Module({
   imports: [AuthModule, DatabaseModule],
@@ -28,7 +28,7 @@ import { CategoriaRepositoryImpl } from './infrastructure/repositories/categoria
       provide: 'CarteiraRepository',
       useClass: CarteiraRepositoryImpl,
     },
-    CarteiraRepositoryImpl, 
+    CarteiraRepositoryImpl,
     CategoriaRepositoryImpl,
     BcryptHashService,
   ],

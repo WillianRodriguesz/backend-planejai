@@ -1,11 +1,11 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { Usuario } from '../../../domain/usuario';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
-import { CarteiraRepository } from '../../../domain/repositories/carteira.repository'; 
 import { BcryptHashService } from '../../../infrastructure/services/hash-bcrypt.service';
 import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
 import { UsuarioMapper } from '../../mappers/usuario.mapper';
-import { Carteira } from '../../../domain/carteira'; 
+import { CarteiraRepository } from 'src/modules/core/domain/repositories/Carteira.repository';
+import { Carteira } from 'src/modules/core/domain/carteira';
+import { Usuario } from 'src/modules/core/domain/usuario';
 
 export interface CriarUsuarioProps {
   nome: string;
@@ -19,7 +19,7 @@ export class CriarUsuarioUseCase {
   constructor(
     @Inject('UsuarioRepository')
     private readonly usuarioRepository: UsuarioRepository,
-    @Inject('CarteiraRepository') 
+    @Inject('CarteiraRepository')
     private readonly carteiraRepository: CarteiraRepository,
     private readonly hashService: BcryptHashService,
   ) {}
@@ -42,7 +42,7 @@ export class CriarUsuarioUseCase {
     await this.usuarioRepository.salvar(usuario);
 
     const carteira = Carteira.criar({
-      usuarioId: usuario.getId(), 
+      usuarioId: usuario.getId(),
     });
     await this.carteiraRepository.salvar(carteira);
 

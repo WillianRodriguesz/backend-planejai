@@ -17,7 +17,7 @@ async function bootstrap() {
   app.setGlobalPrefix('planejai');
 
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    origin: true, // Aceita requisições de qualquer origem
     credentials: true,
   });
 
@@ -28,6 +28,9 @@ async function bootstrap() {
     new RepositoryExceptionFilter(),
   );
 
-  await app.listen(process.env.PORT || 3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port, '0.0.0.0');
+  
+  console.log(`Application is running on: http://0.0.0.0:${port}`);
 }
 bootstrap();
