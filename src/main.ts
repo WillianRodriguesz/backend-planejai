@@ -4,7 +4,8 @@ import * as dotenv from 'dotenv';
 import { webcrypto } from 'crypto';
 import { DomainExceptionFilter } from './common/filters/domain-exception.filter';
 import { RepositoryExceptionFilter } from './common/filters/repository-exception.filter';
-import * as cookieParser from 'cookie-parser';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const cookieParser = require('cookie-parser');
 
 if (!globalThis.crypto) {
   (globalThis as any).crypto = webcrypto;
@@ -30,7 +31,5 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3000;
   await app.listen(port, '0.0.0.0');
-  
-  console.log(`Application is running on: http://0.0.0.0:${port}`);
 }
 bootstrap();
