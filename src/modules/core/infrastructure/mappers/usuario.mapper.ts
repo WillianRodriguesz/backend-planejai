@@ -11,6 +11,9 @@ export class UsuarioMapper {
       criadoEm: model.criadoEm,
       telefone: model.telefone,
       avatar: model.avatar,
+      emailVerificado: model.emailVerificado,
+      codigoVerificacao: model.codigoVerificacao,
+      expiracaoCodigo: model.expiracaoCodigo,
     });
   }
 
@@ -27,6 +30,9 @@ export class UsuarioMapper {
       criadoEm: domain.getCriadoEm(),
       telefone: domain.getTelefone(),
       avatar: domain.getAvatar(),
+      emailVerificado: domain.getEmailVerificado(),
+      codigoVerificacao: domain.getCodigoVerificacao(),
+      expiracaoCodigo: domain.getExpiracaoCodigo(),
     };
   }
 

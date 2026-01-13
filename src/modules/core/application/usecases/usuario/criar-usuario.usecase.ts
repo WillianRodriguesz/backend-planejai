@@ -6,6 +6,7 @@ import { UsuarioMapper } from '../../mappers/usuario.mapper';
 import { CarteiraRepository } from 'src/modules/core/domain/repositories/Carteira.repository';
 import { Carteira } from 'src/modules/core/domain/carteira';
 import { Usuario } from 'src/modules/core/domain/usuario';
+import { EmailService } from '../../../infrastructure/services/email.service';
 
 export interface CriarUsuarioProps {
   nome: string;
@@ -22,9 +23,11 @@ export class CriarUsuarioUseCase {
     @Inject('CarteiraRepository')
     private readonly carteiraRepository: CarteiraRepository,
     private readonly hashService: BcryptHashService,
+    @Inject('EmailService')
+    private readonly emailService: EmailService,
   ) {}
 
-  async execute(props: CriarUsuarioProps): Promise<UsuarioDto> {
+  async execute(props: CriarUsuarioProps): Promise<{ message: string }> {
     const usuarioExistente = await this.usuarioRepository.buscarPorEmail(
       props.email,
     );
@@ -39,13 +42,17 @@ export class CriarUsuarioUseCase {
       senha: senhaHashed,
     });
 
+    // Gerar código de verificação
+    const codigo = Math.random().toString(36).substring(2, 8).toUpperCase();
+    usuario.setCodigoVerificacao(codigo);
+
     await this.usuarioRepository.salvar(usuario);
 
-    const carteira = Carteira.criar({
-      usuarioId: usuario.getId(),
-    });
-    await this.carteiraRepository.salvar(carteira);
+    // Enviar email com código
+    await this.emailService.enviarCodigoVerificacao(props.email, codigo);
 
-    return UsuarioMapper.DomainToDto(usuario);
+    return {
+      message: 'Usuário criado. Verifique seu email para confirmar a conta.',
+    };
   }
 }

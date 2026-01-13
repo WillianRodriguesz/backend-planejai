@@ -35,6 +35,13 @@ export class LoginUsuarioUseCase {
       throw new HttpException('Credenciais inválidas', HttpStatus.UNAUTHORIZED);
     }
 
+    if (!usuario.getEmailVerificado()) {
+      throw new HttpException(
+        'Email não verificado. Verifique seu email antes de fazer login.',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+
     const payload = { sub: usuario.getId(), email: usuario.getEmail() };
     const token = this.jwtService.sign(payload);
 

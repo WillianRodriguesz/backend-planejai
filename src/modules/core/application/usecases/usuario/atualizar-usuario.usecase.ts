@@ -45,6 +45,10 @@ export class AtualizarUsuarioUseCase {
       criadoEm: usuario.getCriadoEm(),
       telefone:
         props.telefone !== undefined ? props.telefone : usuario.getTelefone(),
+      avatar: usuario.getAvatar(),
+      emailVerificado: usuario.getEmailVerificado(),
+      codigoVerificacao: usuario.getCodigoVerificacao(),
+      expiracaoCodigo: usuario.getExpiracaoCodigo(),
     });
 
     await this.usuarioRepository.atualizar(props.id, usuarioAtualizado);

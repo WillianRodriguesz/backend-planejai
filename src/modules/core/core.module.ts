@@ -6,16 +6,19 @@ import {
 } from '@nestjs/common';
 import { DatabaseModule } from '../../shared/infrastructure/database';
 import { AuthModule } from '../../shared/infrastructure/auth/auth.module';
+import { ScheduleModule } from '@nestjs/schedule';
 import { CoreUseCases } from './application/usecases';
 import { CoreQueries } from './application/queries';
 import { CoreControllers } from './controllers';
 import { BcryptHashService } from './infrastructure/services/hash-bcrypt.service';
+import { EmailServiceImpl } from './infrastructure/services/email.service';
+import { LimpezaCodigosService } from './infrastructure/services/limpeza-codigos.service';
 import { UsuarioRepositoryImpl } from './infrastructure/repositories/usuario.repository';
 import { CategoriaRepositoryImpl } from './infrastructure/repositories/categoria.repository';
 import { CarteiraRepositoryImpl } from './infrastructure/repositories/Carteira.repository';
 
 @Module({
-  imports: [AuthModule, DatabaseModule],
+  imports: [AuthModule, DatabaseModule, ScheduleModule.forRoot()],
   controllers: [...CoreControllers],
   providers: [
     ...CoreUseCases,
@@ -28,9 +31,15 @@ import { CarteiraRepositoryImpl } from './infrastructure/repositories/Carteira.r
       provide: 'CarteiraRepository',
       useClass: CarteiraRepositoryImpl,
     },
+    {
+      provide: 'EmailService',
+      useClass: EmailServiceImpl,
+    },
     CarteiraRepositoryImpl,
     CategoriaRepositoryImpl,
     BcryptHashService,
+    EmailServiceImpl,
+    LimpezaCodigosService,
   ],
 })
 export class CoreModule implements NestModule {
