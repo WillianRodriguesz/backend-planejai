@@ -3,6 +3,7 @@ import * as nodemailer from 'nodemailer';
 
 export interface EmailService {
   enviarCodigoVerificacao(email: string, codigo: string): Promise<void>;
+  enviarTokenRedefinicaoSenha(email: string, token: string): Promise<void>;
 }
 
 @Injectable()
@@ -77,6 +78,83 @@ export class EmailServiceImpl implements EmailService {
     } catch (error) {
       console.error('Erro ao enviar email:', error);
       throw new Error('Falha ao enviar email de verificação');
+    }
+  }
+
+  async enviarTokenRedefinicaoSenha(
+    email: string,
+    token: string,
+  ): Promise<void> {
+    const resetUrl = `${process.env.FRONTEND_URL}/redefinir-senha?token=${token}`;
+
+    const html = `
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Redefinição de Senha - Planejai</title>
+      <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%); color: #ffffff; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .card { background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%); border: 1px solid rgba(147,51,234,0.3); border-radius: 20px; padding: 32px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); backdrop-filter: blur(10px); }
+        .header { text-align: center; margin-bottom: 32px; }
+        .logo { font-size: 36px; font-weight: bold; color: #8b5cf6; margin-bottom: 8px; }
+        .subtitle { font-size: 18px; color: #a1a1aa; }
+        .greeting { font-size: 16px; color: #e4e4e7; text-align: center; margin-bottom: 24px; line-height: 1.6; }
+        .button-container { text-align: center; margin: 32px 0; }
+        .button { display: inline-block; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 12px; font-size: 16px; font-weight: bold; box-shadow: 0 4px 12px rgba(139,92,246,0.4); transition: all 0.3s ease; }
+        .button:hover { background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); box-shadow: 0 6px 16px rgba(139,92,246,0.6); transform: translateY(-2px); }
+        .info { font-size: 14px; color: #a1a1aa; text-align: center; margin: 16px 0; line-height: 1.5; }
+        .warning { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; padding: 12px; margin: 24px 0; text-align: center; color: #fca5a5; font-size: 14px; line-height: 1.5; }
+        .token-info { background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.3); border-radius: 8px; padding: 16px; margin: 16px 0; text-align: center; }
+        .token { font-size: 12px; color: #a1a1aa; word-break: break-all; font-family: monospace; }
+        .footer { margin-top: 32px; text-align: center; font-size: 12px; color: #71717a; line-height: 1.5; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="card">
+          <div class="header">
+            <div class="logo">Planejai</div>
+            <div class="subtitle">Redefinição de Senha</div>
+          </div>
+          <p class="greeting">Olá! Recebemos uma solicitação para redefinir a senha da sua conta no Planejai. Se foi você quem solicitou, clique no botão abaixo para criar uma nova senha.</p>
+          <div class="button-container">
+            <a href="${resetUrl}" class="button">Redefinir Senha</a>
+          </div>
+          <p class="info">Ou copie e cole o seguinte link no seu navegador:</p>
+          <div class="token-info">
+            <div class="token">${resetUrl}</div>
+          </div>
+          <p class="info">Este link expira em 1 hora por motivos de segurança.</p>
+          <div class="warning">
+            <strong>Atenção:</strong> Se você não solicitou a redefinição de senha, ignore este email. Sua senha permanecerá inalterada e sua conta está segura.
+          </div>
+          <div class="footer">
+            <p>Precisa de ajuda? Entre em contato conosco.</p>
+            <p>&copy; 2026 Planejai. Todos os direitos reservados.</p>
+          </div>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: email,
+      subject: 'Redefinição de Senha - Planejai',
+      text: `Para redefinir sua senha, acesse o seguinte link: ${resetUrl}. Este link expira em 1 hora.`,
+      html: html,
+    };
+
+    try {
+      await this.transporter.sendMail(mailOptions);
+      console.log(`Link de redefinição de senha enviado para ${email}`);
+    } catch (error) {
+      console.error('Erro ao enviar email:', error);
+      throw new Error('Falha ao enviar email de redefinição de senha');
     }
   }
 }

@@ -14,6 +14,8 @@ export class UsuarioMapper {
       emailVerificado: model.emailVerificado,
       codigoVerificacao: model.codigoVerificacao,
       expiracaoCodigo: model.expiracaoCodigo,
+      tokenRedefinicaoSenha: model.tokenRedefinicaoSenha,
+      expiracaoToken: model.expiracaoToken,
     });
   }
 
@@ -33,6 +35,8 @@ export class UsuarioMapper {
       emailVerificado: domain.getEmailVerificado(),
       codigoVerificacao: domain.getCodigoVerificacao(),
       expiracaoCodigo: domain.getExpiracaoCodigo(),
+      tokenRedefinicaoSenha: domain.getTokenRedefinicaoSenha(),
+      expiracaoToken: domain.getExpiracaoToken(),
     };
   }
 

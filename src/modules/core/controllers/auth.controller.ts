@@ -11,9 +11,13 @@ import { Response } from 'express';
 import { LoginUsuarioUseCase } from '../application/usecases/usuario/login-usuario.usecase';
 import { VerificarEmailUseCase } from '../application/usecases/usuario/verificar-email.usecase';
 import { ReenviarCodigoUseCase } from '../application/usecases/usuario/reenviar-codigo.usecase';
+import { SolicitarRedefinicaoSenhaUseCase } from '../application/usecases/usuario/solicitar-redefinicao-senha.usecase';
+import { RedefinirSenhaUseCase } from '../application/usecases/usuario/redefinir-senha.usecase';
 import { LoginUsuarioDto } from '../application/dtos/usuario/login-usuario.dto';
 import { VerificarEmailDto } from '../application/dtos/usuario/verificar-email.dto';
 import { ReenviarCodigoDto } from '../application/dtos/usuario/reenviar-codigo.dto';
+import { SolicitarRedefinicaoSenhaDto } from '../application/dtos/usuario/solicitar-redefinicao-senha.dto';
+import { RedefinirSenhaDto } from '../application/dtos/usuario/redefinir-senha.dto';
 import { UsuarioDto } from '../application/dtos/usuario/usuario.dto';
 import { JwtAuthGuard } from '../../../shared/infrastructure/auth/jwt-auth.guard';
 import { UsuarioHttpErrorMapper } from '../../../shared/infrastructure/mappers/usuario-http-error.mapper';
@@ -24,6 +28,8 @@ export class AuthController {
     private readonly loginUsuarioUseCase: LoginUsuarioUseCase,
     private readonly verificarEmailUseCase: VerificarEmailUseCase,
     private readonly reenviarCodigoUseCase: ReenviarCodigoUseCase,
+    private readonly solicitarRedefinicaoSenhaUseCase: SolicitarRedefinicaoSenhaUseCase,
+    private readonly redefinirSenhaUseCase: RedefinirSenhaUseCase,
   ) {}
 
   @Post('login')
@@ -68,6 +74,28 @@ export class AuthController {
   ): Promise<{ message: string }> {
     try {
       return await this.reenviarCodigoUseCase.execute(body);
+    } catch (error) {
+      UsuarioHttpErrorMapper.map(error);
+    }
+  }
+
+  @Post('solicitar-redefinicao-senha')
+  @UseGuards(ThrottlerGuard)
+  async solicitarRedefinicaoSenha(
+    @Body() body: SolicitarRedefinicaoSenhaDto,
+  ): Promise<{ message: string }> {
+    try {
+      return await this.solicitarRedefinicaoSenhaUseCase.execute(body);
+    } catch (error) {
+      UsuarioHttpErrorMapper.map(error);
+    }
+  }
+
+  @Post('redefinir-senha')
+  @UseGuards(ThrottlerGuard)
+  async redefinirSenha(@Body() body: RedefinirSenhaDto): Promise<UsuarioDto> {
+    try {
+      return await this.redefinirSenhaUseCase.execute(body);
     } catch (error) {
       UsuarioHttpErrorMapper.map(error);
     }

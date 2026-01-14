@@ -36,6 +36,12 @@ export class UsuarioModel {
   @Column({ name: 'expiracao_codigo', nullable: true })
   expiracaoCodigo: Date;
 
+  @Column({ name: 'token_redefinicao_senha', length: 255, nullable: true })
+  tokenRedefinicaoSenha: string;
+
+  @Column({ name: 'expiracao_token', nullable: true })
+  expiracaoToken: Date;
+
   @CreateDateColumn({ name: 'criado_em' })
   criadoEm: Date;
 
