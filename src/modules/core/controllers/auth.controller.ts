@@ -6,14 +6,25 @@ import {
   HttpStatus,
   UseGuards,
 } from '@nestjs/common';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import { Response } from 'express';
 import { LoginUsuarioUseCase } from '../application/usecases/usuario/login-usuario.usecase';
+import { VerificarEmailUseCase } from '../application/usecases/usuario/verificar-email.usecase';
+import { ReenviarCodigoUseCase } from '../application/usecases/usuario/reenviar-codigo.usecase';
 import { LoginUsuarioDto } from '../application/dtos/usuario/login-usuario.dto';
+import { VerificarEmailDto } from '../application/dtos/usuario/verificar-email.dto';
+import { ReenviarCodigoDto } from '../application/dtos/usuario/reenviar-codigo.dto';
+import { UsuarioDto } from '../application/dtos/usuario/usuario.dto';
 import { JwtAuthGuard } from '../../../shared/infrastructure/auth/jwt-auth.guard';
+import { UsuarioHttpErrorMapper } from '../../../shared/infrastructure/mappers/usuario-http-error.mapper';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly loginUsuarioUseCase: LoginUsuarioUseCase) {}
+  constructor(
+    private readonly loginUsuarioUseCase: LoginUsuarioUseCase,
+    private readonly verificarEmailUseCase: VerificarEmailUseCase,
+    private readonly reenviarCodigoUseCase: ReenviarCodigoUseCase,
+  ) {}
 
   @Post('login')
   async login(@Body() body: LoginUsuarioDto, @Res() res: Response) {
@@ -38,5 +49,27 @@ export class AuthController {
       statusCode: HttpStatus.OK,
       message: 'Logout realizado com sucesso',
     });
+  }
+
+  @Post('verificar-email')
+  @UseGuards(ThrottlerGuard)
+  async verificarEmail(@Body() body: VerificarEmailDto): Promise<UsuarioDto> {
+    try {
+      return await this.verificarEmailUseCase.execute(body);
+    } catch (error) {
+      UsuarioHttpErrorMapper.map(error);
+    }
+  }
+
+  @Post('reenviar-codigo')
+  @UseGuards(ThrottlerGuard)
+  async reenviarCodigo(
+    @Body() body: ReenviarCodigoDto,
+  ): Promise<{ message: string }> {
+    try {
+      return await this.reenviarCodigoUseCase.execute(body);
+    } catch (error) {
+      UsuarioHttpErrorMapper.map(error);
+    }
   }
 }

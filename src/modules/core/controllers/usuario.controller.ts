@@ -12,7 +12,6 @@ import {
   UseInterceptors,
   HttpException,
 } from '@nestjs/common';
-import { ThrottlerGuard } from '@nestjs/throttler';
 import { Request } from 'express';
 import { CriarUsuarioUseCase } from '../application/usecases/usuario/criar-usuario.usecase';
 import { AtualizarUsuarioUseCase } from '../application/usecases/usuario/atualizar-usuario.usecase';
@@ -21,14 +20,10 @@ import { BuscarUsuarioPorIdUseCase } from '../application/usecases/usuario/busca
 import { BuscarUsuarioUseCase } from '../application/usecases/usuario/buscar-usuario.usecase';
 import { TrocarSenhaUseCase } from '../application/usecases/usuario/trocar-senha.usecase';
 import { AtualizarAvatarUseCase } from '../application/usecases/usuario/atualizar-avatar.usecase';
-import { VerificarEmailUseCase } from '../application/usecases/usuario/verificar-email.usecase';
-import { ReenviarCodigoUseCase } from '../application/usecases/usuario/reenviar-codigo.usecase';
 import { CriarUsuarioDto } from '../application/dtos/usuario/criar-usuario.dto';
 import { AtualizarUsuarioDto } from '../application/dtos/usuario/atualizar-usuario.dto';
 import { TrocarSenhaDto } from '../application/dtos/usuario/trocar-senha.dto';
 import { AtualizarAvatarDto } from '../application/dtos/usuario/atualizar-avatar.dto';
-import { VerificarEmailDto } from '../application/dtos/usuario/verificar-email.dto';
-import { ReenviarCodigoDto } from '../application/dtos/usuario/reenviar-codigo.dto';
 import { UsuarioDto } from '../application/dtos/usuario/usuario.dto';
 import { JwtAuthGuard } from '../../../shared/infrastructure/auth/jwt-auth.guard';
 import { UsuarioHttpErrorMapper } from '../../../shared/infrastructure/mappers/usuario-http-error.mapper';
@@ -51,36 +46,12 @@ export class UsuarioController {
     private readonly buscarUsuarioUseCase: BuscarUsuarioUseCase,
     private readonly trocarSenhaUseCase: TrocarSenhaUseCase,
     private readonly atualizarAvatarUseCase: AtualizarAvatarUseCase,
-    private readonly verificarEmailUseCase: VerificarEmailUseCase,
-    private readonly reenviarCodigoUseCase: ReenviarCodigoUseCase,
   ) {}
 
   @Post()
   async criar(@Body() body: CriarUsuarioDto): Promise<{ message: string }> {
     try {
       return await this.criarUsuarioUseCase.execute(body);
-    } catch (error) {
-      UsuarioHttpErrorMapper.map(error);
-    }
-  }
-
-  @Post('verificar-email')
-  @UseGuards(ThrottlerGuard)
-  async verificarEmail(@Body() body: VerificarEmailDto): Promise<UsuarioDto> {
-    try {
-      return await this.verificarEmailUseCase.execute(body);
-    } catch (error) {
-      UsuarioHttpErrorMapper.map(error);
-    }
-  }
-
-  @Post('reenviar-codigo')
-  @UseGuards(ThrottlerGuard)
-  async reenviarCodigo(
-    @Body() body: ReenviarCodigoDto,
-  ): Promise<{ message: string }> {
-    try {
-      return await this.reenviarCodigoUseCase.execute(body);
     } catch (error) {
       UsuarioHttpErrorMapper.map(error);
     }
