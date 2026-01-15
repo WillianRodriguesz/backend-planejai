@@ -7,7 +7,6 @@ export class CategoriaMapper {
       id: model.id,
       nome: model.nome,
     });
-    
     return domain;
   }
 

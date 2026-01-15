@@ -1,11 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Categoria } from '../../domain/categoria';
 import { CategoriaModel } from '../models/categoria.model';
 import { CategoriaMapper } from '../mappers/categoria.mapper';
-import { CategoriaRepository } from '../../domain/repositories/categoria.repository';
 import { RepositoryException } from '../exceptions/repository.exception';
+import { CategoriaRepository } from '../../domain/repositories/Categoria.repository';
+import { Categoria } from '../../domain/categoria';
 
 @Injectable()
 export class CategoriaRepositoryImpl implements CategoriaRepository {

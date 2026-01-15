@@ -16,6 +16,7 @@ export interface RelacaoMesAnterior {
 
 export interface GastosMensais {
   totalGastos: number;
+  quantidadeSaidas: number;
   relacaoMesAnterior: RelacaoMesAnterior;
   gastosPorCategoria: GastoPorCategoria[];
 }
@@ -70,6 +71,7 @@ export class GastosMensaisService {
 
     return {
       totalGastos,
+      quantidadeSaidas: lancamentosMesAtual.length,
       relacaoMesAnterior: {
         diferencaGastosMensal: economiaMensal,
         mensagemEconomia: mensagemEconomiaMensal,
@@ -80,11 +82,11 @@ export class GastosMensaisService {
 
   private determinarMensagemEconomia(economiaMensal: number): string {
     if (economiaMensal > 0) {
-      return `Economizou R$ ${economiaMensal.toFixed(2)} em relação ao mês anterior!`;
+      return `Economizou em relação ao mês anterior!`;
     }
 
     if (economiaMensal < 0) {
-      return `Gastou R$ ${Math.abs(economiaMensal).toFixed(2)} a mais que o mês anterior.`;
+      return `Gastou a mais que o mês anterior.`;
     }
     return 'Seus gastos se mantiveram iguais ao mês anterior.';
   }

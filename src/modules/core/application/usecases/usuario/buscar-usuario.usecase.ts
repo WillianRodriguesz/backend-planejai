@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
-import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
 import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
 import { UsuarioMapper } from '../../mappers/usuario.mapper';
+import { CarteiraRepository } from 'src/modules/core/domain/repositories/Carteira.repository';
 
 export interface BuscarUsuarioResult {
   usuario: UsuarioDto;

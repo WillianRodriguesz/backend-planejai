@@ -14,6 +14,11 @@ export class Usuario {
   private telefone?: string;
   private avatar?: string;
   private criadoEm: Date;
+  private emailVerificado: boolean;
+  private codigoVerificacao?: string;
+  private expiracaoCodigo?: Date;
+  private tokenRedefinicaoSenha?: string;
+  private expiracaoToken?: Date;
 
   private constructor(id?: string) {
     this.id = id;
@@ -28,6 +33,7 @@ export class Usuario {
     usuario.setTelefone(telefone);
     usuario.setAvatar(avatar);
     usuario.setCriadoEm(new Date());
+    usuario.setEmailVerificado(false);
     return usuario;
   }
 
@@ -39,6 +45,11 @@ export class Usuario {
     criadoEm: Date;
     telefone?: string;
     avatar?: string;
+    emailVerificado: boolean;
+    codigoVerificacao?: string;
+    expiracaoCodigo?: Date;
+    tokenRedefinicaoSenha?: string;
+    expiracaoToken?: Date;
   }): Usuario {
     const usuario = new Usuario(props.id);
     usuario.setNome(props.nome);
@@ -47,6 +58,11 @@ export class Usuario {
     usuario.setCriadoEm(props.criadoEm);
     usuario.setTelefone(props.telefone);
     usuario.setAvatar(props.avatar);
+    usuario.setEmailVerificado(props.emailVerificado);
+    usuario.setCodigoVerificacao(props.codigoVerificacao);
+    usuario.setExpiracaoCodigo(props.expiracaoCodigo);
+    usuario.setTokenRedefinicaoSenha(props.tokenRedefinicaoSenha);
+    usuario.setExpiracaoToken(props.expiracaoToken);
     return usuario;
   }
 
@@ -100,6 +116,64 @@ export class Usuario {
 
   private setCriadoEm(criadoEm: Date): void {
     this.criadoEm = criadoEm;
+  }
+
+  public getEmailVerificado(): boolean {
+    return this.emailVerificado;
+  }
+
+  public getCodigoVerificacao(): string | undefined {
+    return this.codigoVerificacao;
+  }
+
+  public getExpiracaoCodigo(): Date | undefined {
+    return this.expiracaoCodigo;
+  }
+
+  private setEmailVerificado(emailVerificado: boolean): void {
+    this.emailVerificado = emailVerificado;
+  }
+
+  public setCodigoVerificacao(codigo: string): void {
+    this.codigoVerificacao = codigo;
+    this.expiracaoCodigo = new Date(Date.now() + 15 * 60 * 1000); // 15 minutos
+  }
+
+  private setExpiracaoCodigo(expiracao: Date): void {
+    this.expiracaoCodigo = expiracao;
+  }
+
+  public verificarEmail(): void {
+    this.emailVerificado = true;
+    this.codigoVerificacao = undefined;
+    this.expiracaoCodigo = undefined;
+  }
+
+  public getTokenRedefinicaoSenha(): string | undefined {
+    return this.tokenRedefinicaoSenha;
+  }
+
+  public getExpiracaoToken(): Date | undefined {
+    return this.expiracaoToken;
+  }
+
+  public setTokenRedefinicaoSenha(token: string): void {
+    this.tokenRedefinicaoSenha = token;
+    this.expiracaoToken = new Date(Date.now() + 60 * 60 * 1000); // 1 hora
+  }
+
+  private setExpiracaoToken(expiracao?: Date): void {
+    this.expiracaoToken = expiracao;
+  }
+
+  public limparTokenRedefinicaoSenha(): void {
+    this.tokenRedefinicaoSenha = undefined;
+    this.expiracaoToken = undefined;
+  }
+
+  public atualizarSenha(novaSenha: string): void {
+    this.senha = novaSenha;
+    this.limparTokenRedefinicaoSenha();
   }
 
   public setId(id: string): void {

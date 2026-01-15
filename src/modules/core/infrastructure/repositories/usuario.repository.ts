@@ -15,7 +15,7 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
 
   async salvar(usuario: Usuario): Promise<void> {
     const model = UsuarioMapper.DomainToModel(usuario) as UsuarioModel;
-    model.senha = usuario.getSenha(); // Adicionar senha
+    model.senha = usuario.getSenha();
     await this.usuarioModelRepository.save(model);
     usuario.setId(model.id);
   }
@@ -28,6 +28,13 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
   async buscarPorEmail(email: string): Promise<Usuario | null> {
     const model = await this.usuarioModelRepository.findOne({
       where: { email },
+    });
+    return model ? UsuarioMapper.ModelToDomain(model) : null;
+  }
+
+  async buscarPorTokenRedefinicao(tokenHash: string): Promise<Usuario | null> {
+    const model = await this.usuarioModelRepository.findOne({
+      where: { tokenRedefinicaoSenha: tokenHash },
     });
     return model ? UsuarioMapper.ModelToDomain(model) : null;
   }

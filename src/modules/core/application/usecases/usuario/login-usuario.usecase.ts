@@ -1,6 +1,6 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
-import { BcryptHashService } from '../../../infrastructure/services/hash-bcrypt.service';
+import { BcryptHashService } from '../../../domain/interfaces/bcrypt-hash.service';
 import { JwtService } from '@nestjs/jwt';
 
 export interface LoginUsuarioProps {
@@ -17,6 +17,7 @@ export class LoginUsuarioUseCase {
   constructor(
     @Inject('UsuarioRepository')
     private readonly usuarioRepository: UsuarioRepository,
+    @Inject('BcryptHashService')
     private readonly hashService: BcryptHashService,
     private readonly jwtService: JwtService,
   ) {}
@@ -33,6 +34,13 @@ export class LoginUsuarioUseCase {
     );
     if (!senhaValida) {
       throw new HttpException('Credenciais inválidas', HttpStatus.UNAUTHORIZED);
+    }
+
+    if (!usuario.getEmailVerificado()) {
+      throw new HttpException(
+        'Email não verificado. Verifique seu email antes de fazer login.',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
     const payload = { sub: usuario.getId(), email: usuario.getEmail() };

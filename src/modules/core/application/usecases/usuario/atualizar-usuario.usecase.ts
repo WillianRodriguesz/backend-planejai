@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Usuario } from '../../../domain/usuario';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
-import { BcryptHashService } from '../../../infrastructure/services/hash-bcrypt.service';
+import { BcryptHashService } from '../../../domain/interfaces/bcrypt-hash.service';
 import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
 import { UsuarioMapper } from '../../mappers/usuario.mapper';
 
@@ -17,6 +17,7 @@ export class AtualizarUsuarioUseCase {
   constructor(
     @Inject('UsuarioRepository')
     private readonly usuarioRepository: UsuarioRepository,
+    @Inject('BcryptHashService')
     private readonly hashService: BcryptHashService,
   ) {}
 
@@ -45,6 +46,10 @@ export class AtualizarUsuarioUseCase {
       criadoEm: usuario.getCriadoEm(),
       telefone:
         props.telefone !== undefined ? props.telefone : usuario.getTelefone(),
+      avatar: usuario.getAvatar(),
+      emailVerificado: usuario.getEmailVerificado(),
+      codigoVerificacao: usuario.getCodigoVerificacao(),
+      expiracaoCodigo: usuario.getExpiracaoCodigo(),
     });
 
     await this.usuarioRepository.atualizar(props.id, usuarioAtualizado);

@@ -1,11 +1,9 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { Usuario } from '../../../domain/usuario';
+import { Inject, Injectable } from '@nestjs/common';
+import { CarteiraRepository } from 'src/modules/core/domain/repositories/Carteira.repository';
+import { Usuario } from 'src/modules/core/domain/usuario';
+import { EmailService } from '../../../domain/interfaces/email.service';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
-import { CarteiraRepository } from '../../../domain/repositories/carteira.repository'; 
-import { BcryptHashService } from '../../../infrastructure/services/hash-bcrypt.service';
-import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
-import { UsuarioMapper } from '../../mappers/usuario.mapper';
-import { Carteira } from '../../../domain/carteira'; 
+import { BcryptHashService } from '../../../domain/interfaces/bcrypt-hash.service';
 
 export interface CriarUsuarioProps {
   nome: string;
@@ -19,12 +17,15 @@ export class CriarUsuarioUseCase {
   constructor(
     @Inject('UsuarioRepository')
     private readonly usuarioRepository: UsuarioRepository,
-    @Inject('CarteiraRepository') 
+    @Inject('CarteiraRepository')
     private readonly carteiraRepository: CarteiraRepository,
+    @Inject('BcryptHashService')
     private readonly hashService: BcryptHashService,
+    @Inject('EmailService')
+    private readonly emailService: EmailService,
   ) {}
 
-  async execute(props: CriarUsuarioProps): Promise<UsuarioDto> {
+  async execute(props: CriarUsuarioProps): Promise<{ message: string }> {
     const usuarioExistente = await this.usuarioRepository.buscarPorEmail(
       props.email,
     );
@@ -39,13 +40,17 @@ export class CriarUsuarioUseCase {
       senha: senhaHashed,
     });
 
+    // Gerar código de verificação
+    const codigo = Math.random().toString(36).substring(2, 8).toUpperCase();
+    usuario.setCodigoVerificacao(codigo);
+
     await this.usuarioRepository.salvar(usuario);
 
-    const carteira = Carteira.criar({
-      usuarioId: usuario.getId(), 
-    });
-    await this.carteiraRepository.salvar(carteira);
+    // Enviar email com código
+    await this.emailService.enviarCodigoVerificacao(props.email, codigo);
 
-    return UsuarioMapper.DomainToDto(usuario);
+    return {
+      message: 'Usuário criado. Verifique seu email para confirmar a conta.',
+    };
   }
 }

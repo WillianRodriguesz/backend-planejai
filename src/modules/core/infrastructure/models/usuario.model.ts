@@ -27,6 +27,21 @@ export class UsuarioModel {
   @Column({ length: 50, nullable: true })
   avatar: string;
 
+  @Column({ name: 'email_verificado', default: false })
+  emailVerificado: boolean;
+
+  @Column({ name: 'codigo_verificacao', length: 6, nullable: true })
+  codigoVerificacao: string;
+
+  @Column({ name: 'expiracao_codigo', nullable: true })
+  expiracaoCodigo: Date;
+
+  @Column({ name: 'token_redefinicao_senha', length: 255, nullable: true })
+  tokenRedefinicaoSenha: string;
+
+  @Column({ name: 'expiracao_token', nullable: true })
+  expiracaoToken: Date;
+
   @CreateDateColumn({ name: 'criado_em' })
   criadoEm: Date;
 
