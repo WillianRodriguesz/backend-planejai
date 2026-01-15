@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Post,
+  Get,
   Res,
   HttpStatus,
   UseGuards,
@@ -39,7 +40,7 @@ export class AuthController {
       httpOnly: true,
       secure: false,
       sameSite: 'strict',
-      maxAge: 7200000, // 2 horas
+      maxAge: 3600000, // 1 hora
     });
     res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
@@ -49,12 +50,22 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Post('logout')
+  @UseGuards(JwtAuthGuard)
   async logout(@Res() res: Response) {
     res.clearCookie('access_token');
     res.status(HttpStatus.OK).json({
       statusCode: HttpStatus.OK,
       message: 'Logout realizado com sucesso',
     });
+  }
+
+  @Get('validate')
+  @UseGuards(JwtAuthGuard)
+  async validateToken() {
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Token válido',
+    };
   }
 
   @Post('verificar-email')

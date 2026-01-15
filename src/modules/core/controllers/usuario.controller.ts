@@ -37,7 +37,7 @@ interface AuthenticatedRequest extends Request {
   user: User;
 }
 
-@Controller('usuarios')
+@Controller('usuario')
 export class UsuarioController {
   constructor(
     private readonly criarUsuarioUseCase: CriarUsuarioUseCase,
