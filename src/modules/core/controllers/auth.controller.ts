@@ -48,7 +48,6 @@ export class AuthController {
     });
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('logout')
   @UseGuards(JwtAuthGuard)
   async logout(@Res() res: Response) {

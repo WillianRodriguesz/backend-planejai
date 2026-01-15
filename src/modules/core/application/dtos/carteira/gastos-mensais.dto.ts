@@ -14,6 +14,7 @@ export interface RelacaoMesAnteriorDto {
 
 export interface GastosMensaisDto {
   totalGastos: number;
+  quantidadeSaidas: number;
   relacaoMesAnterior: RelacaoMesAnteriorDto;
   gastosPorCategoria: GastoPorCategoriaDto[];
 }
