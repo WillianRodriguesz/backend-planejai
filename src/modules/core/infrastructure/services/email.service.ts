@@ -1,18 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-
-export interface EmailService {
-  enviarCodigoVerificacao(email: string, codigo: string): Promise<void>;
-  enviarTokenRedefinicaoSenha(email: string, token: string): Promise<void>;
-}
-
+import { EmailService } from '../../domain/interfaces/email.service';
 @Injectable()
 export class EmailServiceImpl implements EmailService {
   private transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS, // Use App Password, not regular password
+      pass: process.env.GMAIL_PASS, 
     },
   });
 

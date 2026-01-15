@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
-import { EmailService } from '../../../infrastructure/services/email.service';
+import { EmailService } from '../../../domain/interfaces/email.service';
 
 export interface ReenviarCodigoProps {
   email: string;

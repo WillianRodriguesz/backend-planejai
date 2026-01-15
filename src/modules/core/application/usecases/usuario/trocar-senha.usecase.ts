@@ -1,6 +1,6 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
-import { BcryptHashService } from '../../../infrastructure/services/hash-bcrypt.service';
+import { BcryptHashService } from '../../../domain/interfaces/bcrypt-hash.service';
 import { Usuario } from '../../../domain/usuario';
 
 export interface TrocarSenhaProps {
@@ -14,6 +14,7 @@ export class TrocarSenhaUseCase {
   constructor(
     @Inject('UsuarioRepository')
     private readonly usuarioRepository: UsuarioRepository,
+    @Inject('BcryptHashService')
     private readonly hashService: BcryptHashService,
   ) {}
 

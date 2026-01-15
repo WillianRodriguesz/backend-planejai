@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
-import { BcryptHashService } from '../../../infrastructure/services/hash-bcrypt.service';
-import { TokenService } from '../../../infrastructure/services/token.service';
+import { TokenService } from '../../../domain/interfaces/token.service';
 import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
 import { UsuarioMapper } from '../../mappers/usuario.mapper';
+import { BcryptHashService } from '../../../domain/interfaces/bcrypt-hash.service';
 
 export interface RedefinirSenhaProps {
   token: string;
@@ -15,7 +15,9 @@ export class RedefinirSenhaUseCase {
   constructor(
     @Inject('UsuarioRepository')
     private readonly usuarioRepository: UsuarioRepository,
+    @Inject('BcryptHashService')
     private readonly hashService: BcryptHashService,
+    @Inject('TokenService')
     private readonly tokenService: TokenService,
   ) {}
 

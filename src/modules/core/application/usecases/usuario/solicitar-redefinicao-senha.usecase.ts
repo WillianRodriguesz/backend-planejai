@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
-import { EmailService } from '../../../infrastructure/services/email.service';
-import { TokenService } from '../../../infrastructure/services/token.service';
+import { TokenService } from '../../../domain/interfaces/token.service';
+import { EmailService } from 'src/modules/core/domain/interfaces/email.service';
 
 export interface SolicitarRedefinicaoSenhaProps {
   email: string;
@@ -14,6 +14,7 @@ export class SolicitarRedefinicaoSenhaUseCase {
     private readonly usuarioRepository: UsuarioRepository,
     @Inject('EmailService')
     private readonly emailService: EmailService,
+    @Inject('TokenService')
     private readonly tokenService: TokenService,
   ) {}
 

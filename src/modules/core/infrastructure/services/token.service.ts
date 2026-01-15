@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
-
-export interface TokenData {
-  token: string;
-  tokenHash: string;
-}
+import { TokenService, TokenData } from '../../domain/interfaces/token.service';
 
 @Injectable()
-export class TokenService {
+export class TokenServiceImpl implements TokenService {
   /**
    * Gera token completamente aleatório (não expõe userId)
    * Token: 64 caracteres hexadecimais (256 bits de entropia)

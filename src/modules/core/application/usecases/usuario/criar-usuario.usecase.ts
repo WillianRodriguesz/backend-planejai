@@ -1,12 +1,9 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
-import { BcryptHashService } from '../../../infrastructure/services/hash-bcrypt.service';
-import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
-import { UsuarioMapper } from '../../mappers/usuario.mapper';
+import { Inject, Injectable } from '@nestjs/common';
 import { CarteiraRepository } from 'src/modules/core/domain/repositories/Carteira.repository';
-import { Carteira } from 'src/modules/core/domain/carteira';
 import { Usuario } from 'src/modules/core/domain/usuario';
-import { EmailService } from '../../../infrastructure/services/email.service';
+import { EmailService } from '../../../domain/interfaces/email.service';
+import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
+import { BcryptHashService } from '../../../domain/interfaces/bcrypt-hash.service';
 
 export interface CriarUsuarioProps {
   nome: string;
@@ -22,6 +19,7 @@ export class CriarUsuarioUseCase {
     private readonly usuarioRepository: UsuarioRepository,
     @Inject('CarteiraRepository')
     private readonly carteiraRepository: CarteiraRepository,
+    @Inject('BcryptHashService')
     private readonly hashService: BcryptHashService,
     @Inject('EmailService')
     private readonly emailService: EmailService,
