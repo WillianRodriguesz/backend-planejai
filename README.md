@@ -1,51 +1,225 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Planejai - Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend da aplicação Planejai, um sistema de planejamento financeiro pessoal desenvolvido com NestJS. Permite gerenciamento de usuários, carteiras, categorias e lançamentos financeiros.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Tecnologias Utilizadas
 
-## Description
+- **Framework**: [NestJS](https://nestjs.com/) - Framework Node.js para aplicações escaláveis e eficientes.
+- **Linguagem**: TypeScript - Tipagem estática para maior robustez.
+- **Banco de Dados**: PostgreSQL - RDBMS relacional com suporte a UUID e enums.
+- **ORM**: [TypeORM](https://typeorm.io/) - Mapeamento objeto-relacional para interações com DB.
+- **Autenticação**: JWT (JSON Web Tokens) via cookies HTTP-only.
+- **Rate Limiting**: [@nestjs/throttler](https://docs.nestjs.com/security/rate-limiting) - Controle de taxa de requisições.
+- **Validação**: [class-validator](https://github.com/typestack/class-validator) - Validação de DTOs.
+- **Hashing**: bcrypt - Criptografia de senhas.
+- **Envio de Emails**: Nodemailer com Gmail SMTP.
+- **Testes**: Jest - Framework de testes unitários/e2e.
+- **Outros**: UUID para IDs únicos, pg para driver PostgreSQL.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Arquitetura
 
-## Project setup
+O projeto segue princípios de **Domain-Driven Design (DDD)** e **CQRS (Command Query Responsibility Segregation)**, organizados em camadas:
 
-```bash
-$ npm install
+### Estrutura de Diretórios
+
+```
+src/
+├── modules/core/
+│   ├── application/          # Camada de Aplicação (CQRS)
+│   │   ├── usecases/         # Casos de Uso (Commands)
+│   │   ├── queries/          # Consultas (Queries)
+│   │   └── dtos/             # Data Transfer Objects
+│   ├── controllers/          # Controladores HTTP
+│   ├── domain/               # Domínio (Entidades, Regras de Negócio)
+│   │   ├── entities/         # Entidades de Domínio
+│   │   ├── repositories/     # Interfaces de Repositório
+│   │   └── services/         # Serviços de Domínio
+│   └── infrastructure/       # Camada de Infraestrutura
+│       ├── mappers/          # Mapeadores (Domain ↔ Infra)
+│       ├── repositories/     # Implementações de Repositório
+│       └── services/         # Serviços Externos (Email, Hash)
+├── shared/
+│   ├── infrastructure/       # Infraestrutura Compartilhada
+│   │   ├── auth/             # Autenticação (JWT, Guards)
+│   │   └── database/         # Configuração do DB
+│   └── utils/                # Utilitários Compartilhados
+├── migrations/               # Migrações TypeORM
+├── config/                   # Configurações (DB, etc.)
+├── common/                   # Filtros e Middlewares Globais
+└── test/                     # Testes E2E
 ```
 
-## Compile and run the project
+### Padrões Arquiteturais
+
+- **DDD**: Separação clara entre domínio (regras de negócio) e infraestrutura (detalhes técnicos).
+- **CQRS**: Commands (operações de escrita) separados de Queries (leituras), melhorando performance e escalabilidade.
+- **Dependency Injection**: Injeção de dependências via NestJS para desacoplamento.
+- **SOLID**: Princípios aplicados em entidades, serviços e controladores.
+
+### Fluxo de Dados
+
+1. **Requisição HTTP** → Controller
+2. **Validação** → DTOs com class-validator
+3. **Autenticação/Autorização** → Guards (JwtAuthGuard, ThrottlerGuard)
+4. **Execução** → UseCase/Query (Application Layer)
+5. **Domínio** → Entidades e Regras de Negócio
+6. **Infraestrutura** → Repositórios (TypeORM) → Banco de Dados
+7. **Resposta** → Mapeamento para DTOs → Cliente
+
+## Instalação e Configuração
+
+### Pré-requisitos
+
+- Node.js 18+
+- PostgreSQL 13+
+- npm ou yarn
+
+### Passos
+
+1. **Clone o repositório**:
+
+   ```bash
+   git clone <repo-url>
+   cd planejai/back-end
+   ```
+
+2. **Instale dependências**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure variáveis de ambiente**:
+   Copie `.env.example` para `.env` e ajuste:
+
+   ```env
+   PORT=3000
+   CORS_ORIGIN=http://localhost:5173
+   FRONTEND_URL=http://localhost:5173
+   JWT_SECRET=<chave-secreta-forte>
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=planejai
+   DB_USER=postgres
+   DB_PASSWORD=<senha-db>
+   DATABASE_URL=postgresql://postgres:<senha>@localhost:5432/planejai?schema=public
+   GMAIL_USER=<email@gmail.com>
+   GMAIL_PASS=<app-password>
+   ```
+
+4. **Configure o banco**:
+
+   - Crie o banco PostgreSQL.
+   - Execute migrações:
+     ```bash
+     npm run migration:run
+     ```
+
+5. **Execute a aplicação**:
+
+   ```bash
+   # Desenvolvimento
+   npm run start:dev
+
+   # Produção
+   npm run build
+   npm run start:prod
+   ```
+
+## Uso
+
+### Endpoints Principais (API REST)
+
+- **Autenticação**:
+
+  - `POST /auth/login` - Login
+  - `POST /auth/logout` - Logout
+  - `GET /auth/validate` - Validar token
+
+- **Usuários**:
+
+  - `POST /usuario` - Criar usuário
+  - `GET /usuario` - Buscar perfil
+  - `PUT /usuario` - Atualizar perfil
+  - `DELETE /usuario` - Deletar conta
+
+- **Carteiras**:
+
+  - `GET /carteira/:idCarteira` - Saldo mensal
+  - `GET /carteira/:idCarteira/lancamentos` - Listar lançamentos
+  - `POST /carteira/:idCarteira/lancamento` - Adicionar lançamento
+  - `PUT /carteira/:idCarteira/lancamento/:idLancamento` - Atualizar lançamento
+  - `DELETE /carteira/:idCarteira/lancamento/:idLancamento` - Deletar lançamento
+
+- **Categorias**:
+  - `GET /categoria` - Listar categorias
+  - `GET /categoria/:id` - Buscar categoria por ID
+
+Todos os endpoints (exceto criação de usuário e algumas auth) requerem autenticação JWT via cookie `access_token`.
+
+### Testes
 
 ```bash
-# development
-$ npm run start
+# Unitários
+npm run test
 
-# watch mode
-$ npm run start:dev
+# E2E
+npm run test:e2e
 
-# production mode
-$ npm run start:prod
+# Cobertura
+npm run test:cov
 ```
 
-## Run tests
+## Banco de Dados
+
+### Schema Principal
+
+- **usuarios**: ID (UUID), nome, email, senha (hash), telefone, avatar, criado_em
+- **carteiras**: ID (UUID), usuario_id (FK), criado_em
+- **categorias**: ID (SERIAL), nome, tipo (enum: entrada/saida/ambos)
+- **lancamentos**: ID (SERIAL), carteira_id (FK), categoria_id (FK), titulo, descricao, valor, data, tipo (enum), criado_em
+- **saldos_mensais**: ID (SERIAL), carteira_id (FK), mes, ano, saldo_mes, criado_em
+
+### Migrações
+
+Gerenciadas por TypeORM. Para criar nova:
+
+```bash
+npm run typeorm -- migration:generate src/migrations/NomeMigracao -d src/config/database.config.ts
+```
+
+## Segurança
+
+- **Autenticação**: JWT via cookies HTTP-only, renovação automática.
+- **Autorização**: Guards protegem rotas, rate limiting (3 req/min).
+- **Validação**: DTOs com sanitização.
+- **HTTPS**: Recomendado em produção (`secure: true` em cookies).
+- **Credenciais**: Nunca commite `.env`; use variáveis seguras.
+
+## Desenvolvimento
+
+### Scripts Disponíveis
+
+- `npm run start:dev` - Modo desenvolvimento com hot-reload.
+- `npm run build` - Compilação para produção.
+- `npm run lint` - Verificação de código.
+- `npm run migration:generate` - Gerar migração.
+- `npm run migration:run` - Executar migrações.
+
+### Contribuição
+
+1. Fork o projeto.
+2. Crie uma branch para feature/bugfix.
+3. Commit com mensagens claras.
+4. Push e abra PR.
+
+### Licença
+
+Este projeto é privado. Contate o proprietário para permissões.
+
+---
+
+Para dúvidas, abra uma issue ou contate a equipe.
 
 ```bash
 # unit tests
