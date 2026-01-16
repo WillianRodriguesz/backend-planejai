@@ -8,7 +8,9 @@ import {
   Put,
   Query,
   ValidationPipe,
+  UseGuards,
 } from '@nestjs/common';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 import { SaldoMensalDto } from '../application/dtos/carteira/saldo-mensal.dto';
 import { GastosMensaisDto } from '../application/dtos/carteira/gastos-mensais.dto';
@@ -28,6 +30,7 @@ import {
 import { AtualizarLancamentoUseCase } from '../application/usecases/carteira/atualizar-lancamento.usecase';
 import { DeletarLancamentoUseCase } from '../application/usecases/carteira/deletar-lancamento.usecase';
 import { DateUtils } from '../domain/shared/data.utils';
+import { JwtAuthGuard } from '../../../shared/infrastructure/auth/jwt-auth.guard';
 
 @Controller('carteira')
 export class CarteiraController {
@@ -42,6 +45,7 @@ export class CarteiraController {
     private readonly buscarGastosMensaisQuery: BuscarGastosMensaisQuery,
   ) {}
 
+  @UseGuards(ThrottlerGuard, JwtAuthGuard)
   @Get('/:idCarteira')
   async buscarSaldoMensal(
     @Param('idCarteira') id: string,
@@ -50,6 +54,7 @@ export class CarteiraController {
     return this.buscarSaldoMensalQuery.execute(id, data);
   }
 
+  @UseGuards(ThrottlerGuard, JwtAuthGuard)
   @Get('/:idCarteira/lancamentos')
   async buscarTodosLancamentos(
     @Param('idCarteira') idCarteira: string,
@@ -63,6 +68,7 @@ export class CarteiraController {
     );
   }
 
+  @UseGuards(ThrottlerGuard, JwtAuthGuard)
   @Get('/:idCarteira/lancamentos/filtrar')
   async filtrarLancamentos(
     @Param('idCarteira') idCarteira: string,
@@ -87,6 +93,7 @@ export class CarteiraController {
     return this.filtrarLancamentosQuery.execute(idCarteira, filtros);
   }
 
+  @UseGuards(ThrottlerGuard, JwtAuthGuard)
   @Get('/:idCarteira/gastos-mensais')
   async buscarGastosMensais(
     @Param('idCarteira') idCarteira: string,
@@ -95,6 +102,7 @@ export class CarteiraController {
     return this.buscarGastosMensaisQuery.execute(idCarteira, mes);
   }
 
+  @UseGuards(ThrottlerGuard, JwtAuthGuard)
   @Post('/:idCarteira/lancamento')
   async adicionarLancamento(
     @Param('idCarteira') idCarteira: string,
@@ -121,6 +129,7 @@ export class CarteiraController {
     return { message: 'Lançamento adicionado com sucesso' };
   }
 
+  @UseGuards(ThrottlerGuard, JwtAuthGuard)
   @Get('/:idCarteira/lancamento/:idLancamento')
   async buscarLancamentoPorId(
     @Param('idCarteira') idCarteira: string,
@@ -129,6 +138,7 @@ export class CarteiraController {
     return this.buscarLancamentoPorIdQuery.execute(idCarteira, idLancamento);
   }
 
+  @UseGuards(ThrottlerGuard, JwtAuthGuard)
   @Put('/:idCarteira/lancamento/:idLancamento')
   async atualizarLancamento(
     @Param('idCarteira') idCarteira: string,
@@ -144,6 +154,7 @@ export class CarteiraController {
     return { message: 'Lançamento atualizado com sucesso' };
   }
 
+  @UseGuards(ThrottlerGuard, JwtAuthGuard)
   @Delete('/:idCarteira/lancamento/:idLancamento')
   async deletarLancamento(
     @Param('idCarteira') idCarteira: string,

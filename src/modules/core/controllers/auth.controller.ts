@@ -38,7 +38,7 @@ export class AuthController {
     const result = await this.loginUsuarioUseCase.execute(body);
     res.cookie('access_token', result.token, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 3600000, // 1 hora
     });
