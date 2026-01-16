@@ -34,7 +34,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
           });
           response.cookie('access_token', newToken, {
             httpOnly: true,
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
             maxAge: 3600000, // 1 hora
           });
