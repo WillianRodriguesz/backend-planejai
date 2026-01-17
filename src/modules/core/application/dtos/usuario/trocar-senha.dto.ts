@@ -1,10 +1,19 @@
 import { IsString, IsStrongPassword, MinLength } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class TrocarSenhaDto {
+  @ApiProperty({
+    description: 'Senha atual do usuário',
+    example: 'SenhaAntiga123!',
+  })
   @IsString()
   @MinLength(1, { message: 'A senha atual é obrigatória' })
   senhaAtual: string;
 
+  @ApiProperty({
+    description: 'Nova senha do usuário',
+    example: 'NovaSenha123!',
+  })
   @IsStrongPassword(
     {
       minLength: 6,

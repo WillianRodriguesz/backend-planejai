@@ -11,6 +11,15 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiQuery,
+  ApiBody,
+  ApiCookieAuth,
+} from '@nestjs/swagger';
 
 import { SaldoMensalDto } from '../application/dtos/carteira/saldo-mensal.dto';
 import { GastosMensaisDto } from '../application/dtos/carteira/gastos-mensais.dto';
@@ -32,6 +41,8 @@ import { DeletarLancamentoUseCase } from '../application/usecases/carteira/delet
 import { DateUtils } from '../domain/shared/data.utils';
 import { JwtAuthGuard } from '../../../shared/infrastructure/auth/jwt-auth.guard';
 
+@ApiTags('carteiras')
+@ApiCookieAuth('access_token')
 @Controller('carteira')
 export class CarteiraController {
   constructor(
@@ -45,6 +56,18 @@ export class CarteiraController {
     private readonly buscarGastosMensaisQuery: BuscarGastosMensaisQuery,
   ) {}
 
+  @ApiOperation({ summary: 'Buscar saldo mensal da carteira' })
+  @ApiResponse({
+    status: 200,
+    description: 'Saldo retornado',
+    type: SaldoMensalDto,
+  })
+  @ApiParam({ name: 'idCarteira', description: 'ID da carteira' })
+  @ApiQuery({
+    name: 'data',
+    description: 'Data no formato YYYY-MM',
+    example: '2023-01',
+  })
   @UseGuards(ThrottlerGuard, JwtAuthGuard)
   @Get('/:idCarteira')
   async buscarSaldoMensal(
@@ -54,6 +77,19 @@ export class CarteiraController {
     return this.buscarSaldoMensalQuery.execute(id, data);
   }
 
+  @ApiOperation({ summary: 'Buscar todos os lançamentos da carteira' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lançamentos retornados',
+    type: LancamentosPaginadosDto,
+  })
+  @ApiParam({ name: 'idCarteira', description: 'ID da carteira' })
+  @ApiQuery({ name: 'pagina', description: 'Número da página', example: '1' })
+  @ApiQuery({
+    name: 'itensPorPagina',
+    description: 'Itens por página',
+    example: '10',
+  })
   @UseGuards(ThrottlerGuard, JwtAuthGuard)
   @Get('/:idCarteira/lancamentos')
   async buscarTodosLancamentos(

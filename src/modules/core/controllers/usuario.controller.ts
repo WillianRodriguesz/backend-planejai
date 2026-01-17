@@ -12,6 +12,13 @@ import {
   UseInterceptors,
   HttpException,
 } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiCookieAuth,
+} from '@nestjs/swagger';
 import { Request } from 'express';
 import { CriarUsuarioUseCase } from '../application/usecases/usuario/criar-usuario.usecase';
 import { AtualizarUsuarioUseCase } from '../application/usecases/usuario/atualizar-usuario.usecase';
@@ -37,6 +44,8 @@ interface AuthenticatedRequest extends Request {
   user: User;
 }
 
+@ApiTags('usuarios')
+@ApiCookieAuth('access_token')
 @Controller('usuario')
 export class UsuarioController {
   constructor(
@@ -48,6 +57,10 @@ export class UsuarioController {
     private readonly atualizarAvatarUseCase: AtualizarAvatarUseCase,
   ) {}
 
+  @ApiOperation({ summary: 'Criar novo usuário' })
+  @ApiResponse({ status: 201, description: 'Usuário criado com sucesso' })
+  @ApiResponse({ status: 400, description: 'Dados inválidos' })
+  @ApiBody({ type: CriarUsuarioDto })
   @Post()
   async criar(@Body() body: CriarUsuarioDto): Promise<{ message: string }> {
     try {
@@ -57,6 +70,14 @@ export class UsuarioController {
     }
   }
 
+  @ApiOperation({ summary: 'Atualizar usuário' })
+  @ApiResponse({
+    status: 200,
+    description: 'Usuário atualizado',
+    type: UsuarioDto,
+  })
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiBody({ type: AtualizarUsuarioDto })
   @UseGuards(JwtAuthGuard)
   @Put()
   async atualizar(
@@ -74,6 +95,9 @@ export class UsuarioController {
     }
   }
 
+  @ApiOperation({ summary: 'Deletar usuário' })
+  @ApiResponse({ status: 200, description: 'Usuário deletado' })
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
   @UseGuards(JwtAuthGuard)
   @Delete()
   async deletar(@Req() req: AuthenticatedRequest): Promise<void> {
@@ -85,6 +109,9 @@ export class UsuarioController {
     }
   }
 
+  @ApiOperation({ summary: 'Buscar dados do usuário logado' })
+  @ApiResponse({ status: 200, description: 'Dados do usuário retornados' })
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
   @UseGuards(JwtAuthGuard)
   @Get()
   async buscar(
@@ -98,6 +125,10 @@ export class UsuarioController {
     }
   }
 
+  @ApiOperation({ summary: 'Trocar senha do usuário' })
+  @ApiResponse({ status: 200, description: 'Senha alterada com sucesso' })
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiBody({ type: TrocarSenhaDto })
   @UseGuards(JwtAuthGuard)
   @Patch('senha')
   async trocarSenha(
@@ -120,6 +151,14 @@ export class UsuarioController {
     }
   }
 
+  @ApiOperation({ summary: 'Atualizar avatar do usuário' })
+  @ApiResponse({
+    status: 200,
+    description: 'Avatar atualizado',
+    type: UsuarioDto,
+  })
+  @ApiResponse({ status: 401, description: 'Não autorizado' })
+  @ApiBody({ type: AtualizarAvatarDto })
   @UseGuards(JwtAuthGuard)
   @Patch('avatar')
   async atualizarAvatar(
