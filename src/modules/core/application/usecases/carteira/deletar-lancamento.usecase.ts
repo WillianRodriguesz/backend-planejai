@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DomainException } from '../../../domain/exceptions/domain.exception';
-import { CarteiraRepositoryImpl } from 'src/modules/core/infrastructure/repositories/Carteira.repository';
+import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/Carteira.repository';
 
 @Injectable()
 export class DeletarLancamentoUseCase {

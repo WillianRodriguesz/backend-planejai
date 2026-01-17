@@ -2,8 +2,8 @@ import { Injectable, Inject } from '@nestjs/common';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
 import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
 import { UsuarioMapper } from '../../mappers/usuario.mapper';
-import { CarteiraRepository } from 'src/modules/core/domain/repositories/Carteira.repository';
-import { Carteira } from 'src/modules/core/domain/carteira';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
+import { Carteira } from '../../../domain/carteira';
 
 export interface VerificarEmailProps {
   email: string;

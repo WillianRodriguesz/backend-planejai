@@ -5,8 +5,8 @@ import { LancamentoMapper } from '../../mappers/lancamento.mapper';
 import { PaginacaoUtils } from '../../../domain/shared/paginacao.utils';
 import { FiltrarLancamentosDto } from '../../dtos/lancamento/filtrar-lancamentos.dto';
 import { DateUtils } from '../../../domain/shared/data.utils';
-import { CarteiraRepositoryImpl } from 'src/modules/core/infrastructure/repositories/Carteira.repository';
-import { Lancamento } from 'src/modules/core/domain/lancamento';
+import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/Carteira.repository';
+import { Lancamento } from '../../../domain/lancamento';
 
 @Injectable()
 export class FiltrarLancamentosQuery {

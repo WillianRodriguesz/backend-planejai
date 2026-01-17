@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { LancamentoDto } from '../../dtos/lancamento/lancamento.dto';
 import { LancamentoMapper } from '../../mappers/lancamento.mapper';
-import { CarteiraRepositoryImpl } from 'src/modules/core/infrastructure/repositories/Carteira.repository';
+import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/Carteira.repository';
 
 @Injectable()
 export class BuscarLancamentoPorIdQuery {

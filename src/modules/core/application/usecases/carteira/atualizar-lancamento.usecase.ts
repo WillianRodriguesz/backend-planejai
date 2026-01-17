@@ -3,7 +3,7 @@ import { DomainException } from '../../../domain/exceptions/domain.exception';
 import { CategoriaRepositoryImpl } from '../../../infrastructure/repositories/categoria.repository';
 import { DateUtils } from '../../../domain/shared/data.utils';
 import { AtualizarLancamentoDto } from '../../dtos/lancamento/atualizar-lancamento.dto';
-import { CarteiraRepositoryImpl } from 'src/modules/core/infrastructure/repositories/Carteira.repository';
+import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/Carteira.repository';
 
 export interface AtualizarLancamentoProps {
   idCarteira: string;
