@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { GastosMensaisDto } from '../../dtos/carteira/gastos-mensais.dto';
 import { GastosMensaisService } from '../../../domain/services/gastos-mensais.service';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/Carteira.repository';
+import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 
 @Injectable()
 export class BuscarGastosMensaisQuery {

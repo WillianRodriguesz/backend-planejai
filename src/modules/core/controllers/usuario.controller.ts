@@ -1,39 +1,36 @@
 import {
   Body,
   Controller,
-  Post,
-  Get,
-  Put,
-  Patch,
   Delete,
-  UseGuards,
+  Get,
   HttpStatus,
+  Patch,
+  Post,
+  Put,
   Req,
-  UseInterceptors,
-  HttpException,
+  UseGuards
 } from '@nestjs/common';
 import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
   ApiBody,
   ApiCookieAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { Request } from 'express';
-import { CriarUsuarioUseCase } from '../application/usecases/usuario/criar-usuario.usecase';
-import { AtualizarUsuarioUseCase } from '../application/usecases/usuario/atualizar-usuario.usecase';
-import { DeletarUsuarioUseCase } from '../application/usecases/usuario/deletar-usuario.usecase';
-import { BuscarUsuarioPorIdUseCase } from '../application/usecases/usuario/buscar-usuario-por-id.usecase';
-import { BuscarUsuarioUseCase } from '../application/usecases/usuario/buscar-usuario.usecase';
-import { TrocarSenhaUseCase } from '../application/usecases/usuario/trocar-senha.usecase';
-import { AtualizarAvatarUseCase } from '../application/usecases/usuario/atualizar-avatar.usecase';
-import { CriarUsuarioDto } from '../application/dtos/usuario/criar-usuario.dto';
-import { AtualizarUsuarioDto } from '../application/dtos/usuario/atualizar-usuario.dto';
-import { TrocarSenhaDto } from '../application/dtos/usuario/trocar-senha.dto';
-import { AtualizarAvatarDto } from '../application/dtos/usuario/atualizar-avatar.dto';
-import { UsuarioDto } from '../application/dtos/usuario/usuario.dto';
 import { JwtAuthGuard } from '../../../shared/infrastructure/auth/jwt-auth.guard';
 import { UsuarioHttpErrorMapper } from '../../../shared/infrastructure/mappers/usuario-http-error.mapper';
+import { AtualizarAvatarDto } from '../application/dtos/usuario/atualizar-avatar.dto';
+import { AtualizarUsuarioDto } from '../application/dtos/usuario/atualizar-usuario.dto';
+import { CriarUsuarioDto } from '../application/dtos/usuario/criar-usuario.dto';
+import { TrocarSenhaDto } from '../application/dtos/usuario/trocar-senha.dto';
+import { UsuarioDto } from '../application/dtos/usuario/usuario.dto';
+import { AtualizarAvatarUseCase } from '../application/usecases/usuario/atualizar-avatar.usecase';
+import { AtualizarUsuarioUseCase } from '../application/usecases/usuario/atualizar-usuario.usecase';
+import { BuscarUsuarioUseCase } from '../application/usecases/usuario/buscar-usuario.usecase';
+import { CriarUsuarioUseCase } from '../application/usecases/usuario/criar-usuario.usecase';
+import { DeletarUsuarioUseCase } from '../application/usecases/usuario/deletar-usuario.usecase';
+import { TrocarSenhaUseCase } from '../application/usecases/usuario/trocar-senha.usecase';
 
 interface User {
   id: string;

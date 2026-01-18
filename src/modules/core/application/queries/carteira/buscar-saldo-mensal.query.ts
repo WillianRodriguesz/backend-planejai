@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { DateUtils } from '../../../domain/shared/data.utils';
 import { SaldoMensalDto } from '../../dtos/carteira/saldo-mensal.dto';
 import { CarteiraSaldoMensalMapper } from '../../mappers/saldo-mensal.mapper';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/Carteira.repository';
+import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 
 export interface BuscarSaldoMensalQueryProps {
   idCarteira: string;

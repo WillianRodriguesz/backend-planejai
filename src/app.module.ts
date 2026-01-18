@@ -14,7 +14,7 @@ import { CoreModule } from './modules/core/core.module';
     ThrottlerModule.forRoot([
       {
         ttl: 60000, // 1 minuto
-        limit: 3, // 3 tentativas por minuto
+        limit: 200, // 200 tentativas por minuto
       },
     ]),
     CoreModule,

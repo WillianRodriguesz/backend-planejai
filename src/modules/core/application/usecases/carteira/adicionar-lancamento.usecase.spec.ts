@@ -1,5 +1,5 @@
 import { AdicionarLancamentoUseCase } from './adicionar-lancamento.usecase';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/Carteira.repository';
+import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 import { CategoriaRepositoryImpl } from '../../../infrastructure/repositories/categoria.repository';
 import { Carteira } from '../../../domain/carteira';
 import { Categoria } from '../../../domain/categoria';

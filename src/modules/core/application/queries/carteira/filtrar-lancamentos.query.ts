@@ -5,7 +5,7 @@ import { LancamentoMapper } from '../../mappers/lancamento.mapper';
 import { PaginacaoUtils } from '../../../domain/shared/paginacao.utils';
 import { FiltrarLancamentosDto } from '../../dtos/lancamento/filtrar-lancamentos.dto';
 import { DateUtils } from '../../../domain/shared/data.utils';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/Carteira.repository';
+import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 import { Lancamento } from '../../../domain/lancamento';
 
 @Injectable()

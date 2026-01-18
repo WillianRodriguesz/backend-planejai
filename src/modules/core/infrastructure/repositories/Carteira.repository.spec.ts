@@ -6,7 +6,7 @@ import {
   QueryRunner,
   SelectQueryBuilder,
 } from 'typeorm';
-import { CarteiraRepositoryImpl } from './Carteira.repository';
+import { CarteiraRepositoryImpl } from './carteira.repository';
 import { CarteiraModel } from '../models/carteira.model';
 import { LancamentoModel } from '../models/lancamento.model';
 import { SaldoMensalModel } from '../models/saldo-mensal.model';
