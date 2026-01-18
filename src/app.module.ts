@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { CacheModule } from '@nestjs/cache-manager';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoreModule } from './modules/core/core.module';
@@ -17,6 +18,11 @@ import { CoreModule } from './modules/core/core.module';
         limit: 200, // 200 tentativas por minuto
       },
     ]),
+    CacheModule.register({
+      ttl: 60 * 1000, // 60 segundos padrão
+      max: 100, // máximo de itens no cache
+      isGlobal: true, // Tornar global para todos os módulos
+    }),
     CoreModule,
   ],
   controllers: [AppController],

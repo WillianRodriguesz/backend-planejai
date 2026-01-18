@@ -28,6 +28,7 @@ describe('LoginUsuarioUseCase', () => {
       usuarioRepository,
       hashService,
       jwtService,
+      {} as any, // Mock cacheManager
     );
   });
 
