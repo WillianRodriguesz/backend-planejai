@@ -17,6 +17,8 @@ import { LimpezaCodigosService } from './infrastructure/services/limpeza-codigos
 import { UsuarioRepositoryImpl } from './infrastructure/repositories/usuario.repository';
 import { CategoriaRepositoryImpl } from './infrastructure/repositories/categoria.repository';
 import { CarteiraRepositoryImpl } from './infrastructure/repositories/carteira.repository';
+import { TermoRepositoryImpl } from './infrastructure/repositories/termo.repository';
+import { UsuarioConsentimentoRepositoryImpl } from './infrastructure/repositories/usuario-consentimento.repository';
 
 @Module({
   imports: [AuthModule, DatabaseModule, ScheduleModule.forRoot()],
@@ -31,6 +33,14 @@ import { CarteiraRepositoryImpl } from './infrastructure/repositories/carteira.r
     {
       provide: 'CarteiraRepository',
       useClass: CarteiraRepositoryImpl,
+    },
+    {
+      provide: 'TermoRepository',
+      useClass: TermoRepositoryImpl,
+    },
+    {
+      provide: 'UsuarioConsentimentoRepository',
+      useClass: UsuarioConsentimentoRepositoryImpl,
     },
     {
       provide: 'EmailService',

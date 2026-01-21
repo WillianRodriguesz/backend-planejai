@@ -3,6 +3,7 @@ import {
   IsOptional,
   IsString,
   IsStrongPassword,
+  IsBoolean,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -31,4 +32,25 @@ export class CriarUsuarioDto {
   })
   @IsString()
   telefone: string;
+
+  @ApiProperty({
+    description: 'Aceitação da LGPD',
+    example: true,
+  })
+  @IsBoolean()
+  aceitouLgpd: boolean;
+
+  @ApiProperty({
+    description: 'Aceitação dos Termos de Uso',
+    example: true,
+  })
+  @IsBoolean()
+  aceitouTermosUso: boolean;
+
+  @ApiProperty({
+    description: 'Aceitação da Política de Privacidade',
+    example: true,
+  })
+  @IsBoolean()
+  aceitouPoliticaPrivacidade: boolean;
 }

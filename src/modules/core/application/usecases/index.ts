@@ -13,6 +13,7 @@ import { VerificarEmailUseCase } from './usuario/verificar-email.usecase';
 import { ReenviarCodigoUseCase } from './usuario/reenviar-codigo.usecase';
 import { SolicitarRedefinicaoSenhaUseCase } from './usuario/solicitar-redefinicao-senha.usecase';
 import { RedefinirSenhaUseCase } from './usuario/redefinir-senha.usecase';
+import { BuscarTermoAtivoUseCase } from './termo/buscar-termo-ativo.usecase';
 
 export const CoreUseCases = [
   AdicionarLancamentoUseCase,
@@ -30,4 +31,5 @@ export const CoreUseCases = [
   ReenviarCodigoUseCase,
   SolicitarRedefinicaoSenhaUseCase,
   RedefinirSenhaUseCase,
+  BuscarTermoAtivoUseCase,
 ];
