@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CategoriaRepositoryImpl } from '../../../infrastructure/repositories/categoria.repository';
-import { CarteiraRepositoryImpl } from 'src/modules/core/infrastructure/repositories/Carteira.repository';
+import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 
 export type tipoTransacao = 'entrada' | 'saida';
 export interface AdicionarLancamentoUseCaseProps {

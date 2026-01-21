@@ -16,7 +16,7 @@ import { TokenServiceImpl } from './infrastructure/services/token.service';
 import { LimpezaCodigosService } from './infrastructure/services/limpeza-codigos.service';
 import { UsuarioRepositoryImpl } from './infrastructure/repositories/usuario.repository';
 import { CategoriaRepositoryImpl } from './infrastructure/repositories/categoria.repository';
-import { CarteiraRepositoryImpl } from './infrastructure/repositories/Carteira.repository';
+import { CarteiraRepositoryImpl } from './infrastructure/repositories/carteira.repository';
 
 @Module({
   imports: [AuthModule, DatabaseModule, ScheduleModule.forRoot()],

@@ -12,7 +12,7 @@ import { LancamentoMapper } from '../mappers/lancamento.mapper';
 import {
   CarteiraRepository,
   FiltrosLancamento,
-} from '../../domain/repositories/Carteira.repository';
+} from '../../domain/repositories/carteira.repository';
 
 @Injectable()
 export class CarteiraRepositoryImpl implements CarteiraRepository {

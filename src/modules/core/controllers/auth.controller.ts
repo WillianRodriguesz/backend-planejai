@@ -8,6 +8,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiCookieAuth,
+} from '@nestjs/swagger';
 import { Response } from 'express';
 import { LoginUsuarioUseCase } from '../application/usecases/usuario/login-usuario.usecase';
 import { VerificarEmailUseCase } from '../application/usecases/usuario/verificar-email.usecase';
@@ -23,6 +30,7 @@ import { UsuarioDto } from '../application/dtos/usuario/usuario.dto';
 import { JwtAuthGuard } from '../../../shared/infrastructure/auth/jwt-auth.guard';
 import { UsuarioHttpErrorMapper } from '../../../shared/infrastructure/mappers/usuario-http-error.mapper';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -33,6 +41,10 @@ export class AuthController {
     private readonly redefinirSenhaUseCase: RedefinirSenhaUseCase,
   ) {}
 
+  @ApiOperation({ summary: 'Login do usuário' })
+  @ApiResponse({ status: 200, description: 'Login realizado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Credenciais inválidas' })
+  @ApiBody({ type: LoginUsuarioDto })
   @Post('login')
   async login(@Body() body: LoginUsuarioDto, @Res() res: Response) {
     const result = await this.loginUsuarioUseCase.execute(body);
@@ -48,6 +60,9 @@ export class AuthController {
     });
   }
 
+  @ApiOperation({ summary: 'Logout do usuário' })
+  @ApiResponse({ status: 200, description: 'Logout realizado com sucesso' })
+  @ApiCookieAuth('access_token')
   @Post('logout')
   @UseGuards(JwtAuthGuard)
   async logout(@Res() res: Response) {
@@ -58,6 +73,10 @@ export class AuthController {
     });
   }
 
+  @ApiOperation({ summary: 'Validar token JWT' })
+  @ApiResponse({ status: 200, description: 'Token válido' })
+  @ApiResponse({ status: 401, description: 'Token inválido' })
+  @ApiCookieAuth('access_token')
   @Get('validate')
   @UseGuards(JwtAuthGuard)
   async validateToken() {
@@ -67,6 +86,14 @@ export class AuthController {
     };
   }
 
+  @ApiOperation({ summary: 'Verificar email do usuário' })
+  @ApiResponse({
+    status: 200,
+    description: 'Email verificado',
+    type: UsuarioDto,
+  })
+  @ApiResponse({ status: 400, description: 'Dados inválidos' })
+  @ApiBody({ type: VerificarEmailDto })
   @Post('verificar-email')
   @UseGuards(ThrottlerGuard)
   async verificarEmail(@Body() body: VerificarEmailDto): Promise<UsuarioDto> {
@@ -77,6 +104,9 @@ export class AuthController {
     }
   }
 
+  @ApiOperation({ summary: 'Reenviar código de verificação' })
+  @ApiResponse({ status: 200, description: 'Código reenviado' })
+  @ApiBody({ type: ReenviarCodigoDto })
   @Post('reenviar-codigo')
   @UseGuards(ThrottlerGuard)
   async reenviarCodigo(
@@ -89,6 +119,9 @@ export class AuthController {
     }
   }
 
+  @ApiOperation({ summary: 'Solicitar redefinição de senha' })
+  @ApiResponse({ status: 200, description: 'Solicitação enviada' })
+  @ApiBody({ type: SolicitarRedefinicaoSenhaDto })
   @Post('solicitar-redefinicao-senha')
   @UseGuards(ThrottlerGuard)
   async solicitarRedefinicaoSenha(
@@ -101,6 +134,13 @@ export class AuthController {
     }
   }
 
+  @ApiOperation({ summary: 'Redefinir senha' })
+  @ApiResponse({
+    status: 200,
+    description: 'Senha redefinida',
+    type: UsuarioDto,
+  })
+  @ApiBody({ type: RedefinirSenhaDto })
   @Post('redefinir-senha')
   @UseGuards(ThrottlerGuard)
   async redefinirSenha(@Body() body: RedefinirSenhaDto): Promise<UsuarioDto> {

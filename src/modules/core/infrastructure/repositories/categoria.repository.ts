@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { CategoriaModel } from '../models/categoria.model';
 import { CategoriaMapper } from '../mappers/categoria.mapper';
 import { RepositoryException } from '../exceptions/repository.exception';
-import { CategoriaRepository } from '../../domain/repositories/Categoria.repository';
+import { CategoriaRepository } from '../../domain/repositories/categoria.repository';
 import { Categoria } from '../../domain/categoria';
 
 @Injectable()

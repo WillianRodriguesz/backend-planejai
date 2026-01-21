@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CarteiraRepository } from 'src/modules/core/domain/repositories/Carteira.repository';
-import { Usuario } from 'src/modules/core/domain/usuario';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
+import { Usuario } from '../../../domain/usuario';
 import { EmailService } from '../../../domain/interfaces/email.service';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
 import { BcryptHashService } from '../../../domain/interfaces/bcrypt-hash.service';

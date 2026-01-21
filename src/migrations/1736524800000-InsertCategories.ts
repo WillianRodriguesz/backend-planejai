@@ -6,20 +6,24 @@ export class InsertCategories1736524800000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       INSERT INTO "categorias" ("nome", "tipo") VALUES
-      ('salario', 'entrada'),
+      ('salário', 'entrada'),
       ('freelance', 'entrada'),
-      ('alimentacao', 'saida'),
+      ('alimentação', 'saida'),
       ('transporte', 'saida'),
       ('lazer', 'saida'),
       ('contas', 'saida'),
       ('outros', 'ambos'),
-      ('cartao de credito', 'saida');
+      ('cartão de crédito', 'saida'),
+      ('academia', 'saida'),
+      ('educação', 'saida'),
+      ('aluguel', 'saida'),
+      ('assinaturas', 'saida');
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      DELETE FROM "categorias" WHERE "nome" IN ('salario', 'freelance', 'alimentacao', 'transporte', 'lazer', 'contas', 'outros', 'cartaoCredito');
+      DELETE FROM "categorias" WHERE "nome" IN ('salário', 'freelance', 'alimentação', 'transporte', 'lazer', 'contas', 'outros', 'cartão de crédito', 'academia', 'educação', 'aluguel', 'assinaturas');
     `);
   }
 }
