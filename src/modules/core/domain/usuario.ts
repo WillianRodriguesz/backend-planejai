@@ -6,12 +6,14 @@ export interface CriarUsuarioProps {
   avatar?: string;
 }
 
+import { DomainException } from './exceptions/domain.exception';
+
 export class Usuario {
   private id: string;
   private nome: string;
   private email: string;
   private senha: string;
-  private telefone?: string;
+  private telefone: string;
   private avatar?: string;
   private criadoEm: Date;
   private emailVerificado: boolean;
@@ -43,7 +45,7 @@ export class Usuario {
     email: string;
     senha: string;
     criadoEm: Date;
-    telefone?: string;
+    telefone: string;
     avatar?: string;
     emailVerificado: boolean;
     codigoVerificacao?: string;
@@ -82,7 +84,7 @@ export class Usuario {
     return this.senha;
   }
 
-  public getTelefone(): string | undefined {
+  public getTelefone(): string {
     return this.telefone;
   }
 
@@ -95,18 +97,37 @@ export class Usuario {
   }
 
   private setNome(nome: string): void {
+    if (!nome) {
+      throw new DomainException('Nome não pode ser vazio.');
+    }
     this.nome = nome;
   }
 
   private setEmail(email: string): void {
+    if (!email.includes('@')) {
+      throw new DomainException('Email inválido.');
+    }
+
+    if (!email) {
+      throw new DomainException('Email não pode ser vazio.');
+    }
+
     this.email = email;
   }
 
   private setSenha(senha: string): void {
+    if (senha.length < 8) {
+      throw new DomainException('A senha deve ter pelo menos 8 caracteres.');
+    }
+
     this.senha = senha;
   }
 
-  private setTelefone(telefone?: string): void {
+  private setTelefone(telefone: string): void {
+    if (telefone && telefone.length < 10) {
+      throw new DomainException('Telefone inválido.');
+    }
+
     this.telefone = telefone;
   }
 
