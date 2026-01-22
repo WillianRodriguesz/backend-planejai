@@ -14,6 +14,8 @@ import {
   CategoriaModel,
   LancamentoModel,
   SaldoMensalModel,
+  TermoModel,
+  UsuarioConsentimentoModel,
 } from '../../../modules/core/infrastructure/models/index';
 
 @Module({
@@ -34,6 +36,8 @@ import {
           CategoriaModel,
           LancamentoModel,
           SaldoMensalModel,
+          TermoModel,
+          UsuarioConsentimentoModel,
         ],
         synchronize: false, // Sempre false em produção
         logging: true,
@@ -47,6 +51,8 @@ import {
       CategoriaModel,
       LancamentoModel,
       SaldoMensalModel,
+      TermoModel,
+      UsuarioConsentimentoModel,
     ]),
   ],
   exports: [TypeOrmModule],

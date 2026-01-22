@@ -4,11 +4,12 @@ import {
   Delete,
   Get,
   HttpStatus,
+  Param,
   Patch,
   Post,
   Put,
   Req,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -25,6 +26,8 @@ import { AtualizarUsuarioDto } from '../application/dtos/usuario/atualizar-usuar
 import { CriarUsuarioDto } from '../application/dtos/usuario/criar-usuario.dto';
 import { TrocarSenhaDto } from '../application/dtos/usuario/trocar-senha.dto';
 import { UsuarioDto } from '../application/dtos/usuario/usuario.dto';
+import { TermoDto } from '../application/dtos/termo/termo.dto';
+import { BuscarTermoAtivoUseCase } from '../application/usecases/termo/buscar-termo-ativo.usecase';
 import { AtualizarAvatarUseCase } from '../application/usecases/usuario/atualizar-avatar.usecase';
 import { AtualizarUsuarioUseCase } from '../application/usecases/usuario/atualizar-usuario.usecase';
 import { BuscarUsuarioUseCase } from '../application/usecases/usuario/buscar-usuario.usecase';
@@ -52,6 +55,7 @@ export class UsuarioController {
     private readonly buscarUsuarioUseCase: BuscarUsuarioUseCase,
     private readonly trocarSenhaUseCase: TrocarSenhaUseCase,
     private readonly atualizarAvatarUseCase: AtualizarAvatarUseCase,
+    private readonly buscarTermoAtivoUseCase: BuscarTermoAtivoUseCase,
   ) {}
 
   @ApiOperation({ summary: 'Criar novo usuário' })
@@ -168,6 +172,34 @@ export class UsuarioController {
         id: userId,
         avatar: body.avatar,
       });
+    } catch (error) {
+      UsuarioHttpErrorMapper.map(error);
+    }
+  }
+
+  @ApiOperation({ summary: 'Buscar termo ativo por tipo' })
+  @ApiResponse({
+    status: 200,
+    description: 'Termo encontrado',
+    type: TermoDto,
+  })
+  @ApiResponse({ status: 404, description: 'Termo não encontrado' })
+  @Get('termos/:tipo')
+  async buscarTermoAtivo(
+    @Param('tipo') tipo: string,
+  ): Promise<TermoDto | null> {
+    try {
+      const termo = await this.buscarTermoAtivoUseCase.execute(tipo as any);
+      if (!termo) return null;
+      return {
+        id: termo.getId(),
+        tipo: termo.getTipo(),
+        versao: termo.getVersao(),
+        titulo: termo.getTitulo(),
+        texto: termo.getTexto(),
+        ativo: termo.getAtivo(),
+        criadoEm: termo.getCriadoEm(),
+      };
     } catch (error) {
       UsuarioHttpErrorMapper.map(error);
     }
