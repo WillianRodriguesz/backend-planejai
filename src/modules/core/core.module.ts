@@ -10,7 +10,6 @@ import { DatabaseModule } from '../../shared/infrastructure/database';
 import { CoreQueries } from './application/queries';
 import { CoreUseCases } from './application/usecases';
 import { CoreControllers } from './controllers';
-import { CarteiraRepositoryImpl } from './infrastructure/repositories/carteira.repository';
 import { CategoriaRepositoryImpl } from './infrastructure/repositories/categoria.repository';
 import { TermoRepositoryImpl } from './infrastructure/repositories/termo.repository';
 import { UsuarioRepositoryImpl } from './infrastructure/repositories/usuario.repository';
@@ -19,6 +18,7 @@ import { BcryptHashServiceImpl } from './infrastructure/services/hash-bcrypt.ser
 import { LimpezaCodigosService } from './infrastructure/services/limpeza-codigos.service';
 import { TokenServiceImpl } from './infrastructure/services/token.service';
 import { UsuarioConsentimentoRepositoryImpl } from './infrastructure/repositories/usuario-consentimento.repository';
+import { CarteiraRepositoryImpl } from './infrastructure/repositories/carteira.repository';
 
 @Module({
   imports: [AuthModule, DatabaseModule, ScheduleModule.forRoot()],
