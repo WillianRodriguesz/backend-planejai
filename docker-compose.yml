@@ -1,4 +1,4 @@
-version: '3.8' 
+version: '3.8'
 services:
   app:
     build: .
@@ -6,27 +6,27 @@ services:
       - '3000:3000'
     depends_on:
       - db
-    env_file: .env 
+    env_file: .env
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/planejai?schema=public
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_NAME}?schema=${DB_SCHEMA}
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_NAME=planejai
-      - DB_SCHEMA=public
-      - PORT
-      - CORS_ORIGIN
-      - FRONTEND_URL
-      - JWT_SECRET
-      - GMAIL_USER
-      - GMAIL_PASS
+      - DB_NAME=${DB_NAME}
+      - DB_SCHEMA=${DB_SCHEMA}
+      - PORT=${PORT}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - FRONTEND_URL=${FRONTEND_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - GMAIL_USER=${GMAIL_USER}
+      - GMAIL_PASS=${GMAIL_PASS}
   db:
     image: postgres:15
     environment:
-      POSTGRES_DB: planejai
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - '5433:5432'  #PORTA NO PG RODANDO 5433
+      - '5432:5432' #PORTA NO PG RODANDO 5433
     volumes:
       - postgres_data:/var/lib/postgresql/data
 volumes:
