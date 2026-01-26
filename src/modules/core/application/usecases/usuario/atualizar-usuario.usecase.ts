@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { Usuario } from '../../../domain/usuario';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
 import { BcryptHashService } from '../../../domain/interfaces/bcrypt-hash.service';
 import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
 import { UsuarioMapper } from '../../mappers/usuario.mapper';
+import { Usuario } from '../../../domain/usuario';
 
 export interface AtualizarUsuarioProps {
   id: string;

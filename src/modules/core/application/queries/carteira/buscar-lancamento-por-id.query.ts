@@ -1,11 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { LancamentoDto } from '../../dtos/lancamento/lancamento.dto';
 import { LancamentoMapper } from '../../mappers/lancamento.mapper';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
 
 @Injectable()
 export class BuscarLancamentoPorIdQuery {
-  constructor(private readonly carteiraRepository: CarteiraRepositoryImpl) {}
+  constructor(
+    @Inject('CarteiraRepository')
+    private readonly carteiraRepository: CarteiraRepository,
+  ) {}
 
   async execute(
     idCarteira: string,

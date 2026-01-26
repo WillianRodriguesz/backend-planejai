@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
 import { DateUtils } from '../../../domain/shared/data.utils';
 import { SaldoMensalDto } from '../../dtos/carteira/saldo-mensal.dto';
 import { CarteiraSaldoMensalMapper } from '../../mappers/saldo-mensal.mapper';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 
 export interface BuscarSaldoMensalQueryProps {
   idCarteira: string;
@@ -11,7 +11,10 @@ export interface BuscarSaldoMensalQueryProps {
 
 @Injectable()
 export class BuscarSaldoMensalQuery {
-  constructor(private readonly carteiraRepository: CarteiraRepositoryImpl) {}
+  constructor(
+    @Inject('CarteiraRepository')
+    private readonly carteiraRepository: CarteiraRepository,
+  ) {}
 
   async execute(idCarteira: string, data: string): Promise<SaldoMensalDto> {
     const resultCarteiraDomain =

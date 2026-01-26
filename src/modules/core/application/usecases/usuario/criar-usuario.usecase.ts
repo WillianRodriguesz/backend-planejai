@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
-import { Usuario } from '../../../domain/usuario';
-import { EmailService } from '../../../domain/interfaces/email.service';
-import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
 import { BcryptHashService } from '../../../domain/interfaces/bcrypt-hash.service';
+import { EmailService } from '../../../domain/interfaces/email.service';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
 import { TermoRepository } from '../../../domain/repositories/termo.repository';
 import { UsuarioConsentimentoRepository } from '../../../domain/repositories/usuario-consentimento.repository';
-import { UsuarioConsentimento } from '../../../domain/usuario-consentimento';
+import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
 import { TipoTermo } from '../../../domain/termo';
+import { Usuario } from '../../../domain/usuario';
+import { UsuarioConsentimento } from '../../../domain/usuario-consentimento';
 
 export interface CriarUsuarioProps {
   nome: string;
@@ -39,7 +39,6 @@ export class CriarUsuarioUseCase {
   async execute(props: CriarUsuarioProps): Promise<{ message: string }> {
     const { aceitouLgpd, aceitouTermosUso, aceitouPoliticaPrivacidade } = props;
 
-    // Validar consentimentos obrigatórios
     if (!aceitouLgpd || !aceitouTermosUso || !aceitouPoliticaPrivacidade) {
       throw new Error(
         'Todos os consentimentos são obrigatórios: LGPD, Termos de Uso e Política de Privacidade',
@@ -62,13 +61,11 @@ export class CriarUsuarioUseCase {
       telefone: props.telefone,
     });
 
-    // Gerar código de verificação
     const codigo = Math.random().toString(36).substring(2, 8).toUpperCase();
     usuario.setCodigoVerificacao(codigo);
 
     await this.usuarioRepository.salvar(usuario);
 
-    // Buscar versões ativas dos termos
     const termoLgpd = await this.termoRepository.buscarAtivoPorTipo(
       TipoTermo.LGPD,
     );
@@ -79,7 +76,6 @@ export class CriarUsuarioUseCase {
       TipoTermo.POLITICA_PRIVACIDADE,
     );
 
-    // Criar consentimento
     const consentimento = UsuarioConsentimento.criar({
       usuarioId: usuario.getId(),
       termoLgpdId: termoLgpd?.getId(),

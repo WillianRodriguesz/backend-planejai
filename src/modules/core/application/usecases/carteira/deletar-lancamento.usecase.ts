@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { DomainException } from '../../../domain/exceptions/domain.exception';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
 
 @Injectable()
 export class DeletarLancamentoUseCase {
-  constructor(private readonly carteiraRepository: CarteiraRepositoryImpl) {}
+  constructor(
+    @Inject('CarteiraRepository')
+    private readonly carteiraRepository: CarteiraRepository,
+  ) {}
 
   async execute(idCarteira: string, idLancamento: string): Promise<void> {
     const carteira = await this.carteiraRepository.buscarPorId(idCarteira);
