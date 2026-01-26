@@ -1,9 +1,10 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
 import { Lancamento } from '../../../domain/lancamento';
 import { PaginacaoUtils } from '../../../domain/shared/paginacao.utils';
 import { LancamentosPaginadosDto } from '../../dtos/lancamento/lancamentos-paginados.dto';
 import { LancamentoMapper } from '../../mappers/lancamento.mapper';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
+
 
 export interface BuscarTodosLancamentosQueryProps {
   idCarteira: string;

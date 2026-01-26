@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { CategoriaRepository } from '../../../domain/repositories/categoria.repository';
 import { CategoriaDto } from '../../dtos/categoria/categoria.dto';
 import { CategoriaMapper } from '../../mappers/categoria.mapper';
+import { CategoriaRepository } from '../../../domain/repositories/categoria.repository';
 
 @Injectable()
 export class BuscarTodasCategoriasQuery {
