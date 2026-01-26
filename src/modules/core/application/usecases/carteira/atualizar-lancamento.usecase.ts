@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
-import { CategoriaRepository } from '../../../domain/repositories/categoria.repository';
 import { DomainException } from '../../../domain/exceptions/domain.exception';
 import { DateUtils } from '../../../domain/shared/data.utils';
 import { AtualizarLancamentoDto } from '../../dtos/lancamento/atualizar-lancamento.dto';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
+import { CategoriaRepository } from '../../../domain/repositories/categoria.repository';
 
 export interface AtualizarLancamentoProps {
   idCarteira: string;

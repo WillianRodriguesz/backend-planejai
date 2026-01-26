@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { DomainException } from '../../../domain/exceptions/domain.exception';
 import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
 

@@ -9,10 +9,8 @@ import { Carteira } from '../../domain/carteira';
 import { CarteiraMapper } from '../mappers/carteira.mapper';
 import { Lancamento } from '../../domain/lancamento';
 import { LancamentoMapper } from '../mappers/lancamento.mapper';
-import {
-  CarteiraRepository,
-  FiltrosLancamento,
-} from '../../domain/repositories/carteira.repository';
+import { CarteiraRepository, FiltrosLancamento } from '../../domain/repositories/carteira.repository';
+
 
 @Injectable()
 export class CarteiraRepositoryImpl implements CarteiraRepository {
