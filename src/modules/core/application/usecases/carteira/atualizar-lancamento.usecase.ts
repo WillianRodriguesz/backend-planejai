@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
+import { CategoriaRepository } from '../../../domain/repositories/categoria.repository';
 import { DomainException } from '../../../domain/exceptions/domain.exception';
-import { CategoriaRepositoryImpl } from '../../../infrastructure/repositories/categoria.repository';
 import { DateUtils } from '../../../domain/shared/data.utils';
 import { AtualizarLancamentoDto } from '../../dtos/lancamento/atualizar-lancamento.dto';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 
 export interface AtualizarLancamentoProps {
   idCarteira: string;
@@ -14,8 +14,10 @@ export interface AtualizarLancamentoProps {
 @Injectable()
 export class AtualizarLancamentoUseCase {
   constructor(
-    private readonly carteiraRepository: CarteiraRepositoryImpl,
-    private readonly categoriaRepository: CategoriaRepositoryImpl,
+    @Inject('CarteiraRepository')
+    private readonly carteiraRepository: CarteiraRepository,
+    @Inject('CategoriaRepository')
+    private readonly categoriaRepository: CategoriaRepository,
   ) {}
 
   async execute(props: AtualizarLancamentoProps): Promise<void> {

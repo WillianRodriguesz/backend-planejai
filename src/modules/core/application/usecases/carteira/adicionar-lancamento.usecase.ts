@@ -1,6 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { CategoriaRepositoryImpl } from '../../../infrastructure/repositories/categoria.repository';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
+import { CategoriaRepository } from '../../../domain/repositories/categoria.repository';
 
 export type tipoTransacao = 'entrada' | 'saida';
 export interface AdicionarLancamentoUseCaseProps {
@@ -16,8 +16,10 @@ export interface AdicionarLancamentoUseCaseProps {
 @Injectable()
 export class AdicionarLancamentoUseCase {
   constructor(
-    private readonly carteiraRepository: CarteiraRepositoryImpl,
-    private readonly categoriaRepository: CategoriaRepositoryImpl,
+    @Inject('CarteiraRepository')
+    private readonly carteiraRepository: CarteiraRepository,
+    @Inject('CategoriaRepository')
+    private readonly categoriaRepository: CategoriaRepository,
   ) {}
 
   async execute(props: AdicionarLancamentoUseCaseProps): Promise<void> {

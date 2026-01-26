@@ -1,13 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { GastosMensaisDto } from '../../dtos/carteira/gastos-mensais.dto';
 import { GastosMensaisService } from '../../../domain/services/gastos-mensais.service';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
 
 @Injectable()
 export class BuscarGastosMensaisQuery {
   private readonly gastosMensaisService: GastosMensaisService;
 
-  constructor(private readonly carteiraRepository: CarteiraRepositoryImpl) {
+  constructor(
+    @Inject('CarteiraRepository')
+    private readonly carteiraRepository: CarteiraRepository,
+  ) {
     this.gastosMensaisService = new GastosMensaisService();
   }
 

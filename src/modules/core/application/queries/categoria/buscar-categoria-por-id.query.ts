@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { CategoriaRepositoryImpl } from '../../../infrastructure/repositories/categoria.repository';
+import { Injectable, Inject } from '@nestjs/common';
 import { DomainException } from '../../../domain/exceptions/domain.exception';
 import { CategoriaDto } from '../../dtos/categoria/categoria.dto';
 import { CategoriaMapper } from '../../mappers/categoria.mapper';
+import { CategoriaRepository } from '../../../domain/repositories/categoria.repository';
 
 @Injectable()
 export class BuscarCategoriaPorIdQuery {
-  constructor(private readonly categoriaRepository: CategoriaRepositoryImpl) {}
+  constructor(
+    @Inject('CategoriaRepository')
+    private readonly categoriaRepository: CategoriaRepository,
+  ) {}
 
   async execute(id: number): Promise<CategoriaDto> {
     const categoria = await this.categoriaRepository.buscarPorId(id);

@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { CarteiraRepository } from '../../../domain/repositories/carteira.repository';
+import { Lancamento } from '../../../domain/lancamento';
+import { PaginacaoUtils } from '../../../domain/shared/paginacao.utils';
 import { LancamentosPaginadosDto } from '../../dtos/lancamento/lancamentos-paginados.dto';
 import { LancamentoMapper } from '../../mappers/lancamento.mapper';
-import { PaginacaoUtils } from '../../../domain/shared/paginacao.utils';
-import { CarteiraRepositoryImpl } from '../../../infrastructure/repositories/carteira.repository';
 
 export interface BuscarTodosLancamentosQueryProps {
   idCarteira: string;
@@ -15,7 +16,10 @@ export class BuscarTodosLancamentosQuery {
   private readonly ITENS_POR_PAGINA_DEFAULT = 10;
   private readonly PAGINA_DEFAULT = 1;
 
-  constructor(private readonly carteiraRepository: CarteiraRepositoryImpl) {}
+  constructor(
+    @Inject('CarteiraRepository')
+    private readonly carteiraRepository: CarteiraRepository,
+  ) {}
 
   async execute(
     idCarteira: string,
@@ -38,7 +42,9 @@ export class BuscarTodosLancamentosQuery {
     );
 
     return {
-      lancamentos: LancamentoMapper.DomainToDtoList(resultado.items),
+      lancamentos: LancamentoMapper.DomainToDtoList(
+        resultado.items as Lancamento[],
+      ),
       total: resultado.total,
       pagina: resultado.pagina,
       totalPaginas: resultado.totalPaginas,
