@@ -32,7 +32,7 @@ services:
 
       - "traefik.http.routers.planejai.rule=Host(`api.planejai.cloud`)"
       - "traefik.http.routers.planejai.entrypoints=websecure"
-      - "traefik.http.routers.planejai.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.planejai.tls.certresolver=mytlschallenge"
 
       - "traefik.http.services.planejai.loadbalancer.server.port=3000"
 
