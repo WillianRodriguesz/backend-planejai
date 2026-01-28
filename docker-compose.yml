@@ -7,7 +7,7 @@ services:
 
     # NÃO expor porta
     expose:
-      - "3000"
+      - '3000'
 
     depends_on:
       - db
@@ -28,13 +28,13 @@ services:
       - GMAIL_PASS=${GMAIL_PASS}
 
     labels:
-      - "traefik.enable=true"
+      - 'traefik.enable=true'
 
-      - "traefik.http.routers.planejai.rule=Host(`api.planejai.cloud`)"
-      - "traefik.http.routers.planejai.entrypoints=websecure"
-      - "traefik.http.routers.planejai.tls.certresolver=mytlschallenge"
+      - 'traefik.http.routers.planejai.rule=Host(`api.planejai.cloud`)'
+      - 'traefik.http.routers.planejai.entrypoints=websecure'
+      - 'traefik.http.routers.planejai.tls.certresolver=mytlschallenge'
 
-      - "traefik.http.services.planejai.loadbalancer.server.port=3000"
+      - 'traefik.http.services.planejai.loadbalancer.server.port=3000'
 
     networks:
       - root_default
@@ -50,8 +50,7 @@ services:
 
     # NÃO expor banco pra internet
     ports:
-      - "5432:5432"
-
+      - '5432:5432'
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
