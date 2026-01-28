@@ -19,7 +19,7 @@ async function bootstrap() {
   app.setGlobalPrefix('planejai');
 
   app.enableCors({
-    origin: true, // Aceita requisições de qualquer origem
+    origin: process.env.FRONTEND_URL, 
     credentials: true,
   });
 
