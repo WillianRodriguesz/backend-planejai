@@ -1,33 +1,66 @@
 version: '3.8'
+
 services:
   app:
     build: .
-    ports:
-      - '3000:3000'
+    container_name: planejai-api
+
+    # NÃO expor porta
+    expose:
+      - "3000"
+
     depends_on:
       - db
+
     env_file: .env
+
     environment:
-      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_NAME}?schema=${DB_SCHEMA}
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}?schema=${DB_SCHEMA}
       - DB_HOST=db
       - DB_PORT=5432
       - DB_NAME=${DB_NAME}
       - DB_SCHEMA=${DB_SCHEMA}
-      - PORT=${PORT}
+      - PORT=3000
       - CORS_ORIGIN=${CORS_ORIGIN}
       - FRONTEND_URL=${FRONTEND_URL}
       - JWT_SECRET=${JWT_SECRET}
       - GMAIL_USER=${GMAIL_USER}
       - GMAIL_PASS=${GMAIL_PASS}
+
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.planejai.rule=Host(`api.planejai.cloud`)"
+      - "traefik.http.routers.planejai.entrypoints=websecure"
+      - "traefik.http.routers.planejai.tls.certresolver=letsencrypt"
+
+      - "traefik.http.services.planejai.loadbalancer.server.port=3000"
+
+    networks:
+      - root_default
+
   db:
     image: postgres:15
+    container_name: planejai-db
+
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - '5433:5433' #PORTA NO PG RODANDO 5433
+
+    # NÃO expor banco pra internet
+    expose:
+      - "5432"
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+    networks:
+      - root_default
+
 volumes:
   postgres_data:
+
+networks:
+  root_default:
+    external: true
