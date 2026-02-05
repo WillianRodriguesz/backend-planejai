@@ -1,4 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 import { UsuarioRepository } from '../../../domain/repositories/usuario.repository';
 import { UsuarioDto } from '../../dtos/usuario/usuario.dto';
 import { UsuarioMapper } from '../../mappers/usuario.mapper';
@@ -17,6 +19,7 @@ export class VerificarEmailUseCase {
     private readonly usuarioRepository: UsuarioRepository,
     @Inject('CarteiraRepository')
     private readonly carteiraRepository: CarteiraRepository,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   async execute(props: VerificarEmailProps): Promise<UsuarioDto> {
@@ -40,12 +43,13 @@ export class VerificarEmailUseCase {
       throw new Error('Código de verificação expirado');
     }
 
-    // Verificar email
     usuario.verificarEmail();
 
     await this.usuarioRepository.atualizar(usuario.getId(), usuario);
 
-    // Criar carteira após verificação
+    await this.cacheManager.del(`login_attempts_${props.email}`);
+    await this.cacheManager.del(`attempts_${props.email}`);
+
     const carteira = Carteira.criar({
       usuarioId: usuario.getId(),
     });

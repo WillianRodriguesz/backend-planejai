@@ -8,6 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
+import { JwtService } from '@nestjs/jwt';
 import {
   ApiTags,
   ApiOperation,
@@ -39,6 +40,7 @@ export class AuthController {
     private readonly reenviarCodigoUseCase: ReenviarCodigoUseCase,
     private readonly solicitarRedefinicaoSenhaUseCase: SolicitarRedefinicaoSenhaUseCase,
     private readonly redefinirSenhaUseCase: RedefinirSenhaUseCase,
+    private readonly jwtService: JwtService,
   ) {}
 
   @ApiOperation({ summary: 'Login do usuário' })
@@ -89,16 +91,30 @@ export class AuthController {
   @ApiOperation({ summary: 'Verificar email do usuário' })
   @ApiResponse({
     status: 200,
-    description: 'Email verificado',
-    type: UsuarioDto,
+    description: 'Email verificado e usuário autenticado',
   })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiBody({ type: VerificarEmailDto })
   @Post('verificar-email')
   @UseGuards(ThrottlerGuard)
-  async verificarEmail(@Body() body: VerificarEmailDto): Promise<UsuarioDto> {
+  async verificarEmail(@Body() body: VerificarEmailDto, @Res() res: Response) {
     try {
-      return await this.verificarEmailUseCase.execute(body);
+      const usuario = await this.verificarEmailUseCase.execute(body);
+
+      const payload = { sub: usuario.id, email: usuario.email };
+      const token = this.jwtService.sign(payload);
+
+      res.cookie('access_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        maxAge: 3600000, // 1 hora
+      });
+
+      res.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
+        message: 'Email verificado com sucesso. Você já está logado!',
+      });
     } catch (error) {
       UsuarioHttpErrorMapper.map(error);
     }
